@@ -141,8 +141,11 @@ function TileWall({ items, search, onHover }: { items: Item[]; search: Search; o
   )
 }
 
-export function ItemGrid({ items, search }: { items: Item[]; search: Search }) {
-  const { lang, tr } = useLang()
+/**
+ * Hover state for item tiles: pass `onHover` to each ItemTile and render `tooltip` once.
+ * The tooltip hides on any scroll or resize, since it is positioned from the tile's rect.
+ */
+export function useTileTooltip() {
   const [hover, setHover] = useState<Hover | null>(null)
   useLayoutEffect(() => {
     if (!hover) return
@@ -154,6 +157,12 @@ export function ItemGrid({ items, search }: { items: Item[]; search: Search }) {
       window.removeEventListener('resize', hide)
     }
   }, [hover])
+  return { onHover: setHover, tooltip: hover ? <TileTooltip hover={hover} /> : null }
+}
+
+export function ItemGrid({ items, search }: { items: Item[]; search: Search }) {
+  const { lang, tr } = useLang()
+  const { onHover: setHover, tooltip } = useTileTooltip()
 
   // Group by tier only when the list is in rarity order (searching ranks name matches first).
   const grouped = (search.s ?? 'rarity') === 'rarity' && !search.q?.trim()
@@ -201,7 +210,7 @@ export function ItemGrid({ items, search }: { items: Item[]; search: Search }) {
       ) : (
         <TileWall items={items} search={search} onHover={setHover} />
       )}
-      {hover && <TileTooltip hover={hover} />}
+      {tooltip}
     </>
   )
 }

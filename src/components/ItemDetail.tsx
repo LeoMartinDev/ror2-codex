@@ -6,6 +6,7 @@ import { useLang } from '#/lib/i18n'
 import { itemFacts, relatedItems, synergyGroups } from '#/lib/related'
 import { RichText } from '#/lib/richText'
 import type { Item, LinkKind } from '#/lib/types'
+import { ItemTile, useTileTooltip } from './ItemGrid'
 import { StatCard } from './StatCard'
 import { Button } from './ui'
 
@@ -59,25 +60,9 @@ function ItemRow({ item, why, border }: { item: Item; why?: string; border?: str
   )
 }
 
-function MiniTile({ item }: { item: Item }) {
-  const { lang } = useLang()
-  return (
-    <Link
-      to="/"
-      search={(prev: Search) => ({ ...prev, item: item.id })}
-      resetScroll={false}
-      title={item.name[lang]}
-      aria-label={item.name[lang]}
-      className="frame tile"
-      style={{ ...tileColors(item.rarity), width: 44, height: 44 }}
-    >
-      {item.icon && <img src={item.icon} alt="" className="pointer-events-none size-9 object-contain" />}
-    </Link>
-  )
-}
-
 export function ItemDetail({ item, all, byId, byWikiName, onClose }: Props) {
   const { lang, tr, loc } = useLang()
+  const { onHover, tooltip } = useTileTooltip()
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
@@ -211,7 +196,7 @@ export function ItemDetail({ item, all, byId, byWikiName, onClose }: Props) {
                   <p className="m-0 text-sm leading-snug text-ink-dim">{g.why}</p>
                   <div className="mt-1 grid grid-cols-[repeat(auto-fill,44px)] gap-1.5">
                     {g.items.map((it) => (
-                      <MiniTile key={it.id} item={it} />
+                      <ItemTile key={it.id} item={it} size={44} onHover={onHover} />
                     ))}
                   </div>
                 </div>
@@ -275,6 +260,7 @@ export function ItemDetail({ item, all, byId, byWikiName, onClose }: Props) {
           </div>
         </div>
       </div>
+      {tooltip}
     </div>
   )
 }
