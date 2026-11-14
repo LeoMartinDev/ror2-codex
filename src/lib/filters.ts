@@ -1,12 +1,16 @@
 import { z } from 'zod'
-import { COLOR_BUCKETS, EFFECT_FILTERS, EFFECT_FILTER_BY_ID, RARITY_ORDER, TIER_OF, normalizeEffectIds } from './catalog'
+import { COLOR_BUCKETS, EFFECT_FILTERS, EFFECT_FILTER_BY_ID, RARITY_ORDER, TIER_OF, normalizeColorIds, normalizeEffectIds } from './catalog'
 import type { Item } from './types'
 
 /** URL search params. Lists are comma-separated to keep URLs readable. */
 export const searchSchema = z.object({
   q: z.string().optional(),
   r: z.string().optional(), // rarities
-  c: z.string().optional(), // colour buckets
+  // colour buckets; merged ids from old links (pink, cyan) are mapped to their bucket
+  c: z
+    .string()
+    .transform((v) => joinList(normalizeColorIds(list(v))))
+    .optional(),
   // effect filters (EFFECT_FILTERS); old ids from shared links are mapped to their new filter
   t: z
     .string()

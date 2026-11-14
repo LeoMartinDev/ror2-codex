@@ -88,17 +88,19 @@ function interiorMask(data: Buffer): Uint8Array {
 }
 
 /** Bump when dominantColor changes: build-data keeps its cache per version. */
-export const COLOR_ALGO_VERSION = 2
+export const COLOR_ALGO_VERSION = 3
 
+/**
+ * Hue → bucket. Close hues share a bucket because they are hard to tell apart on screen:
+ * red includes pink/magenta (290°–14°), blue includes cyan (165°–248°).
+ */
 function hueBucket(h: number, s: number, v: number) {
-  if (h < 14 || h >= 338) return 'red'
+  if (h < 14 || h >= 290) return 'red'
   if (h < 42) return v < 0.6 && s < 0.85 ? 'brown' : 'orange'
   if (h < 68) return v < 0.5 ? 'brown' : 'yellow'
   if (h < 165) return 'green'
-  if (h < 195) return 'cyan'
   if (h < 248) return 'blue'
-  if (h < 290) return 'purple'
-  return 'pink'
+  return 'purple'
 }
 
 /** A pixel counts as coloured when saturated and bright enough, or very saturated even if shaded (dark red). */

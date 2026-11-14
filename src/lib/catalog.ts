@@ -74,20 +74,25 @@ export const DLCS: { id: DlcId; fr: string; en: string; short: string }[] = [
 ]
 export const DLC_BY_ID = Object.fromEntries(DLCS.map((d) => [d.id, d])) as Record<DlcId, (typeof DLCS)[number]>
 
+/** Colour filter. Close hues share a bucket (see hueBucket in scripts/lib/icons.ts). */
 export const COLOR_BUCKETS: { id: string; fr: string; en: string; swatch: string }[] = [
-  { id: 'red', fr: 'Rouge', en: 'Red', swatch: '#e04848' },
+  { id: 'red', fr: 'Rouge / rose', en: 'Red / pink', swatch: '#e04848' },
   { id: 'orange', fr: 'Orange', en: 'Orange', swatch: '#ec8a2f' },
   { id: 'yellow', fr: 'Jaune', en: 'Yellow', swatch: '#e8c937' },
   { id: 'green', fr: 'Vert', en: 'Green', swatch: '#5cbf4a' },
-  { id: 'cyan', fr: 'Cyan', en: 'Cyan', swatch: '#3fc4c9' },
-  { id: 'blue', fr: 'Bleu', en: 'Blue', swatch: '#3f7fe0' },
+  { id: 'blue', fr: 'Bleu / cyan', en: 'Blue / cyan', swatch: '#3f7fe0' },
   { id: 'purple', fr: 'Violet', en: 'Purple', swatch: '#9b59d9' },
-  { id: 'pink', fr: 'Rose / magenta', en: 'Pink / magenta', swatch: '#d4458f' },
   { id: 'white', fr: 'Blanc / gris', en: 'White / grey', swatch: '#d9dce1' },
   { id: 'brown', fr: 'Brun', en: 'Brown', swatch: '#8b5e3c' },
   { id: 'black', fr: 'Noir', en: 'Black', swatch: '#2a2a2e' },
 ]
 export const COLOR_BY_ID = Object.fromEntries(COLOR_BUCKETS.map((c) => [c.id, c]))
+
+/** Colour ids merged into another bucket, kept so old links still filter. */
+const LEGACY_COLOR: Record<string, string> = { pink: 'red', cyan: 'blue' }
+export function normalizeColorIds(ids: string[]): string[] {
+  return [...new Set(ids.map((id) => LEGACY_COLOR[id] ?? id).filter((id) => id in COLOR_BY_ID))]
+}
 
 /**
  * Fine-grained effect tags stored on each item (computed by scripts/build-data.ts).
