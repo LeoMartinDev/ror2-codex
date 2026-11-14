@@ -87,14 +87,37 @@ function interiorMask(data: Buffer): Uint8Array {
   return opaque
 }
 
-/** Dominant colour of an icon: hue histogram weighted by chroma, on the object's interior only. */
+/** Bump when dominantColor changes: build-data keeps its cache per version. */
+export const COLOR_ALGO_VERSION = 2
+
+function hueBucket(h: number, s: number, v: number) {
+  if (h < 14 || h >= 338) return 'red'
+  if (h < 42) return v < 0.6 && s < 0.85 ? 'brown' : 'orange'
+  if (h < 68) return v < 0.5 ? 'brown' : 'yellow'
+  if (h < 165) return 'green'
+  if (h < 195) return 'cyan'
+  if (h < 248) return 'blue'
+  if (h < 290) return 'purple'
+  return 'pink'
+}
+
+/** A pixel counts as coloured when saturated and bright enough, or very saturated even if shaded (dark red). */
+const isColoured = (s: number, v: number) => (s >= 0.35 && v >= 0.32) || (s >= 0.6 && v >= 0.2)
+/** Below this share of coloured pixels, the object reads as white/grey or black, whatever its accents. */
+const MIN_COLOURED_SHARE = 0.25
+
+/**
+ * Dominant colour of an icon, as a player would name it, on the object's interior only:
+ * - if clearly coloured pixels cover less than a quarter of the object (a white device with a red
+ *   detail, a dark stone with a glowing glyph), it is white/grey or black by its average brightness;
+ * - otherwise the hue covering the most area wins (pixel count, not saturation, so a small vivid
+ *   accent does not beat a large muted body).
+ */
 export async function dominantColor(file: string): Promise<{ color: string; bucket: string }> {
   const { data } = await sharp(file).resize(SIZE, SIZE, { fit: 'fill' }).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
   const mask = interiorMask(data)
-  const bins = Array.from({ length: 36 }, () => ({ w: 0, r: 0, g: 0, b: 0, v: 0 }))
-  let total = 0
-  let chromaTotal = 0
-  let lum = 0
+  const bins = Array.from({ length: 36 }, () => ({ n: 0, w: 0, r: 0, g: 0, b: 0 }))
+  let total = 0, coloured = 0, lum = 0
   let sr = 0, sg = 0, sb = 0
   for (let p = 0; p < SIZE * SIZE; p++) {
     if (!mask[p]) continue
@@ -104,42 +127,31 @@ export async function dominantColor(file: string): Promise<{ color: string; buck
     total++
     lum += v
     sr += r; sg += g; sb += b
+    if (!isColoured(s, v)) continue
+    coloured++
     const w = s * v
-    chromaTotal += w
-    if (s < 0.22 || v < 0.15) continue
     const bin = bins[Math.floor(h / 10) % 36]
-    bin.w += w; bin.r += r * w; bin.g += g * w; bin.b += b * w; bin.v += v * w
+    bin.n++; bin.w += w; bin.r += r * w; bin.g += g * w; bin.b += b * w
   }
   if (!total) return { color: '#888888', bucket: 'white' }
-  const avgV = lum / total
-  // Colourless icon (or only faint colour that never reaches the saturation threshold)
-  const vivid = bins.reduce((s, b) => s + b.w, 0)
-  if (chromaTotal / total < 0.12 || vivid / total < 0.04) {
+  if (coloured / total < MIN_COLOURED_SHARE) {
     const c = `#${hex((sr / total) * 255)}${hex((sg / total) * 255)}${hex((sb / total) * 255)}`
-    return { color: c, bucket: avgV < 0.35 ? 'black' : 'white' }
+    return { color: c, bucket: lum / total < 0.35 ? 'black' : 'white' }
   }
-  // Smooth histogram over neighbouring bins and pick the peak.
-  let best = 0, bestW = -1
+  // Peak of the hue histogram by area, smoothed over neighbouring bins.
+  let best = 0, bestN = -1
   for (let i = 0; i < 36; i++) {
-    const w = bins[(i + 35) % 36].w * 0.5 + bins[i].w + bins[(i + 1) % 36].w * 0.5
-    if (w > bestW) { bestW = w; best = i }
+    const n = bins[(i + 35) % 36].n * 0.5 + bins[i].n + bins[(i + 1) % 36].n * 0.5
+    if (n > bestN) { bestN = n; best = i }
   }
+  // Representative colour: chroma-weighted mean of the peak's pixels.
   const group = [bins[(best + 35) % 36], bins[best], bins[(best + 1) % 36]]
-  const W = group.reduce((s, b) => s + b.w, 0) || 1
-  const r = group.reduce((s, b) => s + b.r, 0) / W
-  const g = group.reduce((s, b) => s + b.g, 0) / W
-  const b = group.reduce((s, b2) => s + b2.b, 0) / W
+  const W = group.reduce((s, x) => s + x.w, 0) || 1
+  const r = group.reduce((s, x) => s + x.r, 0) / W
+  const g = group.reduce((s, x) => s + x.g, 0) / W
+  const b = group.reduce((s, x) => s + x.b, 0) / W
   const { h, s, v } = rgbToHsv(r, g, b)
-  let bucket: string
-  if (h < 14 || h >= 338) bucket = "red"
-  else if (h < 42) bucket = v < 0.6 && s < 0.85 ? 'brown' : 'orange'
-  else if (h < 68) bucket = v < 0.5 ? 'brown' : 'yellow'
-  else if (h < 165) bucket = 'green'
-  else if (h < 195) bucket = 'cyan'
-  else if (h < 248) bucket = 'blue'
-  else if (h < 290) bucket = 'purple'
-  else bucket = 'pink'
-  return { color: `#${hex(r * 255)}${hex(g * 255)}${hex(b * 255)}`, bucket }
+  return { color: `#${hex(r * 255)}${hex(g * 255)}${hex(b * 255)}`, bucket: hueBucket(h, s, v) }
 }
 
 export function readJson<T>(file: string, fallback: T): T {

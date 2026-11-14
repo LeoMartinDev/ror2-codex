@@ -12,7 +12,7 @@ import { join } from 'node:path'
 import { parseLuaAssignments, luaArray, type LuaTable, type LuaValue } from './lib/lua'
 import { loadLanguage, DEFAULT_LANG_DIR } from './lib/lang'
 import { wikiToRich, richToPlain } from './lib/wikitext'
-import { resolveFileUrls, download, dominantColor, readJson, writeJson } from './lib/icons'
+import { resolveFileUrls, download, dominantColor, readJson, writeJson, COLOR_ALGO_VERSION } from './lib/icons'
 import { TAGS } from '../src/lib/catalog'
 import type { DlcId, Item, RarityId, Stacking, StackModel } from '../src/lib/types'
 
@@ -80,13 +80,17 @@ type Override = {
   totalDamage?: boolean
   explain?: string
   links?: { kind: 'boost' | 'combo' | 'none'; id: string; why: string }[]
+  /** Colour filter bucket, when the icon analysis gets it wrong (see dominantColor). */
+  colorBucket?: string
 }
 const overridesRaw = readJson<Record<string, Override>>(join(ROOT, "data", "overrides.json"), {})
 const statLabels = readJson<Record<string, string>>(join(ROOT, 'data', 'stat-labels.fr.json'), {})
 /** English versions of the hand-written French texts of overrides.json, same keys. */
 type EnText = { explain?: string; limit?: string; notes?: Record<string, string>; links?: Record<string, string> }
 const enTextsRaw = readJson<Record<string, EnText>>(join(ROOT, 'data', 'overrides.en.json'), {})
-const colorCache = readJson<Record<string, { color: string; bucket: string }>>(join(CACHE, 'colors.json'), {})
+// One cache file per algorithm version, so changing dominantColor recomputes every icon.
+const COLOR_CACHE = join(CACHE, `colors.v${COLOR_ALGO_VERSION}.json`)
+const colorCache = readJson<Record<string, { color: string; bucket: string }>>(COLOR_CACHE, {})
 
 // ---------------------------------------------------------------- helpers
 const str = (v: LuaValue | undefined) => (typeof v === 'string' ? v : typeof v === 'number' ? String(v) : '')
@@ -428,9 +432,9 @@ for (const it of items) {
   it.icon = `/icons/${it.id}.png`
   if (refresh || !colorCache[it.id]) colorCache[it.id] = await dominantColor(file)
   it.color = colorCache[it.id].color
-  it.colorBucket = colorCache[it.id].bucket
+  it.colorBucket = overrides[it.id]?.colorBucket ?? colorCache[it.id].bucket
 }
-writeJson(join(CACHE, 'colors.json'), colorCache)
+writeJson(COLOR_CACHE, colorCache)
 // Remove icons that no longer belong to any entry.
 const validIcons = new Set(items.map((it) => `${it.id}.png`))
 for (const f of readdirSync(ICONS)) if (f.endsWith('.png') && !validIcons.has(f)) unlinkSync(join(ICONS, f))

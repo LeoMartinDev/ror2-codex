@@ -512,7 +512,8 @@
         "note": "Délai entre deux largages de dynamite, en combat."
       }
     ],
-    "explain": "Donne un drone, le Lt. Droneboy. En combat, tous vos alliés mécaniques (pas seulement les drones) lâchent de la dynamite qui étourdit, toutes les 10 s."
+    "explain": "Donne un drone, le Lt. Droneboy. En combat, tous vos alliés mécaniques (pas seulement les drones) lâchent de la dynamite qui étourdit, toutes les 10 s.",
+    "colorBucket": "brown"
   },
   "stickybomb": {
     "addStacking": [
@@ -627,7 +628,8 @@
         "note": "Touche toutes les 0,3 s dans ~5 m."
       }
     ],
-    "explain": "Seul le pourcentage de la compétence compte pour atteindre 400 % : critiques et bonus d'objets ne permettent pas d'y arriver (sauf Exposition du Mercenaire et Ruine du Faux Fils). Se déclenche toujours en même temps que la Bague de Runald."
+    "explain": "Seul le pourcentage de la compétence compte pour atteindre 400 % : critiques et bonus d'objets ne permettent pas d'y arriver (sauf Exposition du Mercenaire et Ruine du Faux Fils). Se déclenche toujours en même temps que la Bague de Runald.",
+    "colorBucket": "brown"
   },
   "icering": {
     "addStacking": [
@@ -907,7 +909,8 @@
         "note": "Le coffre rouillé contient un objet vert (80 %) ou rouge (20 %), comme un grand coffre."
       }
     ],
-    "explain": "Un seul coffre rouillé apparaît par étage pour chaque joueur qui possède au moins une clé : avoir plusieurs clés n'ajoute pas de coffres, ça permet juste d'en ouvrir sur plusieurs étages. Le coffre n'apparaît qu'à partir de l'étage suivant le ramassage de la clé."
+    "explain": "Un seul coffre rouillé apparaît par étage pour chaque joueur qui possède au moins une clé : avoir plusieurs clés n'ajoute pas de coffres, ça permet juste d'en ouvrir sur plusieurs étages. Le coffre n'apparaît qu'à partir de l'étage suivant le ramassage de la clé.",
+    "colorBucket": "brown"
   },
   "powerpyramid": {
     "explain": "Sert surtout à activer les Terminaux Sentinelles de Conduit Canyon (chemins et téléporteur). Le bonus de vitesse ne se cumule pas, et la clé ne peut pas être recyclée en ferraille jaune."
@@ -2638,7 +2641,8 @@
         "unit": "",
         "note": "PV/s supplémentaires par niveau du joueur (+20 % par niveau)."
       }
-    ]
+    ],
+    "colorBucket": "purple"
   },
   "physicsprojectile": {
     "addStacking": [
@@ -4076,5 +4080,8 @@
       }
     ],
     "explain": "Toutes les charges se rechargent d'un coup après 2 s sans tirer ; chaque tir relance ce délai. La vitesse d'attaque accélère les tirs mais pas la recharge ; les réductions de recharge, elles, l'accélèrent."
+  },
+  "AttackSpeedAndMoveSpeed": {
+    "colorBucket": "white"
   }
 }
