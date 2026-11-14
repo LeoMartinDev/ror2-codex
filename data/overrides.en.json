@@ -1,0 +1,1388 @@
+{
+  "ElementalRingVoid": {
+    "explain": "Unlike the original bands, the explosion has a proc coefficient of 1.0, so it can trigger other items (Sticky Bomb, Brilliant Behemoth…). Cannot pull Magma Worms.",
+    "notes": {
+      "Trigger threshold": "The hit must deal at least 400% BASE damage.",
+      "Black hole radius": "Pulls enemies in for 5 s before exploding.",
+      "Delay": "Time before the explosion."
+    }
+  },
+  "VoidMegaCrabItem": {
+    "explain": "Summons a Void Reaver or a Void Jailer (rarely a Void Devastator). Careful: their death implosion can kill you and your other allies. The real cooldown is 60 s divided by your number of stacks.",
+    "notes": {
+      "Max allies": "Global limit of 20 allies (drones and others included)."
+    }
+  },
+  "Bandolier": {
+    "explain": "Any ally can pick up the ammo pack. It restores one charge of each skill (not all charges) and does not affect equipment.",
+    "notes": {
+      "Drop Chance": "The first 2–3 stacks matter most; after that it rises very slowly."
+    }
+  },
+  "HalfAttackSpeedHalfCooldowns": {
+    "explain": "The penalty and the cooldown reduction apply after all your other bonuses: they make attack speed items less effective and reduce the value of other cooldown reductions. Only the first stack truly halves attack speed; further stacks penalize less.",
+    "notes": {
+      "Remaining Attack Speed": "Attack speed × 1/(stacks+1), floored at 10% (reached at 9 stacks)."
+    }
+  },
+  "HalfSpeedDoubleHealth": {
+    "explain": "Due to a bug, the speed penalty is actually stronger than stated (one third of your speed with one stack), and speed bonuses compensate poorly. Ground friction depends on speed: with many stacks, you slide under knockback.",
+    "notes": {
+      "Remaining Movement Speed": "Game bug: the penalty is applied twice, remaining speed 1/(2×stacks+1) (33%, 20%, 14.3%...)."
+    }
+  },
+  "FocusConvergence": {
+    "explain": "Beyond 3 stacks, the item does nothing more. It counts the total across all players and applies to every hold zone (Void Fields cells, Commencement pillars…). Halving the radius divides the area by 4, so the trade-off is harsher than it looks.",
+    "limit": "3 stacks: further ones do nothing.",
+    "notes": {
+      "Teleporter Zone": "Zone radius as % of the normal radius; capped at 3 stacks.",
+      "Minimum charge time (90 s base)": "Minimum charge time with 1 stack: 90/(1+0.3·n) → 69.2 s, 56.2 s, 47.3 s (max 3 stacks)."
+    }
+  },
+  "FreeChest": {
+    "explain": "Each stage, a free delivery (crashed multishop) appears somewhere: you pick 1 item out of 2, one of them hidden. Stacks raise the odds of green and especially red items (about 3% per item at 2 stacks, 26% at 10). In multiplayer, rarity depends on the whole team's total stacks.",
+    "notes": {
+      "Items per Delivery": "You pick 1 out of 2 (one is hidden); odds per item: white 0.79, green 0.2×n, red 0.01×n² (weighted)."
+    }
+  },
+  "LunarDagger": {
+    "explain": "Each stack doubles damage and halves max health, and the item removes one-shot protection. At the 25th stack your health drops to 0 and you die instantly.",
+    "limit": "127 stacks: at the 128th, you die."
+  },
+  "SprintDamage": {
+    "explain": "You first need to fill 10 charges by sprinting. Then, while sprinting, the skull strikes around you every 0.1 s (each enemy once per second), each strike using a charge; the faster you are, the harder it hits. The speed bonus fades quickly once you stop sprinting.",
+    "notes": {
+      "Distance per Charge": "Each stack needs a bit less sprinting (wiki: 9.09 m with 1 stack).",
+      "Max bonus sprint speed": "Max accumulated bonus (+5%/s of sprinting), not mentioned in game.",
+      "Armor per charge used": "For 1 s per charge used."
+    }
+  },
+  "HexHaunting": {
+    "explain": "An interactable within 120 m is haunted; when you get within 18 m, a hostile Poltergeist lifts it and throws it at you when it dies. If you kill the Poltergeist yourself, the item deals only 10% damage. Bug: the first Hex already reduces the interval to 48 s.",
+    "notes": {
+      "Poltergeist Interval": "Poltergeists return more and more often (48 s with 1 stack).",
+      "Max Haunted Interactables": "Number of interactables haunted at once.",
+      "Thrown Object Radius": "Damage radius of the thrown object."
+    }
+  },
+  "Mimicry": {
+    "explain": "A hostile Mimic disguised as a small chest spawns about 40 m behind you, as soon as you pick up the Hex and then at regular intervals; only one at a time per holder. Killing it gives gold. Bug: the first Hex already reduces the interval (54.5 s instead of 60).",
+    "notes": {
+      "Mimic Interval": "Mimics spawn more and more often (54.5 s with 1 stack)."
+    }
+  },
+  "SpeedBoostPickup": {
+    "explain": "Orbs spawn on the ground in front of your camera; you have to go pick them up. Each orb resets the 12 s duration; without a new orb, all stacks drop at once. Allies can pick them up too.",
+    "notes": {
+      "Energy Orb Spawn Cooldown": "Orbs spawn more often, but never below 2 s.",
+      "Movement Speed per orb": "Per buff stack picked up.",
+      "Buff Duration": "Reset by each orb; all stacks then vanish."
+    }
+  },
+  "LowHealthOrbSpawner": {
+    "explain": "When a cooldown item (Kjaro's Band, Old War Stealthkit, Breaching Fin…) starts its cooldown, the Crucible can take it instead: the item is ready again. For consumable items (Power Elixir, Dio's Best Friend…), it is consumed in their place, with ALL its stacks. The chance is not linear (10%, 19%, 27%…) and is affected by luck; skills and equipment are not affected.",
+    "notes": {
+      "Absorb Chance": "Each stack adds a bit less, never reaching 100%."
+    }
+  },
+  "RandomDebuffOnInteract": {
+    "explain": "Each stack adds both a debuff and a 50% roll, so the average number of debuffs rises very fast (0.5, 2, 4.5…). Luck (Clover) lowers the debuff risk. Damage-over-time debuffs hurt you with your own damage.",
+    "notes": {
+      "Expected Debuffs": "Each stack adds a roll and a debuff: on average 0.5, 2, then 4.5 debuffs per interaction."
+    }
+  },
+  "Missile": {
+    "explain": "The 10% chance is multiplied by the attack's proc coefficient, and the missile crits if the triggering hit did.",
+    "notes": {
+      "Trigger Chance": "Chance per hit, multiplied by the attack's proc coefficient."
+    },
+    "links": {
+      "firering": "2 missiles are enough to trigger the band with almost any attack.",
+      "icering": "Same as Kjaro's: missiles are big hits.",
+      "chainlightning": "Two TOTAL damage items that trigger each other."
+    }
+  },
+  "CritGlasses": {
+    "explain": "Beyond 10 glasses (100% crit), extra stacks are useless, except for Railgunner, who converts crit chance into crit damage. Crit chance benefits from luck (Clover) and does not depend on the attack's proc coefficient.",
+    "limit": "100% at 10 stacks: further ones are useless (except Railgunner).",
+    "links": {
+      "healoncrit": "Each crit heals you.",
+      "attackspeedoncrit": "Each crit increases your attack speed.",
+      "missile": "Missiles fired by a crit are crits."
+    }
+  },
+  "Syringe": {
+    "links": {
+      "missile": "More hits = more chances to fire.",
+      "stickybomb": "More hits = more bombs."
+    }
+  },
+  "bfg": {
+    "explain": "After a 2 s charge, fires a big slow ball that zaps nearby enemies, then explodes on contact with an enemy or terrain. Real damage is double what is stated. The bolts can trigger the Bands (Kjaro's, Runald's, Singularity) before the explosion.",
+    "notes": {
+      "Explosion damage": "Real damage (the game says 4,000%). Falls off to ~25% between 15 and 20 m from the center. Proc 1.0.",
+      "Explosion radius": "Radius of the final explosion.",
+      "Tendril damage per bolt": "3 bolts per second (1,200%/s real, the game says 600%/s). Proc 0.1.",
+      "Tendril range": "Range of the ball's bolts."
+    }
+  },
+  "knockbackhitenemies": {
+    "explain": "Hitting a grounded enemy launches it into the air and stuns it; each later hit in the air relaunches it and removes a charge, and each remaining charge increases its damage taken by 10%. Does not work on enemies already airborne or immune to falling, but works on bosses. If it takes fall damage while still debuffed, that damage becomes a crit.",
+    "notes": {
+      "Bonus damage taken per launch": "Per debuff charge left on the enemy (2, +1 per stack).",
+      "Recharge": "Per the in-game text; the wiki says 10 s."
+    }
+  },
+  "pageupgradeitem": {
+    "explain": "Target an item on the ground (30 m max, line of sight) to replace it with 2 copies of an item from the tier below, preferably with similar tags. White, lunar, food, page and white Void items cannot be targeted; an invalid target does not consume the page. Holding Pages adds catastrophes to later teleporters."
+  },
+  "armorplate": {
+    "explain": "Removes a flat amount from every hit taken, after armor, including each damage-over-time tick. Very strong against small fast hits, less and less useful as difficulty rises. Does not affect Void Fog."
+  },
+  "elitehauntedequipment": {
+    "explain": "Passive equipment (cannot be activated), dropped very rarely (1/4000) by a Celestine elite. Your attacks heavily slow enemies and a large aura makes nearby allies invisible. Invisible allies no longer draw enemies, who then focus on you."
+  },
+  "wardonlevel": {
+    "explain": "A banner is placed on each level-up and at the start of the teleporter event. All allies in the zone (drones and turrets included) gain 30% attack and movement speed.",
+    "notes": {
+      "Attack & movement speed": "Attack and movement speed bonus inside the banner's zone."
+    }
+  },
+  "thorns": {
+    "explain": "Triggers whenever you lose health, including from self-damage (fall, Shrine of Blood, Helfire Tincture). Does not trigger if the hit is blocked (Tougher Times, Safer Spaces, invincibility).",
+    "notes": {
+      "Damage": "Damage per target hit, each time you take a hit. Proc 0.5."
+    }
+  },
+  "behemoth": {
+    "explain": "All your attacks explode, including item attacks. The radius is multiplied by the hit's proc coefficient: a hit with 0 (e.g. bleed) does not explode. The in-game description (+1.5 m) is wrong: it is +2.5 m per stack."
+  },
+  "eliteaurelioniteequipment": {
+    "explain": "Enemies you hit drop gold nuggets to pick up (about one every 0.5 s, even during cooldown). Activating it raises spikes where you aim, in two rings.",
+    "notes": {
+      "Gold per nugget": "Gold per nugget, rises over time; the nugget disappears after 10 s.",
+      "Outer ring damage": "First ring of spikes (active).",
+      "Inner ring damage": "Second ring, after a short delay."
+    }
+  },
+  "shocknearby": {
+    "explain": "The coil switches on its own between 10 s on and 10 s off. When on, it automatically strikes enemies within 35 m, even through walls.",
+    "notes": {
+      "Damage": "Per bolt, every 0.5 s. Proc 0.3. Goes through terrain.",
+      "Range": "Target search radius."
+    }
+  },
+  "sprintbonus": {
+    "explain": "Speed bonus only while sprinting. It does not raise the sprint multiplier, so it does not boost other speed items like Paul's Goat Hoof."
+  },
+  "dronesdropdynamite": {
+    "explain": "Gives a drone, Lt. Droneboy. In combat, all your mechanical allies (not just drones) drop stunning dynamite every 10 s.",
+    "notes": {
+      "Recharge": "Delay between two dynamite drops, in combat."
+    }
+  },
+  "stickybomb": {
+    "notes": {
+      "Damage": "TOTAL damage of the explosion. Proc 0.0.",
+      "Explosion radius": "More damage at the center (damage falloff).",
+      "Fuse delay": "Delay before the explosion."
+    }
+  },
+  "stunandpierce": {
+    "explain": "The boomerang pierces enemies on the way out and back, so it can hit twice. After the first impact, it deals small continuous hits (proc 0.2). It can get stuck in terrain and repeatedly hit nearby enemies.",
+    "notes": {
+      "Chance": "Fixed chance, multiplied by the hit's proc coefficient."
+    }
+  },
+  "critatlowerelevation": {
+    "explain": "Your center must be above the enemy's (roughly mid-height) to gain a charge. After that, any hit, even from below, refreshes the 10 s duration. The buff goes up to 10 charges, and each item stack raises the bonus per charge.",
+    "notes": {
+      "Max crit chance bonus": "At the buff's max of 10 charges."
+    }
+  },
+  "novaonlowhealth": {
+    "explain": "Triggers when your health falls below 25% of total health + shield. The charge before the blast is shorter with more attack speed, and if you are still below the threshold when the recharge ends, it fires again on its own.",
+    "notes": {
+      "Recharge Speed": "Real recharge time (the game says 30 s). Plus 3 s of charging (reduced by attack speed) and 2 s of explosion.",
+      "Damage": "BASE damage. Proc 1.0.",
+      "Explosion radius": "Radius of the explosion."
+    }
+  },
+  "firering": {
+    "explain": "Only the skill's percentage counts toward 400%: crits and item bonuses cannot get you there (except Mercenary's Expose and the False Son's Ruin). Always triggers together with Runald's Band.",
+    "notes": {
+      "Trigger threshold": "The hit must deal at least 400% BASE damage and have a proc coefficient > 0.",
+      "Recharge": "Shared with Runald's Band.",
+      "Tornado duration": "Hits every 0.3 s within ~5 m."
+    }
+  },
+  "icering": {
+    "explain": "Only the skill's percentage counts toward 400%: crits and item bonuses cannot get you there. Does not freeze: slows a single target by 80%. Always triggers together with Kjaro's Band.",
+    "notes": {
+      "Trigger threshold": "The hit must deal at least 400% BASE damage and have a proc coefficient > 0.",
+      "Recharge": "Shared with Kjaro's Band.",
+      "Slow": "Movement slow."
+    }
+  },
+  "barrieronkill": {
+    "explain": "Barrier decays over time based on your max health, while the gain per kill is flat: late game you need a lot of it. Barrier cannot exceed max health + shield."
+  },
+  "vendingmachine": {
+    "explain": "The machine lands 5 s after activation. It can then be used 12 times for a little gold (5 base) to give up to 3 healing cans. Each use triggers on-interact items (Bundle of Fireworks, Squid Polyp). Only one machine at a time.",
+    "notes": {
+      "Impact damage": "Proc 1.0, more damage at the center.",
+      "Heal per can": "Of the max health of whoever picks up the can."
+    }
+  },
+  "jumpboost": {
+    "explain": "Works on all of the character's base jumps (including Mercenary's double jump), but not on extra jumps from Hopoo Feather."
+  },
+  "sanguinechalice": {
+    "explain": "Each bleed or hemorrhage tick on an enemy heals you, multiplied by the total number of bleed stacks on it (even from other players). Bleed ticks 4 times per second, so it heals fast. The 10% chance adds to Tri-Tip Dagger's and is multiplied by the proc coefficient."
+  },
+  "pageteaminvisibility": {
+    "explain": "After a 1 s cast, your whole team (players, drones, turrets, minions) is affected, wherever they are on the map. Usable once per stage with the N'tormat."
+  },
+  "multishopcard": {
+    "explain": "Triggers on its own with every gold purchase (no manual activation). To keep terminals open, it must not be on cooldown: hold the interact key rather than mashing it. Only works as the active equipment.",
+    "notes": {
+      "Gold refund": "Of the gold spent, rounded down."
+    }
+  },
+  "talisman": {
+    "explain": "Each kill (even a broken pot) cuts your equipment's cooldown. Useless with equipment that has no cooldown (Executive Card, elite equipment…). Kills by Engineer turrets do not count."
+  },
+  "equipmentmagazinevoid": {
+    "explain": "Gives extra charges to your special skill and also reduces its cooldown, which the game does not mention. No longer affects equipment (unlike Fuel Cell).",
+    "notes": {
+      "Special cooldown reduction": "Not mentioned in game."
+    }
+  },
+  "masterbattery": {
+    "explain": "No direct effect. Dropped by the Solus Wing; combine it with a key (Rusted Key, Encrusted Key, etc.) at the wandering CHEF to create the Exposed Cerebellum, needed to reach the Neural Sanctum."
+  },
+  "mastercore": {
+    "explain": "No direct effect. Give it to SPEX in the Computational Exchange to open a portal to the Neural Sanctum. Cannot be recycled or scrapped."
+  },
+  "mushroom": {
+    "explain": "Healing is based on each healed ally's max health, not yours, and also works on drones and turrets. Any movement (even skill recoil) cancels the effect."
+  },
+  "randomequipmenttrigger": {
+    "explain": "Each time you activate your equipment, also fires one or more other random equipment. Some are excluded (Glowing Meteorite, Helfire Tincture, Milky Chrysalis, Recycler, Executive Card…). With Executive Card, it triggers on every purchase."
+  },
+  "mushshot": {
+    "explain": "Negates all fall damage. Clouds only appear if the landing would have dealt fall damage: slowing down first (double jump) prevents them. Clouds also slow enemies.",
+    "notes": {
+      "Spore clouds": "Number of clouds per landing.",
+      "Damage per tick": "4 ticks per second for 10 s. Proc 0.5.",
+      "Slow": "For 2 s, not mentioned in game."
+    }
+  },
+  "extrastatsonlevelup": {
+    "explain": "The item gains experience with you and builds up charges. The stats are only granted when you part with it (scrapper, printer, cauldron): you then gain part of your per-level health, regen and damage for each charge.",
+    "notes": {
+      "Experience gained": "XP gained by the item, reduced by 2.5% per charge already used (min 20%, +5%)."
+    }
+  },
+  "secondaryskillmagazine": {
+    "explain": "Adds charges to your secondary skill but does not reduce its cooldown."
+  },
+  "slowonhit": {
+    "explain": "Works on every hit, regardless of proc coefficient. Only slows movement, not attack speed: not very useful against ranged enemies.",
+    "notes": {
+      "Slow": "Movement slow."
+    }
+  },
+  "jetpack": {
+    "explain": "Lets you fly for 15 s; jumping gives a boost with no cooldown. The stated 20% speed bonus does not actually apply."
+  },
+  "ghostblades": {
+    "explain": "Lifesteal is multiplied by the proc coefficient and ignores crits. Each time your total healing reaches 10% of your max health, a blade appears (regen does not count). The secondary skill launches all blades forward.",
+    "notes": {
+      "Blade damage": "On contact; each blade hits an enemy at most once per second.",
+      "Blade bleed": "Bleed over 3 s per blade hit."
+    }
+  },
+  "pageclarity": {
+    "explain": "Instantly recharges all skills (all charges) and equipment, then reduces cooldowns by 75% for 10 s. An equipment cooldown started during the buff stays reduced even after it ends. Usable once per stage with the N'tormat.",
+    "notes": {
+      "Cooldown reduction": "Skills and equipment."
+    }
+  },
+  "artifactkey": {
+    "explain": "Dropped by enemies during an Artifact trial in Bulwark's Ambry. Used to damage the Artifact Reliquary; all keys held and on the ground are consumed on use. Not affected by luck."
+  },
+  "treasurecachevoid": {
+    "explain": "A purple cache appears each stage; opening it uses a key and offers a choice of 3 Void items. Real odds are about 42% common, 51% uncommon, 7% legendary. In multiplayer, one cache per player."
+  },
+  "treasurecache": {
+    "explain": "Only one rusty lockbox spawns per stage for each player holding at least one key: more keys do not add lockboxes, they just let you open them on more stages. The lockbox only appears from the stage after you pick up the key.",
+    "notes": {
+      "Uncommon chance": "The rusty lockbox holds a green (80%) or red (20%) item, like a large chest."
+    }
+  },
+  "powerpyramid": {
+    "explain": "Mainly used to activate the Sentry Terminals in Conduit Canyon (paths and teleporter). The speed bonus does not stack, and the key cannot be recycled into yellow scrap."
+  },
+  "speedonpickup": {
+    "explain": "Every pickup (item, equipment, healing orb, gold nugget, ammo pack, opened barrel…) gives a stack of +3% to almost all stats for 20 s. The bonus is multiplicative: strong on stats that are already high, weak on crits; it does not increase acceleration.",
+    "notes": {
+      "Buff duration": "Duration of each bonus after a pickup.",
+      "Max all-stats bonus": "Max bonus with all stacks active (3% × max stacks). Multiplicative, applied after other items."
+    }
+  },
+  "elitelunarequipment": {
+    "explain": "Passive equipment (cannot be activated): you become a Perfected elite. Your attacks inflict Cripple, you gain +30% speed and +25% health, but all your health except 1 HP is converted into shield that does not heal normally, like with Transcendence.",
+    "notes": {
+      "Bomb damage": "4 bombs of 30% damage each, every 10 s in combat.",
+      "Bomb interval": "Delay between two volleys of 4 bombs (in combat).",
+      "Movement Speed": "Bonus movement speed of the Perfected elite.",
+      "Max health": "+25% max health, but all health except 1 HP becomes shield."
+    }
+  },
+  "deathmark": {
+    "explain": "Requires 4 DIFFERENT debuffs on the enemy, then the holder must hit it with an attack with proc coefficient > 0 (damage over time does not mark). Stun and freeze do not count as debuffs. The mark cannot be extended, but stays even if the debuffs wear off.",
+    "notes": {
+      "Damage taken": "Marked enemies take +50% damage from all sources (allies included).",
+      "Debuffs required": "Number of different debuffs needed on the enemy."
+    }
+  },
+  "lightning": {
+    "notes": {
+      "Damage": "Lightning damage on the targeted enemy, 0.5 s after activation.",
+      "Radius": "Impact radius; the target can dodge during the delay."
+    }
+  },
+  "shockdamageaura": {
+    "explain": "The Energized buff affects all allies within 45 m. Guaranteed crits only apply to electric damage (Ukulele, Charged Perforator, Royal Capacitor, some Artificer, Loader and Captain skills…). Only wave frequency improves with stacks.",
+    "notes": {
+      "Buff duration": "Duration of the Energized buff.",
+      "Radius": "Radius of the wave that energizes allies."
+    }
+  },
+  "energizedonequipmentuse": {
+    "notes": {
+      "Attack Speed": "Attack speed from the Energized buff."
+    }
+  },
+  "extraequipment": {
+    "explain": "Each stack adds an equipment slot; switch the active equipment by pressing Interact and Equipment together. The cooldown is tied to the slot, not the equipment. If you lose the item, extra equipment drops to the ground."
+  },
+  "goldonhit": {
+    "explain": "Gold per hit rises with the run's difficulty (2 × difficulty per stack), and the 30% chance depends on proc coefficient and luck. When hit, you lose the same percentage of your gold as of max health lost (×2 with 2 stacks…)."
+  },
+  "missilevoid": {
+    "explain": "Every hit with a proc coefficient > 0 fires a missile as long as you have shield, with no chance roll. The in-game text (+50% per stack) is wrong: it is +40% TOTAL damage per stack. The missile ignores terrain and does not retarget if its target dies.",
+    "notes": {
+      "Shield": "Shield equal to 10% of max health (first stack only)."
+    }
+  },
+  "nearbydamagebonus": {
+    "explain": "All your damage is increased against nearby enemies, including damage over time and item damage. TOTAL damage items use the hit before the bonus, then get the bonus themselves if they hit a nearby enemy.",
+    "notes": {
+      "Radius": "Only enemies within 13 m of the holder take the bonus (red ring on the ground)."
+    }
+  },
+  "bouncenearby": {
+    "explain": "The chance stacks hyperbolically (16.7% with 1 stack, despite the 20% shown), while the number of targets rises linearly. Hooks pull enemies toward the one hit, handy for grouping them.",
+    "notes": {
+      "Damage per hook": "TOTAL damage per hook.",
+      "Range": "Target search range around the enemy hit."
+    }
+  },
+  "lunarsecondaryreplacement": {
+    "notes": {
+      "Maelstrom damage per second": "Up to 5 hits per second of 175% each (proc coefficient 0.2).",
+      "Explosion damage": "Explodes after 3 s, proc coefficient 1.0.",
+      "Explosion radius": "Radius of the explosion that roots enemies."
+    }
+  },
+  "dagger": {
+    "explain": "Any death caused by you or your items spawns 3 daggers that home in on nearby enemies; each dagger rolls its own crit. They do not go around walls and can get stuck on them.",
+    "notes": {
+      "Daggers": "Number of daggers per enemy killed.",
+      "Homing range": "Dagger search range; they vanish after 10 s with no target."
+    }
+  },
+  "regeneratingscrap": {
+    "explain": "Used first in green 3D printers and Bazaar legendary cauldrons; it then becomes 'consumed' and comes back next stage. Putting it in a scrapper turns it into normal green scrap, which does not regenerate."
+  },
+  "dreamdemon": {
+    "explain": "Only skill damage can haunt and charge the demon (not items or damage over time), and any player's skill damage counts. From 800% charge, you can detonate it for half damage. Only one demon per enemy.",
+    "notes": {
+      "Haunt chance": "Chance per skill hit, multiplied by the proc coefficient.",
+      "Charge required": "Charge needed, as % of your BASE damage dealt to the haunted enemy.",
+      "Explosion radius": "Damage falls off linearly to the edge of the radius."
+    }
+  },
+  "tooth": {
+    "notes": {
+      "Flat heal": "Flat HP heal added to the % of max health.",
+      "Orb lifetime": "Approximate time before the orb disappears."
+    }
+  },
+  "tonicaffliction": {
+    "explain": "Gained with a 20% chance when the Spinel Tonic buff ends. The penalties are cancelled while the Tonic buff is active, and Blast Shower does not remove them. Max health cannot drop below 1 HP.",
+    "notes": {
+      "Most": "All stats except max health: -5% multiplicative per stack.",
+      "Max health reduction": "Max health drops by 1-1/(1+0.1·n): 9.09%, 16.67%, 23.08%… (hyperbolic, not -5%)."
+    }
+  },
+  "parry": {
+    "explain": "For 0.5 s, the next hit you take (any hit, even fall or damage over time) is negated. A successful parry grants the Blessing: your next skill hit is guaranteed to trigger all your chance-based effects (and on-kill effects if it kills). On a multi-projectile shot, only one is blessed.",
+    "notes": {
+      "Parry window": "Duration of the parry stance.",
+      "Cooldown refund": "Equipment cooldown reduction after a successful parry (45 s refunded)."
+    }
+  },
+  "laserturbine": {
+    "explain": "The in-game text is wrong: the explosion deals 4,000% BASE damage, not 1,000%. The disc targets the enemy surrounded by the most enemies within 100 m. Breaking pots or barrels counts as kills.",
+    "notes": {
+      "Explosion radius": "Explosion radius (less damage far from the center).",
+      "Kills to charge": "Kills within 7 s needed to launch the disc."
+    }
+  },
+  "elitefireequipment": {
+    "explain": "Passive equipment (cannot be activated): you become a Blazing elite. Every hit ignites the enemy and you leave a fire trail that hurts anyone who touches it. Ignition Tank makes this equipment much stronger.",
+    "notes": {
+      "Burn damage": "Burn for 50% of the hit's TOTAL damage, over time."
+    }
+  },
+  "cleanse": {
+    "explain": "Only removes temporary debuffs (not permanent penalties or Tonic Afflictions). Also recharges some cooldown items (Bands, Old War Stealthkit, Breaching Fin…), but not Warped Echo.",
+    "notes": {
+      "Projectile radius": "Radius in which enemy projectiles are destroyed."
+    }
+  },
+  "duplicator": {
+    "explain": "Every item picked up also gives a temporary copy. Items from printers do not count. An item not allowed as temporary (Regenerating Scrap, Sale Star…) gives a random temporary item of the same rarity instead; lunar and quest items give nothing."
+  },
+  "delayeddamage": {
+    "explain": "The absorbed hit is split into several hits 0.75 s apart, giving you time to heal or become invincible. Only the last hit can kill. Damage-taken bonuses (Lunar Ruin, Delicate Watch…) can apply twice.",
+    "notes": {
+      "Damage reduction": "Reduction of the absorbed hit before it is split.",
+      "Echo interval": "Delay between two split hits."
+    }
+  },
+  "barrieroncooldown": {
+    "explain": "Barrier is proportional to the skill's BASE cooldown: long cooldowns give more. Extra charges (Backup Magazine, etc.) also give barrier for each charge regained, but Bandit's shot reloads do not."
+  },
+  "crippleward": {
+    "explain": "The effigy is permanent and also affects you and your allies. With more than 5 effigies, the oldest disappears.",
+    "notes": {
+      "Radius": "Effigy radius (affects players and enemies).",
+      "Slow": "Cripple slow.",
+      "Armor reduction": "Armor removed by Cripple."
+    }
+  },
+  "lunarsun": {
+    "explain": "The time between bombs is 3 s divided by your number of stacks. The converted item is picked at random from all your items (not rarity-less items or Solitude), regardless of its stack count. Bombs go through terrain.",
+    "notes": {
+      "Bomb damage": "Damage of each bomb on impact.",
+      "Item conversion interval": "A random item becomes Egocentrism every 60 s (fixed)."
+    }
+  },
+  "gainarmor": {
+    "notes": {
+      "Armor": "+500 armor, about 83% damage reduction.",
+      "Duration": "Duration of the armor buff."
+    }
+  },
+  "healingpotion": {
+    "explain": "Only one stack is consumed each time and becomes an Empty Bottle. It triggers before Delicate Watch, which protects the watch.",
+    "notes": {
+      "Heal": "Heal as % of max health.",
+      "Health threshold": "Triggers when a hit takes you below 25% health."
+    }
+  },
+  "teleportonlowhealth": {
+    "explain": "Below 25% health, you get a large barrier and an aura that teleports enemies far away and inflicts 3 bleed stacks on them. The item is consumed when the effect ends and comes back next stage; it prevents other low-health items (Power Elixir, Delicate Watch…) from triggering.",
+    "notes": {
+      "Barrier": "Temporary barrier as % of max health, on activation.",
+      "Aura duration": "Each enemy killed by the aura adds 1 s, up to 10 s max."
+    }
+  },
+  "vilecenser": {
+    "explain": "The in-game text is wrong: the stun chance is not a flat 10% but depends on the enemy's missing health, and the chain radius is 14 m (+4 m), not 10 m (+5 m). Only skill hits on a stunned target release the tendrils; enemies that cannot be stunned (bosses) get a chance based on their missing health.",
+    "notes": {
+      "Stun duration": "Stun duration.",
+      "Max stun chance": "The chance depends on the target's missing health: 0% at full health, ~11% at half health, 20% when nearly dead."
+    }
+  },
+  "monstersonshrineuse": {
+    "explain": "Each use of a shrine or cleansing pool spawns enemies, like a Shrine of Combat, with a budget based on the difficulty when you entered the stage. More stacks = stronger or more numerous enemies, which also give more gold and XP."
+  },
+  "jumpdamagestrike": {
+    "explain": "Charge builds as you move and increases speed, jump and discharge radius, but not its damage. Jumping (including mid-air) with at least 25% charge triggers the discharge and empties the charge. A very powerful jump can cause fall damage.",
+    "notes": {
+      "Explosive Discharge Area": "Radius at 100% charge (5 m minimum at low charge). The displayed radius is only half the real one (bug).",
+      "Jump Height": "+200% jump power, about +800% jump height."
+    }
+  },
+  "triggerenemydebuffs": {
+    "explain": "Its bleed chance adds to Tri-Tip Dagger's (a single roll), and both chance and duration are multiplied by the hit's proc coefficient. When an enemy dies, a third of each of its debuff stacks (rounded up, so at least 1) is transferred to nearby enemies: bleed, burn, poison, slows, etc.",
+    "notes": {
+      "Bleed Damage": "BASE damage over 3 s per bleed stack (duration and chance × proc coefficient)."
+    }
+  },
+  "bearvoid": {
+    "explain": "Fully blocks the next hit you take, however strong, then must recharge before blocking another. Does not block Void Fog damage; Blast Shower recharges it instantly.",
+    "notes": {
+      "Recharge": "Floor of one frame (~0.017 s), reached at 65 stacks."
+    }
+  },
+  "passivehealing": {
+    "explain": "The Woodsprite continuously heals its holder. Activating it sends it to an ally (even behind a wall), who gets an instant heal and then the continuous heal instead of you; targeting yourself recalls it, and it comes back if the ally dies.",
+    "notes": {
+      "Heal per Second": "% of max health, continuous heal on the Woodsprite's target.",
+      "Instant Heal": "% of the targeted ally's max health, on activation."
+    }
+  },
+  "vengefulspiritragemode": {
+    "explain": "This is a Vengeful Spirit whose guardian spirit was killed. Every ally death (player, drone, turret, minion, other spirit) grants the bonus. It turns back into a Vengeful Spirit next stage, except in the hidden realms of N'kuhana's trials.",
+    "notes": {
+      "Attack Speed": "During the bonus triggered by an ally's death.",
+      "Skill Cooldown Reduction": "During the bonus triggered by an ally's death.",
+      "Buff Duration": "A new death resets the duration to max, without adding up."
+    }
+  },
+  "elitecollectiveequipment": {
+    "explain": "You become a Collective elite: a 30 m dome blocks projectiles and reduces skill cooldowns for you and your allies. When you die, you explode and disable the items of enemies hit; being hit by a skill shuts the dome down for 8 s (monster and drone attacks do not count).",
+    "notes": {
+      "Dome Radius": "Dome that blocks projectiles.",
+      "Skill Cooldown Reduction": "For you and allies inside the dome.",
+      "Death Explosion Damage": "BASE damage when you die; allies below 25% health inside the dome also die and explode.",
+      "Item Disable Duration": "Enemies hit by the explosion lose their item effects.",
+      "Dome Downtime": "The dome shuts down for 8 s each time you take a skill hit."
+    }
+  },
+  "vengefulspirit": {
+    "explain": "Half the damage you take (after armor) is shared among your spirits; more spirits do not redirect more damage but last longer. Each spirit killed turns one stack into a Dormant Spirit until the end of the stage, which grants attack speed and reduced cooldowns on each ally death.",
+    "notes": {
+      "Vengeful Attack Speed": "Dormant Spirit bonus on each ally death.",
+      "Vengeful Cooldown Reduction": "Dormant Spirit bonus on each ally death.",
+      "Spirit Health": "Base health of each spirit, +27 per level, no armor."
+    }
+  },
+  "igniteonkill": {
+    "explain": "Each kill makes the enemy explode and ignites those around it. Extra stacks do not make the burn stronger, only longer (so more total damage); the burn is boosted by Ignition Tank.",
+    "notes": {
+      "Damage": "BASE burn damage over its full duration (3 s +1.5 s per stack); the explosion is a flat 150%.",
+      "Explosion Damage": "BASE damage of the on-kill explosion, does not change with stacks.",
+      "Burn Duration": "Only the duration increases; burn strength stays the same."
+    }
+  },
+  "lunarspecialreplacement": {
+    "explain": "Replaces your special skill. Each hit has a chance to add a Ruin stack based on its proc coefficient; damage over time, drones and attacks during cooldown do not apply it. Activating fires an unerring projectile at every marked enemy, with unlimited range and through walls.",
+    "notes": {
+      "Detonation Damage": "BASE detonation damage, per marked enemy.",
+      "Damage per Ruin Stack": "Added to the detonation for each Ruin stack."
+    }
+  },
+  "lowerpricedchests": {
+    "explain": "The first chest opened each stage gives one extra item, then all stacks are consumed and come back next stage. From 2 stacks, extra rolls can go up to 5 items. Works on chests, equipment barrels, Rusty Lockbox, legendary and adaptive chests, but not on Shrines of Chance, multishops, lunar pods or Void content.",
+    "notes": {
+      "Extra item chance": "Chance to get at least 3 items from the chest (the 2nd is guaranteed); up to 5 items max.",
+      "Guaranteed Extra Item": "Guaranteed extra item from the first chest of the stage."
+    }
+  },
+  "increasedamageonmultikill": {
+    "explain": "Each kill adds a damage bonus stack for 7 s, and each hit you deal resets the timer. The bonus is added at the end of the calculation: it is not amplified by BASE damage bonuses (Prayer Beads, Hearty Stew, Artifact of Glass) but is by conditional bonuses (Focus Crystal, Armor-Piercing Rounds…).",
+    "notes": {
+      "Damage": "Per buff stack (1 per kill). Max bonus = value × max stacks: 35% at 1 item, 67.5% at 2, 110% at 3.",
+      "Buff Duration": "Dealing damage resets the timer."
+    }
+  },
+  "healoncrit": {
+    "explain": "Only the first stack gives 5% crit. Each crit's heal is multiplied by the attack's proc coefficient: low-coefficient attacks heal less."
+  },
+  "explodeondeath": {
+    "explain": "One second after the kill, an explosion appears where the enemy died. Its damage falls off for enemies far from the center."
+  },
+  "explodeondeathvoid": {
+    "explain": "Triggers on the first hit on an enemy at full health (0.2 s later), not on kill. If an ally or drone hits it before you, the effect no longer triggers; damage falls off far from the center."
+  },
+  "clovervoid": {
+    "explain": "At the start of each stage, randomly picks white or green items and turns the whole stack into a random item of the next rarity (4 Mochas become 4 of the same green item). Legendary, boss, Void, lunar and food items are never transformed; you can lose important items."
+  },
+  "helpwake": {
+    "explain": "Only obtained during The Wake: interacting with a Soul Conduit uses a flower, heals and cleanses it and destroys nearby projectiles, then a surge hits enemies 0.5 s later. Damage falls off with distance and the flowers disappear when the event ends.",
+    "notes": {
+      "Surge Damage": "1,200% real (the in-game text says 2,000%), based on your damage, falls off with distance."
+    }
+  },
+  "repeatheal": {
+    "explain": "Your healing is increased but stored, then given back bit by bit every 0.2 s, with a per-second cap that drops with each stack. Natural regen is not increased.",
+    "notes": {
+      "Heal Storage Cap": "Max stored healing, as % of max health."
+    }
+  },
+  "sprintoutofcombat": {
+    "explain": "'Out of combat' means not using an offensive skill for 5 s. Taking damage, using equipment or a mobility skill does not remove the bonus; an attack skill cancels it.",
+    "notes": {
+      "Out of Combat Delay": "Time without an offensive skill before the bonus."
+    }
+  },
+  "wisponkill": {
+    "explain": "Every 5 kills you make (not your minions), a spirit appears. On each of your non-lethal hits with a proc coefficient, a spirit fires a homing projectile; each hit uses a charge, so very fast attacks drain spirits quickly. They disappear at the end of the stage.",
+    "notes": {
+      "Explosion Damage": "BASE damage per spirit shot, no damage falloff with distance.",
+      "Kills per Spirit": "Only your direct kills count."
+    }
+  },
+  "fruit": {
+    "notes": {
+      "Heal": "% of max health, instant."
+    }
+  },
+  "personalshield": {
+    "explain": "Adds shield that does not heal: it only recharges after 7 s without taking damage. It is reduced by Shaped Glass, and from 2 stacks one-shot protection depends on shield.",
+    "notes": {
+      "Recharge Delay": "Shield recharges after 7 s without taking damage."
+    }
+  },
+  "beetlegland": {
+    "explain": "Each gland gives a boosted allied Beetle Guard. Due to a bug, the 30 s delay does not apply: a dead guard is replaced almost immediately. Engineer turrets do not inherit this item.",
+    "notes": {
+      "Guard Damage Bonus": "4× the damage of a normal Beetle Guard.",
+      "Guard Health Bonus": "2× the health of a normal Beetle Guard."
+    }
+  },
+  "gummyclone": {
+    "explain": "Throws a blob that creates a clone of you with your skills but not your items; it dies automatically after 30 s, even if healed. 3 clones max at once.",
+    "notes": {
+      "Clone Damage": "Of the player's BASE damage.",
+      "Clone Health": "Of the player's max health."
+    }
+  },
+  "healandrevive": {
+    "explain": "If you die while holding it, you come back to life and it becomes 'consumed', ignoring its cooldown. In multiplayer, activating it revives all dead survivors at any distance; in solo, it only works automatically on death.",
+    "notes": {
+      "Invulnerability": "After the revive."
+    }
+  },
+  "healandreviveconsumed": {
+    "explain": "Plants a sprout that drops 10 healing orbs over 5 s, up to 20% max health in total.",
+    "notes": {
+      "Heal per Orb": "% of max health.",
+      "Orbs": "One orb every 0.5 s for 5 s (20% health in total)."
+    }
+  },
+  "titangoldduringtp": {
+    "explain": "Aurelionite spawns as an ally at the start of each teleporter event and dies when it is charged; the seeds then return to you. Stacks across the whole team add up. It also helps against Mithrix (phase 4) but fights you against the False Son (phase 3).",
+    "notes": {
+      "Damage": "Square root of the stack count, rounded to 10% (the in-game text is wrong)."
+    }
+  },
+  "seed": {
+    "explain": "Every hit heals, and the heal is multiplied by the hit's proc coefficient: low-coefficient attacks heal less and damage over time (bleed, burn) does not heal."
+  },
+  "stunchanceonhit": {
+    "explain": "The chance is multiplied by the attack's proc coefficient and stacks with diminishing returns. Does not stun most bosses."
+  },
+  "fallboots": {
+    "explain": "In the air, hold Interact to slam down: the explosion grows with fall height (max after 150 m) and can crit. The item also greatly increases jump height when ready and always negates fall damage.",
+    "notes": {
+      "Min Damage": "BASE damage from a low fall.",
+      "Max Damage": "BASE damage after a 150 m fall; damage falls off far from the center.",
+      "Max Radius": "After a 150 m fall."
+    }
+  },
+  "movespeedonkill": {
+    "explain": "A kill gives 5 stacks of +25% speed that fade one after another; extra stacks only lengthen the duration.",
+    "notes": {
+      "Movement Speed": "5 stacks of +25% that fade one by one."
+    }
+  },
+  "moremissile": {
+    "explain": "Every missile fired by your items, equipment and some skills (AtG, Bundle of Fireworks, Plasma Shrimp, War Bonds, Disposable Missile Launcher, Engineer harpoons, Missile Drones) becomes 3 missiles. Extra stacks add damage, not more missiles; with War Bonds, the extra missiles deal only 50%.",
+    "notes": {
+      "Damage": "Bonus to the missiles' TOTAL damage, from the 2nd stack onward."
+    }
+  },
+  "immunetodebuff": {
+    "explain": "Blocks temporary debuffs, not permanent ones, Void fog or Spinel Tonic Afflictions. After blocking as many debuffs as you have stacks, it recharges for 5 s.",
+    "notes": {
+      "Barrier": "% of max health per blocked debuff."
+    }
+  },
+  "infusion": {
+    "explain": "Max health gained is permanent as long as you keep at least one Infusion; the bonus comes from the red orb that follows the kill. Engineer turrets have their own kill counter."
+  },
+  "attackspeedoncrit": {
+    "explain": "Each crit grants an attack speed stack for 3 s (duration multiplied by proc coefficient). Only the first stack gives 5% crit chance; extra stacks raise the max buff count.",
+    "notes": {
+      "Attack Speed per Buff": "Per stack gained from a critical hit.",
+      "Buff Duration": "Multiplied by the hit's proc coefficient."
+    }
+  },
+  "pagesummonferaltoddlers": {
+    "explain": "Ritual castable once per stage if you have the N'tormat: summons 10 allied lynx pups that stay until they die. Holding Pages adds catastrophes to upcoming teleporters.",
+    "notes": {
+      "Lynx Pups": "No time limit.",
+      "Bite Damage": "Pup damage (12 base, +2.4 per level), proc coefficient 1.0."
+    }
+  },
+  "armorreductiononhit": {
+    "explain": "Takes 5 hits in quick succession with a proc coefficient (damage over time doesn't count) to remove 60 armor. That's about +38% damage on average against normal monsters."
+  },
+  "phasing": {
+    "notes": {
+      "Duration": "Invisibility and speed."
+    }
+  },
+  "medkit": {
+    "explain": "The heal lands 2 s after the last damage taken: each new hit resets the delay, so it's weak under constant hits or damage over time.",
+    "notes": {
+      "Flat Heal": "Flat health, on top of the % of max health.",
+      "Delay": "Reset by each new hit."
+    }
+  },
+  "commandmissile": {
+    "notes": {
+      "Missiles": "Fired at 8 per second."
+    }
+  },
+  "attackspeedpernearbyallyorenemy": {
+    "explain": "Each enemy or ally within 20 m grants an attack speed stack, up to the max; stacks are added and removed instantly as they enter or leave the area.",
+    "notes": {
+      "Attack Speed": "Per enemy or ally within 20 m (per buff stack), up to the max stack count."
+    }
+  },
+  "extralifevoid": {
+    "explain": "On death, you revive after a few seconds and one stack is consumed, but all your items with a Void version are corrupted (e.g. 57 Leaf Clover becomes Benthic Bloom, boss items become Newly Hatched Zoea). On-death effects still trigger.",
+    "notes": {
+      "Invulnerability": "After reviving."
+    }
+  },
+  "goldgat": {
+    "explain": "No cooldown: activating it toggles continuous fire. Each bullet costs gold based on your level (not on time, unlike the in-game text), and firing stops when you run out of gold.",
+    "notes": {
+      "Damage per Bullet": "Damage falls off with distance.",
+      "Max Fire Rate": "Shots per second after 10 s (3 at the start)."
+    }
+  },
+  "dronebackup": {
+    "explain": "Summons 4 allied Strike Drones that fire machine guns for about 25 s, then self-destruct. Their shots don't trigger your on-hit items, and they count toward the 20-ally limit.",
+    "notes": {
+      "Strike Drones": "4 Strike Drones summoned per activation.",
+      "Duration": "The drones self-destruct after 25 to 28 s."
+    }
+  },
+  "meteorattackonhighdamage": {
+    "explain": "The stronger the triggering hit, the more likely the meteor is to fall and the harder it hits (capped at 75% chance and 7,500% damage). One meteor at a time per player, and only the ground explosion deals damage: airborne enemies far from the ground are spared.",
+    "notes": {
+      "Meteor chance per 100% damage": "Total chance (3% + bonus) capped at 75%, reached with a 2,400% hit (1 stack) or 1,200% (2 stacks).",
+      "Meteor bonus damage per 100% damage": "Total meteor damage (2,000% + bonus) capped at 7,500% BASE damage.",
+      "Meteor Damage": "Meteor BASE damage before bonus; total cap 7,500%.",
+      "Max Meteor Chance": "Trigger chance cap.",
+      "Max Meteor Damage": "Meteor damage cap (BASE damage)."
+    }
+  },
+  "healwhilesafe": {
+    "explain": "Activates after 7 s without taking damage (not \"out of combat\" as the game says) and stops as soon as you're hit. The regen bonus also scales with your level.",
+    "notes": {
+      "Health Regen per Level": "Extra HP/s per player level.",
+      "Activation Delay": "Active after 7 s without taking damage."
+    }
+  },
+  "firework": {
+    "explain": "Every interaction (chest, shrine, printer... but not the Recycler) launches homing fireworks. Crit is rolled once for the whole volley, and the low proc coefficient makes chance-based items trigger poorly.",
+    "notes": {
+      "Damage per Firework": "BASE damage per firework, 5 m explosion.",
+      "Explosion Radius": "Explosion radius of each firework."
+    }
+  },
+  "blightzone": {
+    "explain": "During the teleporter and other hold zones, a cloud grows around the zone and applies Blight every 5 s. Stacks from the whole team add up, but Blight only lasts 3 s out of 5, so real average damage is lower than shown.",
+    "notes": {
+      "Cloud Growth per 1% Charge": "The in-game text is wrong: the cloud reaches max size 10% charge earlier per team stack (instant max size from 11).",
+      "Blight Damage per Second": "BASE damage per second, whole-team stacks; only active 3 s out of every 5 s.",
+      "Average Damage per Second": "Real average over time (Blight applied every 5 s for 3 s), BASE damage.",
+      "Blight Pulse Interval": "Every 5 s, enemies in the cloud receive 3 s Blight stacks."
+    }
+  },
+  "slipperyground": {
+    "explain": "The ground behaves as if you were airborne: starting, stopping and turning get hard. With 1 Hex, only about 18% of your normal ground acceleration remains; each extra stack adds a diminishing penalty."
+  },
+  "shareitemswithenemies": {
+    "explain": "Every 15 s, up to 3 random enemies within 65 m receive ethereal copies of your items; you keep the originals. Many items are excluded (on-kill, sprint or equipment effects, scrap, Hexes...).",
+    "notes": {
+      "Share Interval": "Shares every 15 s (retries after 7.5 s if no eligible enemy or item).",
+      "Range": "Enemies picked at random within 65 m."
+    }
+  },
+  "barrierenemiesonkill": {
+    "explain": "When you kill an enemy, other nearby enemies gain barrier based on the victim's max health, with a minimum based on their own health. The radius grows with the size of the killed enemy, and only your own kills count.",
+    "notes": {
+      "Minimum Barrier": "Each enemy gets at least this % of ITS OWN max health as barrier (largest bosses: 1% +0.5%)."
+    }
+  },
+  "blindness": {
+    "explain": "Everything beyond the view distance is hidden by fog, and some auto-targeting (Royal Capacitor, Trophy Hunter's Tricorn) can no longer find targets past it. The distance is halved with each stack."
+  },
+  "hexmountain": {
+    "explain": "Each Hex held by the team (even by a dead player) counts as one more Shrine of the Mountain for the teleporter boss, but with no bonus item. Only stacks held when the teleporter is activated count."
+  },
+  "lowerhealing": {
+    "explain": "Reduces all healing received, including regen, but with diminishing returns: 28.6% with 1 Hex instead of the 40% shown, and never 100%. Negative regen is also reduced."
+  },
+  "outoftpradius": {
+    "explain": "Only while charging the teleporter: any ally outside the zone loses 1% max health per second, and this damage is multiplied every 10 s spent outside (resets when you return). It ignores armor, can't be blocked and can kill; stacks from the whole team add up.",
+    "notes": {
+      "Base Damage per Second": "% of combined max health (shield included) per second outside the teleporter zone."
+    }
+  },
+  "roamingitemdisable": {
+    "explain": "The percentage counts item types, not stacks, and items are disabled in pickup order (not randomly). A disabled item has no effect and can't be recycled or printed; Hexes themselves are never disabled.",
+    "notes": {
+      "Disable Interval": "30 s cycle; first disable 3 s after picking up the Hex."
+    }
+  },
+  "increaseddifficulty": {
+    "explain": "Doesn't add 25% difficulty at once: it speeds up difficulty scaling over time, retroactively (picking it up late makes difficulty jump immediately). Stacks from the whole team add up, but the effect per stack is reduced in multiplayer."
+  },
+  "weakasshamstring": {
+    "explain": "Each jump weakens later jumps (the first jump after recovering is always full), up to 4 stacked jumps; the penalty then fades gradually. Extra stacks only lengthen recovery, and safe fall distance is only reduced during the penalty.",
+    "notes": {
+      "Max Penalty Jumps": "The penalty stacks over at most 4 jumps (jump speed halved)."
+    }
+  },
+  "hexcurse": {
+    "explain": "Also reduces max shield and fully removes one-shot protection. The penalty adds to Shaped Glass's instead of multiplying."
+  },
+  "tphealingnova": {
+    "explain": "Daisies from the whole team add up: heals are spread evenly over the charge (e.g. 33% and 66% with 2). It also works in other hold zones (Void Fields, Commencement pillars...).",
+    "notes": {
+      "Healing per Nova": "Heals all allies in the zone for 50% of max health."
+    }
+  },
+  "causticpheromones": {
+    "explain": "Each skill hit has a chance equal to its proc coefficient to add a mark, which never expires; at 10 marks the enemy is branded and all AI within 40 m (allies and enemies) attack it. The stun only lasts 1 s and doesn't affect bosses; you get the gold and XP if a monster kills it.",
+    "notes": {
+      "Hits to Brand": "Marks needed (chance per hit = proc coefficient).",
+      "Stun Duration": "Actual 1 s stun, not on bosses or champions.",
+      "Re-brand Cooldown": "Delay before the same target can be branded again."
+    }
+  },
+  "ghostonkill": {
+    "explain": "The ghost keeps the enemy's items and elite status, takes no normal damage but loses health every second. Careful: some ghosts (Clay Dunestrider, Grandparent, Void enemies, Lynx Totem) can still hurt you.",
+    "notes": {
+      "Ghost Chance": "Chance on kill, affected by luck.",
+      "Ghost Damage": "Ghost damage bonus."
+    }
+  },
+  "powercube": {
+    "explain": "Only gives +50% of the survivor's BASE armor: most have none, so it often does nothing (+10 armor for Mercenary, REX, Loader, Acrid...). Doesn't stack; mainly used to activate the Matrix Terminal."
+  },
+  "captaindefensematrix": {
+    "explain": "Destroys nearby enemy projectiles (fireballs, puddles, bombs...), but not instant attacks like lasers or hitscan shots. In practice Captain-only.",
+    "notes": {
+      "Range": "Projectile interception radius.",
+      "Recharge Interval": "Base interval, reduced by attack speed."
+    }
+  },
+  "molotov": {
+    "explain": "The big bottle splits into 6 small ones that only break on hitting the ground (they bounce off enemies) and leave fire pools. Real damage is lower than the in-game text (250% and 100%/s).",
+    "notes": {
+      "Molotov Damage": "Big and small bottles: 250%, 7 m radius, ignite (the in-game text says 500%, wrong).",
+      "Molotovs": "Small bottles after splitting.",
+      "Fire Pool Damage per Second": "Fire pools, proc coefficient 0.5.",
+      "Fire Pool Duration": "Fire pool duration.",
+      "Radius": "Explosion radius, no falloff."
+    }
+  },
+  "fragiledamagebonus": {
+    "explain": "Breaks when your health + shield drops below 25% after a hit; all stacks break together. Unstable Transmitter, then Power Elixir trigger first and can prevent it."
+  },
+  "bossdamagebonus": {
+    "explain": "Works on enemies with a red health bar: teleporter bosses and Hordes, special bosses, Simulacrum waves 5 and 10, Umbrae. Bosses that spawn naturally outside the teleporter don't count."
+  },
+  "itemdropchanceonkill": {
+    "explain": "Bosses always drop an item (only the final phase of Mithrix or False Son counts), and an elite boss can drop two. Nothing drops if a drone lands the killing blow; loot is 80% white, 20% green, 0.1% red. The in-game text (4%) is wrong: it's 5% base."
+  },
+  "boostallstats": {
+    "explain": "Each DIFFERENT active buff (Warbanner, Opal ready, Prison Matrix...) gives +4% multiplicative health, regen, speed, damage, attack speed, crit and armor, but not acceleration. Stacks only raise the number of buffs counted, not the 4%."
+  },
+  "knurl": {
+    "notes": {
+      "Health Regen per Level": "Extra HP/s per player level (+20% per level)."
+    }
+  },
+  "physicsprojectile": {
+    "explain": "An allied Solus charges at enemies; its damage is multiplied by its speed and it inherits your speed items (Goat Hoof, Energy Drink, Mocha...). Petting it (interact, 15 s cooldown) cleanses debuffs and cooldown effects from it, you and nearby allies.",
+    "notes": {
+      "Heavy Target Impact Damage": "Extra damage when ramming a heavy enemy; all damage is multiplied by speed (×1.45 minimum while sprinting).",
+      "Pet Cooldown": "Petting the unit cleanses debuffs once every 15 s.",
+      "Respawn Time": "Respawns 30 s after being destroyed."
+    }
+  },
+  "minorconstructonkill": {
+    "explain": "Limited by the global 20-ally cap, so not very useful beyond 4-5 stacks. Constructs vanish if you stay more than 100 m away for 30 s; Engineer turrets have their own limit.",
+    "notes": {
+      "Construct Bonus Damage": "Damage bonus for each allied Alpha Construct.",
+      "Construct Bonus Health": "Health bonus for each allied Alpha Construct."
+    }
+  },
+  "roboballbuddy": {
+    "explain": "The probes gain damage for each ally on the team (drones, turrets, other players, minions and the other probe, but not you), so they start at ×2. They have 4× more health and take little area damage.",
+    "notes": {
+      "Respawn Interval": "Destroyed probes are resummoned every 30 s.",
+      "Probes": "Two allied Solus probes."
+    }
+  },
+  "barrageonboss": {
+    "explain": "The missiles deal a % of the boss's max health; with no boss targeted, they deal 3,200% damage each. Their proc coefficient is 0, so they trigger no items.",
+    "notes": {
+      "Base Missiles": "Missiles fired at the start of each boss fight.",
+      "Gold per Extra Missile": "Gold to earn per bonus missile (rises over time)."
+    }
+  },
+  "fireballdash": {
+    "explain": "You fly as a fireball toward your crosshair and can't use skills; each enemy hit resets the 5 s timer. You can detonate early with the interact key, and you stay vulnerable during the transformation.",
+    "notes": {
+      "Impact Damage": "Damage when ramming an enemy (once per enemy per use).",
+      "Detonation Damage": "Final explosion.",
+      "Duration": "Reset by each enemy hit.",
+      "Speed": "Fixed 30 m/s, not affected by movement speed."
+    }
+  },
+  "meteor": {
+    "explain": "Meteors are explosions placed near characters across the whole map: they land even under a roof and Defensive Microbots don't block them. Blue circles show the impacts to avoid.",
+    "notes": {
+      "Damage per Meteor": "Hits ALL characters, you included; linear falloff from the center.",
+      "Duration": "Duration of the meteor shower."
+    }
+  },
+  "outofcombatarmor": {
+    "explain": "The armor bonus is active after 7 s without taking damage and is lost on the first hit taken (unless blocked by Tougher Times, Safer Spaces...). 100 armor reduces damage by 50%, so stacks quickly diminish.",
+    "notes": {
+      "Activation Delay": "Buff regained after 7 s without taking damage."
+    }
+  },
+  "novaonheal": {
+    "explain": "Every heal, even at full health, fills soul energy; at 10% of your max health a homing skull fires (10 per second max). The flat part uses your BASE damage, and the energy part is worth about 25% of your max health per skull.",
+    "notes": {
+      "Soul Energy Threshold": "A skull fires each time energy reaches 10% of max health (shield included).",
+      "Targeting Range": "Skulls target enemies within 40 m."
+    }
+  },
+  "teamwarcry": {
+    "explain": "Affects all allies, drones and turrets included. This buff doesn't stack with the Berzerker's Pauldron war cry: the most recent one replaces the other.",
+    "notes": {
+      "Duration": "Frenzy duration.",
+      "Movement Speed": "Movement speed bonus during the frenzy.",
+      "Attack Speed": "Attack speed bonus during the frenzy."
+    }
+  },
+  "randomlylunar": {
+    "explain": "The replacement is rolled when the stage is generated, for each item (chests, printers, Void cradles, teleporter reward, Bazaar cauldrons, items given to monsters). It's a global effect for the whole team; picked up mid-stage, it only applies from the next stage. Elite equipment is never replaced."
+  },
+  "pageshredded": {
+    "explain": "Only obtained by recycling another Page at the Recycler. It counts as a Page for spawning the N'tormat, but not toward the total Pages that curse teleporters."
+  },
+  "deathprojectile": {
+    "explain": "The doll sticks to the surface it hits and simulates a kill there every second. Conditional effects don't trigger: Brainstalks, Happiest Mask, Wake of Vultures, Shatterspleen, Defense Nucleus. It still charges Infusion and Resonance Disc.",
+    "notes": {
+      "Triggers": "On-kill effect triggers, one per second.",
+      "Interval": "Delay between triggers.",
+      "Max active dolls": "Active dolls at once per player."
+    }
+  },
+  "lunarutilityreplacement": {
+    "explain": "The actual heal is 18.2% max health per stack, spread over the duration, not 25%. During the effect you're untouchable but can't use skills; Shrine of Blood, fall damage and already-applied damage over time still go through.",
+    "notes": {
+      "Movement Speed": "Speed bonus during Shadowfade.",
+      "Cooldown": "Cooldown, which starts when the effect ends."
+    }
+  },
+  "lightningstrikeonhit": {
+    "explain": "The lightning lands with a slight delay, so a fast target can dodge it. Unlike other TOTAL damage items, it rolls its own crit. It slams flying enemies hard into the ground.",
+    "notes": {
+      "Chance": "Chance per hit."
+    }
+  },
+  "fireballsonhit": {
+    "explain": "The balls burst out of the hit enemy and often miss small targets, but hit big enemies and bosses well. With an Ignition Tank, they apply the enhanced burn.",
+    "notes": {
+      "Chance": "Chance per hit.",
+      "Magma balls": "Magma balls per trigger, each dealing the damage.",
+      "Explosion Radius": "Explosion radius of each ball."
+    }
+  },
+  "shinypearl": {
+    "explain": "Armor is only multiplied on the character's base armor: +2 at best (Loader), nothing if base armor is 0. Regen is a flat bonus, not really +10%.",
+    "notes": {
+      "Health Regen": "HP/s per stack at level 1 (+0.02 HP/s per level per stack)."
+    }
+  },
+  "lunartrinket": {
+    "explain": "No in-game effect unless you obliterate at the Obelisk in A Moment, Fractured: you're sent to A Moment, Whole to fight a Twisted Scavenger. Stacking more changes nothing; it's a risk-free lunar item to give to the Cleansing Pool."
+  },
+  "sprintwisp": {
+    "explain": "Only fires while sprinting. The 1.6 s interval drops with movement speed (about 0.83 s at 14 m/s). Engineer turrets don't sprint and don't benefit.",
+    "notes": {
+      "Range": "Wisp range."
+    }
+  },
+  "bonushealthboost": {
+    "explain": "Only multiplies max health and regen from items or skills, not from leveling up. Without such bonuses, the item does nothing."
+  },
+  "droneweapons": {
+    "explain": "Affects all mechanical allies: drones, Engineer turrets, Best Buddy, Empathy Cores probes, Equipment Drone. Not the Squid Turret or Alpha Constructs. Col. Droneman respawns each stage if destroyed.",
+    "notes": {
+      "Missile Chance": "Chance per hit for a drone to fire a missile.",
+      "Missile Damage": "TOTAL damage of the triggering hit.",
+      "Chain Gun Shots": "Shots per burst, 50% damage each.",
+      "Chain Gun Damage": "Damage per chain gun shot.",
+      "Chain Gun Bounces": "Bounces to other enemies."
+    }
+  },
+  "bleedonhitvoid": {
+    "explain": "The chance is multiplied by the hit's proc coefficient. 3 s after the first stack, all stacks burst together; new hits don't push back this delay. Bleed from Shatterspleen, Noxious Thorn and Sanguine Chalice isn't replaced.",
+    "notes": {
+      "Collapse Damage": "BASE damage per Collapse stack, dealt all at once.",
+      "Collapse Delay": "Delay after the first stack before it bursts."
+    }
+  },
+  "plant": {
+    "explain": "The real base radius is 10 m, not 5 m as the game says. Each kill grows a plant where the enemy died; multiple plants stack.",
+    "notes": {
+      "Healing": "Max health per second (5% every 0.5 s) to all allies in the area.",
+      "Plant Duration": "Lifetime of each plant.",
+      "Grow Delay": "Delay before the plant appears."
+    }
+  },
+  "parentegg": {
+    "explain": "The heal applies before each hit's damage, so it can save you. It also triggers on damage over time, fall damage and self-damage, but not in Void fog. Very strong against small, rapid hits."
+  },
+  "transferdebuffonhit": {
+    "explain": "You pass it to an enemy by hitting it. When it dies, it doesn't necessarily go back to the killer: it goes to the nearest opposing character (including a drone). The projectile vanishes after 5 s without a target and drops the weights; if it falls out of the map or you change stage, the item is lost."
+  },
+  "chainlightningvoid": {
+    "explain": "All strikes hit the same target, unlike the Ukulele, which bounces between several enemies. Better in single-target fights, especially against final bosses.",
+    "notes": {
+      "Chance": "Chance per hit.",
+      "Damage per hit": "TOTAL damage per strike."
+    }
+  },
+  "squid": {
+    "explain": "Any interactable counts except Recyclers, drone recyclers and Artifact of Command essences. Its duration comes from health decay: healing it extends it, damaging it shortens it. The turret uses the monster level, not yours.",
+    "notes": {
+      "Turret Duration": "Normal turret duration (constant health decay).",
+      "Turret Damage": "Per shot every 0.75 s, based on the turret's damage (4, +0.8 per level); proc coefficient 0.1."
+    }
+  },
+  "pagewarpgate": {
+    "explain": "Cast once per stage with the N'tormat. Each exit from the gate counts as a use, even a cancel or invalid destination. Beyond 125 m, aiming locks onto enemies.",
+    "notes": {
+      "Damage": "From 150% (trip of 7.5 m or less) to 15,000% (450 m or more) based on distance; can crit.",
+      "Explosion Radius": "Explosion radius on arrival.",
+      "Freeze Duration": "Fixed freeze on freezable enemies, regardless of distance.",
+      "Max Range": "Maximum aiming distance.",
+      "Uses per gate": "Uses before the gate disappears."
+    }
+  },
+  "utilityskillmagazine": {
+    "notes": {
+      "Utility Cooldown Reduction": "Flat reduction, doesn't scale with stacks."
+    }
+  },
+  "extrashrineitem": {
+    "explain": "On a Shrine of Chance success, the item is rolled from a special pool: 79% green, 20% red, 1% boss, never white. It can sometimes swap a red for a green, but average quality goes up. Affected by luck."
+  },
+  "lunarbadluck": {
+    "explain": "The 2 s reduction applies after other percentage reductions, with a 0.5 s minimum per skill. The bad luck is canceled by as many 57 Leaf Clovers; effects that can reach 100% (crits, Tri-Tip Dagger...) stay usable. Tougher Times isn't affected."
+  },
+  "pagepurify": {
+    "explain": "Cast once per stage with the N'tormat. The reduction is permanent until the target dies, stacks across casts and also hits neutral and Void monsters. Deals no damage.",
+    "notes": {
+      "Max HP reduction": "Normal enemies; about 23.1% for champions and 9.1% for bosses.",
+      "Radius": "Wave that expands over 2 s."
+    }
+  },
+  "randomdamagezone": {
+    "explain": "The zone appears randomly near you and buffs everyone, enemies included, while they stay inside. Its real radius is a bit smaller than the indicator; each stack grows the radius by 50% of the previous one.",
+    "notes": {
+      "Damage Bonus": "Damage bonus inside the zone, for allies AND enemies.",
+      "Ward Duration": "Approximate duration before the zone moves."
+    }
+  },
+  "stew": {
+    "explain": "Full health ignores shields. Regen depends on difficulty (higher on Drizzle, lower on Monsoon), so the damage bonus does too."
+  },
+  "bleedonhitandexplode": {
+    "explain": "An enemy killed in a single crit doesn't explode, since it dies before bleeding. The bleed is the same as Tri-Tip Dagger's: the two don't add up on the same hit.",
+    "notes": {
+      "Bleed Damage": "BASE damage over 3 s, per bleed stack (critical hit).",
+      "Explosion Radius": "Explosion radius on death."
+    }
+  },
+  "recycle": {
+    "explain": "Turns an item on the ground into another of the same rarity, never into itself. Each item can only be recycled once. Doesn't work on elite equipment, the Fuel Array or unique items."
+  },
+  "pagedie": {
+    "explain": "The circle hits everyone inside, allies included, and you can leave it before the strike. Cast in a sacrifice zone (announced in chat), it lets you travel to other places.",
+    "notes": {
+      "Radius": "Infinitely tall circle under the caster.",
+      "Delay": "Delay before the strike.",
+      "Damage": "Of max health for targets with over 200 base health; ignores armor. Others are killed."
+    }
+  },
+  "icicle": {
+    "explain": "The storm grows with each kill up to the max radius. Destroyed pots and barrels count as kills.",
+    "notes": {
+      "Damage per second": "300% every 0.25 s; proc coefficient 0.2, never crits.",
+      "Starting Radius": "Starting radius, +2 m per kill.",
+      "Uptime per kill": "Duration added per kill.",
+      "Slow": "Slow on enemies hit."
+    }
+  },
+  "ultimatemeal": {
+    "explain": "Only counts at full health (shields ignored). Same chance as two 57 Leaf Clovers, but only at full health."
+  },
+  "strengthenburn": {
+    "explain": "Replaces your Ignite with an enhanced burn. Doesn't affect Kjaro's Band, Will-o'-the-wisp or Voidsent Flame, which don't inflict Ignite. Also boosts the damage Helfire Tincture deals to you."
+  },
+  "questvolatilebattery": {
+    "explain": "Can't be activated manually. Mainly used to repair the robot in Abyssal Depths to unlock REX; it's destroyed when it explodes. Max health reductions without damage don't trigger it.",
+    "notes": {
+      "Trigger threshold": "Explodes when you drop to 50% max health.",
+      "Explosion Damage": "Of the holder's max health + shields, reduced by armor.",
+      "Explosion Radius": "Hits all entities.",
+      "Explosion Delay": "Delay before the explosion."
+    }
+  },
+  "elitedeathequipment": {
+    "explain": "No active effect. Minions and allied players who die near you come back as ghosts (+45% speed, -70% cooldowns); drones and turrets excluded. Worn by a player, the aspect gives no health or damage bonus.",
+    "notes": {
+      "Revive Radius": "Radius where the dead come back as ghosts.",
+      "Ghost Duration": "Ghost lifetime.",
+      "Max Ghosts": "Ghosts at once."
+    }
+  },
+  "elitepoisonequipment": {
+    "explain": "Passive, can't be activated; neither cooldown reduction nor Fuel Cell charges affect it. You throw spike balls (3 minimum) and a Malachite Urchin spawns when you die.",
+    "notes": {
+      "Healing Disabled": "Duration of the healing block your attacks apply.",
+      "Spike Ball Damage": "Explosion on impact, then 100% spike traps on contact."
+    }
+  },
+  "goldonhurt": {
+    "explain": "The gain scales with difficulty over time. Any damage from another character counts, including each damage-over-time tick; not self-damage, fall damage or Void fog."
+  },
+  "elitebeadequipment": {
+    "explain": "Passive, can't be activated. Tethered allies gain lots of armor, and hits they take charge a lunar ball that flies at an enemy.",
+    "notes": {
+      "Tethered allies": "Max tethered allies.",
+      "Tether Radius": "Tether radius.",
+      "Armor": "Bonus armor for tethered allies.",
+      "Spike Ball Damage": "After 10 hits taken by allies; applies Lunar Ruin.",
+      "Cooldown": "Cooldown after the ball is thrown, tethers included."
+    }
+  },
+  "eliteearthequipment": {
+    "explain": "Passive, can't be activated. The heal ignores damage bonuses (Delicate Watch, Focus Crystal). A Healing Core spawns when you die.",
+    "notes": {
+      "Healing": "Of the holder's BASE damage, 4 times per second, to the nearest ally.",
+      "Heal Radius": "Heal range."
+    }
+  },
+  "lifestealonhit": {
+    "notes": {
+      "Lifesteal": "Of direct damage dealt.",
+      "Duration": "Buff duration."
+    }
+  },
+  "scanner": {
+    "explain": "Marks every interactable (chests, shrines, drones, teleporter, items on the ground...) within 500 m with an icon for 10 s. The radius isn't infinite: some distant interactables can escape the scan.",
+    "notes": {
+      "Radius": "Interactable detection radius.",
+      "Duration": "How long markers are shown."
+    }
+  },
+  "saw": {
+    "explain": "The three blades fan out, come back to you and can hit both going and returning; they return immediately if they hit terrain. Bleed is only applied if the Sawmerang is still your active equipment when the blades hit.",
+    "notes": {
+      "Blades": "Number of blades thrown in a fan.",
+      "Damage per blade": "Damage per blade, going AND returning (each blade can hit twice), applies bleed.",
+      "Damage per tick": "After impact, each blade deals 140% in rapid ticks (proc coefficient 0.2) and applies bleed each tick; the game wrongly says 100%."
+    }
+  },
+  "permanentdebuffonhit": {
+    "explain": "The 100% chance is multiplied by the hit's proc coefficient. Despite the word \"permanent\", the armor reduction is removed on the next stage; negative armor caps at +100% damage taken, so stacks have diminishing returns."
+  },
+  "primaryskillshuriken": {
+    "explain": "Each press of the primary skill throws a shuriken while any remain in stock, even if the skill is on cooldown. The projectiles weakly home toward the nearest enemy.",
+    "notes": {
+      "Full reload time": "Time to reload all shurikens; one shuriken returns every 10/(stacks+2) s (3.33 s with 1 item, 2.5 s with 2)."
+    }
+  },
+  "autocastequipment": {
+    "explain": "Each Fuel Cell adds to the Gesture count for the extra 15% reduction. Equipment fires on its own as soon as it's ready (only MUL-T's active equipment is affected); some, like Royal Capacitor, wait for a target."
+  },
+  "elitelightningequipment": {
+    "explain": "Passive effect (can't be activated): your attacks stick bombs that explode after a short delay for 50% of the hit's damage, and half your health becomes shield, which can't be healed and only returns after 7 s without damage. Fuel Cells and cooldown reduction have no effect.",
+    "notes": {
+      "Bomb damage": "TOTAL damage of each lightning bomb your attacks place, no proc coefficient.",
+      "Health converted to shield": "50% of your max health is replaced by shield."
+    }
+  },
+  "headhunter": {
+    "explain": "Killing an elite gives you its elite aspect (and its effects: fire, ice, lightning shield...) for the listed duration; you can hold several aspects at once. Careful: the lightning or lunar aspect temporarily turns part of your health into shield."
+  },
+  "onlevelupfreeunlock": {
+    "explain": "All gold picked up is converted into experience (about $25, scaled, gives 12% of a level) and each level-up grants a free purchase usable on any interactable. Several levels gained at once give only one unlock; at level 91 the item turns into a Pearl.",
+    "notes": {
+      "Free unlock": "Capped at 3 free unlocks per level (3 stacks).",
+      "Experience received": "% of next level's XP per $25 (scaled); capped at 20.75% (8 stacks). Not shown in game."
+    }
+  },
+  "eliteiceequipment": {
+    "explain": "Passive effect (can't be activated): all your attacks heavily slow enemies, longer with high proc coefficient hits. The freezing explosion only happens when you die, so it's mostly useful with an extra life.",
+    "notes": {
+      "Slow": "Slow applied by all your attacks.",
+      "Slow duration": "Base duration, multiplied by the hit's proc coefficient.",
+      "Death explosion damage": "On death, an explosion that freezes enemies (proc coefficient 0.75)."
+    }
+  },
+  "sharedsuffering": {
+    "explain": "The first enemies hit by an attack with a proc coefficient above 0 are infected until they die; to infect new targets you must kill an infected one. The infection is a permanent debuff that can't be cleansed.",
+    "notes": {
+      "Damage copied to pool": "Share of ALL damage taken by infected enemies (allies, minions, DoTs included) added to the pool.",
+      "Pool interval": "Every 3 s, each infected enemy takes 100% of the pool, with no proc coefficient or crit, then it's emptied."
+    }
+  },
+  "warcryonmultikill": {
+    "explain": "You don't need 4 kills in 1 s: just reach a 4-kill streak, which resets if 1 s passes without a kill. Doesn't stack with Gorag's Opus; the last one activated replaces the other.",
+    "notes": {
+      "Movement Speed": "Speed bonus during the frenzy.",
+      "Attack Speed": "Attack speed bonus during the frenzy."
+    }
+  },
+  "shieldbooster": {
+    "explain": "The armor only applies while you still have shield; the pulse fires when shield hits zero and shocks (not a true stun). Shield only returns after 7 s without taking damage.",
+    "notes": {
+      "Pulse radius": "Pulse radius, no falloff, proc coefficient 1.0."
+    }
+  },
+  "burnnearby": {
+    "explain": "Damage is based on your max health: the more health you have, the more the burn hurts enemies (and you). It can never kill you (you stay at 1 HP) but can kill your allies; it ticks very fast, which triggers items like Razorwire.",
+    "notes": {
+      "Duration": "Aura duration; the debuff lingers 3 s after leaving the area.",
+      "Radius": "Fire aura radius.",
+      "Enemy burn": "Damage to enemies per second, as % of YOUR max health (5 ticks/s of 24%).",
+      "Self burn": "Damage you take (never lethal); allies take 1.25%/s of your max health."
+    }
+  },
+  "slowonhitvoid": {
+    "explain": "The chance is multiplied by the hit's proc coefficient. A rooted enemy can't walk, but flyers can still rise or descend and some teleport."
+  },
+  "killelitefrenzy": {
+    "explain": "During the frenzy, cooldowns don't drop to zero but to a 0.5 s minimum. Forgive Me Please never triggers this effect."
+  },
+  "increaseprimarydamage": {
+    "explain": "Each secondary skill use grants a charge; at 3+ charges, each primary skill hit consumes a charge to fire a lightning bolt (proc coefficient 1.0). Shurikens don't consume charges.",
+    "notes": {
+      "Charges required": "Charges needed to activate the lightning.",
+      "Secondary cooldown reduction": "Secondary skill cooldown reduction (first stack only)."
+    }
+  },
+  "bonusgoldpackonkill": {
+    "explain": "The treasure is worth the price of a small chest, so its value rises over time, and the gold goes to all players. It never despawns but isn't always pulled toward you; 25 stacks give 100%."
+  },
+  "tonic": {
+    "explain": "The bonuses (except armor) are multipliers that amplify your other items. The Affliction roll happens on activation but only applies when the effect ends; Afflictions are ignored while the Tonic is active, and changing stage during the effect avoids the Affliction.",
+    "notes": {
+      "Duration": "Boost duration.",
+      "Damage": "Multiplier: also amplifies your other bonuses.",
+      "Attack Speed": "Multiplier: also amplifies your other bonuses.",
+      "Armor": "Flat armor.",
+      "Max Health": "Max health multiplier.",
+      "Health Regen": "Regen ×4.",
+      "Movement Speed": "Speed multiplier.",
+      "Affliction chance": "Affliction chance when the effect ends (reduced by Clover: 4% with 1). Each Affliction: -5% to stats (compounding), health reduced hyperbolically (-9.1% for 1)."
+    }
+  },
+  "goldengoose": {
+    "explain": "The real radius is 10 m (+10 m per stack), not 5 m as the game says. A killed golden enemy drops 4 treasures worth the gold bonus, based on the killer's Totem count; if the triggering hit kills the target, it drops nothing.",
+    "notes": {
+      "Damage threshold": "The hit must reach 400% damage (excluding crit).",
+      "Gild duration": "Immobilization duration (4.25 s elites, 3.5 s champions, 2 s champion bosses).",
+      "Recharge": "Effect recharge after triggering."
+    }
+  },
+  "spawnaltar": {
+    "explain": "First press: preview the placement; second press: place it and consume the equipment. Friendly fire affects all teams in the zone (monsters included); each death fills the altar up to level 3, which gives an item and summons as many ghost allies (+1,500% damage) as its level.",
+    "notes": {
+      "Duration": "Altar duration (ends once level 3 is reached).",
+      "Radius": "Friendly fire zone radius.",
+      "Placement range": "Max placement distance in front of you."
+    }
+  },
+  "shieldonly": {
+    "explain": "Your health becomes almost entirely shield: it can't be healed, but fully recharges in 2 s after 7 s without taking damage (damage over time delays this). Healing becomes nearly useless, except with Aegis, and fall damage becomes negligible."
+  },
+  "clover": {
+    "explain": "Each failed luck roll is rerolled one more time per clover: with 20% base, 1 clover gives 36%. Works on all chance-based items (crits included), but not on Tougher Times, chest contents or Shrines of Chance. Each Purity cancels one clover."
+  },
+  "bleedonhit": {
+    "explain": "Bleed chance is multiplied by the hit's proc coefficient. Bleed stacks refresh each other, so they can pile up without limit as long as you keep applying them.",
+    "notes": {
+      "Bleed damage": "BASE damage over 3 s per bleed stack (20% per tick, 4 ticks/s); duration multiplied by proc coefficient."
+    }
+  },
+  "bosshunter": {
+    "explain": "Only activates when aiming at a boss that has a matching boss item (a reticle appears): it dies instantly and drops that item. The Tricorn is then consumed; never use it on Mithrix, who reflects the execution and kills you."
+  },
+  "bosshunterconsumed": {
+    "explain": "Does nothing except post \"Ahoy!\" in chat, but counts as an equipment activation (useful for War Horn, for example)."
+  },
+  "chainlightning": {
+    "notes": {
+      "Chance": "Chance on hit, multiplied by the hit's proc coefficient.",
+      "Damage": "TOTAL damage per target hit by the lightning (proc coefficient 0.2)."
+    }
+  },
+  "siphononlowhealth": {
+    "explain": "Only works in combat, but doesn't require hitting an enemy. The tethers slow with tar and can crit, but don't trigger on-hit or on-crit effects.",
+    "notes": {
+      "Damage per second": "BASE damage per second per tether (25% every 0.25 s), no proc coefficient; heals for 100% of damage.",
+      "Radius": "Tether range."
+    }
+  },
+  "rechargeablejump": {
+    "explain": "When you pick up the item or at the start of a stage you only have 3 jumps; the rest must recharge on the ground, and using one of these jumps resets the timer. The armor also applies in the air until you land."
+  },
+  "gateway": {
+    "explain": "All players can use the tunnel, from either end, and you stay vulnerable while traveling. Avoid downward tunnels: the built-up speed can cause heavy fall damage.",
+    "notes": {
+      "Max length": "Max tunnel length; beyond it the equipment won't activate.",
+      "Duration": "Tunnel lifetime."
+    }
+  },
+  "critglassesvoid": {
+    "explain": "The chance is multiplied by the hit's proc coefficient and doesn't apply to enemies with a red health bar (bosses) or to players. The execute carries over to Brilliant Behemoth explosions."
+  },
+  "wyrmonhit": {
+    "explain": "The worm strikes every 0.2 s (proc coefficient 0.5) and adds a burn; it passes through terrain and can target enemies other than the one hit. The more worms you have active, the harder it is to summon a new one.",
+    "notes": {
+      "Proc chance": "Chance on hit, multiplied by proc coefficient and divided by (active worms + 1); 1 s cooldown between summons.",
+      "Duration": "Worm lifetime.",
+      "Max wyrms": "Max active worms."
+    }
+  },
+  "executelowhealthelite": {
+    "explain": "The elite is executed when YOU hit it below the threshold (not your allies). An enemy that still has shield can't be executed, which limits the effective threshold to 50% on Overloading elites."
+  },
+  "critdamage": {
+    "explain": "Increases the crit bonus: with 1 stack, a crit deals ×3 instead of ×2. Gives no crit chance."
+  },
+  "lunarprimaryreplacement": {
+    "explain": "All charges reload at once after 2 s without firing; each shot resets this delay. Attack speed speeds up firing but not reloading; cooldown reduction does speed it up.",
+    "notes": {
+      "Shard damage": "BASE damage of each shard's explosion (proc coefficient 1.0).",
+      "Initial hit damage": "BASE damage of the initial contact (proc coefficient 0.1)."
+    }
+  }
+}

@@ -1,0 +1,4080 @@
+{
+  "ElementalRingVoid": {
+    "rarity": "void-red",
+    "addStacking": [
+      {
+        "stat": "Trigger threshold",
+        "model": "none",
+        "base": 400,
+        "add": 0,
+        "unit": "%",
+        "note": "Le coup doit faire au moins 400 % de dégâts de base."
+      },
+      {
+        "stat": "Recharge",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "s",
+        "note": ""
+      },
+      {
+        "stat": "Black hole radius",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "m",
+        "note": "Attire les ennemis pendant 5 s avant d'exploser."
+      },
+      {
+        "stat": "Delay",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée avant l'explosion."
+      }
+    ],
+    "explain": "Contrairement aux bagues d'origine, l'explosion a un proc de 1.0 et peut donc déclencher d'autres objets (Bombe collante, Béhémoth…). Ne peut pas attirer les Vers de magma."
+  },
+  "VoidMegaCrabItem": {
+    "rarity": "void-boss",
+    "stacking": [
+      {
+        "stat": "Max allies",
+        "cap": 20,
+        "note": "Limite globale de 20 alliés (drones et autres compris)."
+      }
+    ],
+    "explain": "Invoque un Void Reaver ou un Void Jailer (rarement un Void Devastator). Attention : leur implosion à la mort peut vous tuer, vous et vos autres alliés ; la recharge réelle est de 60 s divisé par le nombre d'exemplaires."
+  },
+  "Bandolier": {
+    "stacking": [
+      {
+        "stat": "Chance",
+        "rename": "Drop Chance",
+        "model": "table",
+        "expr": "100 * (1 - 1 / Math.pow(n + 1, 0.33))",
+        "formula": "1 − 1 / (n + 1)^0,33",
+        "note": "Les 2–3 premières copies comptent beaucoup, ensuite ça monte très lentement."
+      }
+    ],
+    "explain": "N'importe quel allié peut ramasser la boîte de munitions. Elle recharge une charge de chaque compétence (pas toutes les charges) et ne touche pas à l'équipement."
+  },
+  "HalfAttackSpeedHalfCooldowns": {
+    "stacking": [
+      {
+        "stat": "Attack Speed",
+        "rename": "Remaining Attack Speed",
+        "model": "reciprocal",
+        "base": 50,
+        "add": 0.5,
+        "bad": true,
+        "note": "Vitesse d'attaque restante = 1 / (1 + n)."
+      },
+      {
+        "stat": "Remaining Attack Speed",
+        "model": "table",
+        "expr": "Math.max(10, 100/(n+1))",
+        "note": "Vitesse d'attaque × 1/(cumuls+1), plancher à 10 % (atteint à 9 cumuls)."
+      }
+    ],
+    "explain": "Le malus et la réduction de recharge s'appliquent après tous vos autres bonus : ils rendent les objets de vitesse d'attaque moins efficaces et réduisent l'intérêt des autres réductions de recharge. Seul le premier exemplaire divise vraiment la vitesse d'attaque par 2, les suivants pénalisent moins."
+  },
+  "HalfSpeedDoubleHealth": {
+    "stacking": [
+      {
+        "stat": "Speed",
+        "rename": "Remaining Movement Speed",
+        "model": "reciprocal",
+        "base": 50,
+        "add": 0.5,
+        "bad": true,
+        "note": "Vitesse de déplacement restante = 1 / (1 + n)."
+      },
+      {
+        "stat": "Remaining Movement Speed",
+        "model": "table",
+        "expr": "100/(2*n+1)",
+        "note": "Bug du jeu : le malus est appliqué deux fois, vitesse restante 1/(2×cumuls+1) (33 %, 20 %, 14,3 %...)."
+      }
+    ],
+    "explain": "Le malus de vitesse est en réalité plus fort qu'annoncé à cause d'un bug (un tiers de votre vitesse avec un exemplaire), et les bonus de vitesse compensent mal. La friction au sol dépend de la vitesse : avec beaucoup d'exemplaires, vous glissez sous le recul."
+  },
+  "FocusConvergence": {
+    "limit": "3 copies : les suivantes ne font plus rien.",
+    "stacking": [
+      {
+        "stat": "Charge Speed",
+        "cap": 90
+      },
+      {
+        "stat": "Teleporter Zone",
+        "model": "table",
+        "bad": true,
+        "note": "Rayon de la zone en % du rayon normal ; plafonné à 3 cumuls.",
+        "expr": "100/(2*Math.min(n,3))"
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Minimum charge time (90 s base)",
+        "model": "none",
+        "base": 69.2,
+        "add": 0,
+        "unit": "s",
+        "note": "Temps de charge minimal avec 1 cumul : 90/(1+0,3·n) → 69,2 s, 56,2 s, 47,3 s (max 3 cumuls)."
+      }
+    ],
+    "explain": "Au-delà de 3 exemplaires, l'objet ne fait plus rien. Il compte le total de tous les joueurs et s'applique à toutes les zones à tenir (cellules du Champ du Vide, piliers de Commencement…). Diviser le rayon par 2 divise la surface par 4, donc la contrepartie est plus dure qu'il n'y paraît."
+  },
+  "FreeChest": {
+    "stacking": [
+      {
+        "stat": "Rarity",
+        "remove": true
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Items per Delivery",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "",
+        "note": "On en choisit 1 sur 2 (l'un est caché) ; chances par objet : blanc 0,79, vert 0,2×n, rouge 0,01×n² (pondérées)."
+      }
+    ],
+    "explain": "Chaque stage, une livraison gratuite (multishop écrasé) apparaît quelque part : vous y choisissez 1 objet parmi 2, dont un caché. Les exemplaires augmentent les chances de vert et surtout de rouge (environ 3 % par objet à 2 exemplaires, 26 % à 10). En multijoueur, la rareté dépend du total d'exemplaires de toute l'équipe."
+  },
+  "LunarDagger": {
+    "limit": "127 copies : au 128ᵉ, vous mourez.",
+    "stacking": [
+      {
+        "stat": "Health Reduction",
+        "bad": true
+      }
+    ],
+    "explain": "Les dégâts doublent et les PV max sont divisés par 2 à chaque exemplaire, et l'objet supprime la protection contre les one-shots. Au 25e exemplaire vos PV tombent à 0 et vous mourez instantanément."
+  },
+  "SprintDamage": {
+    "stacking": [
+      {
+        "stat": "Distance per Charge",
+        "model": "table",
+        "expr": "10 / (1 + 0.1 * n)",
+        "formula": "10 m / (1 + 0,1 × n)",
+        "note": "Il faut sprinter un peu moins à chaque copie (wiki : 9,09 m avec 1 copie)."
+      }
+    ],
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Max bonus sprint speed",
+        "model": "linear",
+        "base": 150,
+        "add": 150,
+        "unit": "%",
+        "note": "Bonus max accumulé (+5 %/s de sprint), non mentionné en jeu."
+      },
+      {
+        "stat": "Armor per charge used",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "",
+        "note": "Pendant 1 s à chaque charge consommée."
+      }
+    ],
+    "explain": "Il faut d'abord remplir 10 charges en sprintant. Ensuite, en sprintant, le crâne frappe autour de vous toutes les 0,1 s (chaque ennemi une fois par seconde), chaque frappe consommant une charge ; plus vous êtes rapide, plus il fait mal. Le bonus de vitesse se perd vite quand vous arrêtez de sprinter."
+  },
+  "HexHaunting": {
+    "stacking": [
+      {
+        "stat": "Poltergeist Interval",
+        "model": "table",
+        "expr": "60 / (1 + 0.25 * n)",
+        "formula": "60 s / (1 + 0,25 × n)",
+        "note": "Les esprits frappeurs reviennent de plus en plus souvent (48 s avec 1 copie)."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Max Haunted Interactables",
+        "model": "linear",
+        "base": 2,
+        "add": 1,
+        "unit": "",
+        "note": "Nombre d'interactifs hantés en même temps."
+      },
+      {
+        "stat": "Thrown Object Radius",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon des dégâts de l'objet lancé."
+      }
+    ],
+    "explain": "Un interactif à moins de 120 m est hanté ; quand tu t'en approches à 18 m, un Poltergeist hostile le soulève puis te le lance à sa mort. Si tu tues le Poltergeist toi-même, l'objet ne fait que 10 % des dégâts. Bug : le premier Hex réduit déjà l'intervalle à 48 s."
+  },
+  "Mimicry": {
+    "stacking": [
+      {
+        "stat": "Mimic Interval",
+        "model": "table",
+        "expr": "60 / (1 + 0.1 * n)",
+        "formula": "60 s / (1 + 0,1 × n)",
+        "note": "Les mimiques apparaissent de plus en plus souvent (54,5 s avec 1 copie)."
+      }
+    ],
+    "explain": "Un Mimic hostile déguisé en petit coffre apparaît environ 40 m derrière toi, dès la prise de l'Hex puis à intervalle régulier ; un seul à la fois par porteur. Le tuer rapporte de l'or. Bug : le premier Hex réduit déjà l'intervalle (54,5 s au lieu de 60)."
+  },
+  "SpeedBoostPickup": {
+    "stacking": [
+      {
+        "stat": "Energy Orb Spawn Cooldown",
+        "model": "table",
+        "expr": "10 - (1 - 3 / (3 + (n - 1))) * 8",
+        "formula": "10 − (1 − 3 / (2 + n)) × 8",
+        "note": "Les orbes apparaissent plus souvent, sans jamais descendre sous 2 s."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Movement Speed per orb",
+        "model": "none",
+        "base": 12,
+        "add": 0,
+        "unit": "%",
+        "note": "Par cumul de buff ramassé."
+      },
+      {
+        "stat": "Buff Duration",
+        "model": "none",
+        "base": 12,
+        "add": 0,
+        "unit": "s",
+        "note": "Relancée à chaque orbe ; tous les cumuls disparaissent ensuite."
+      }
+    ],
+    "explain": "Les orbes apparaissent au sol devant votre caméra, il faut aller les ramasser. Chaque orbe relance la durée de 12 s ; sans nouvel orbe, tous les cumuls tombent d'un coup. Les alliés peuvent aussi les ramasser."
+  },
+  "LowHealthOrbSpawner": {
+    "stacking": [
+      {
+        "stat": "Absorb Chance",
+        "model": "table",
+        "expr": "100 * (1 - Math.pow(0.9, n))",
+        "formula": "1 − 0,9^n",
+        "note": "Chaque copie rapporte un peu moins, sans jamais atteindre 100 %."
+      }
+    ],
+    "explain": "Quand un objet à recharge (Bande de Kjaro, Kit furtif, Nageoire…) démarre sa recharge, le Creuset peut la prendre à sa place : l'objet redevient prêt. Pour les objets consommables (Elixir, Meilleur ami de Dio…), il est consommé à leur place, avec TOUS ses exemplaires. La chance n'est pas linéaire (10 %, 19 %, 27 %…) et elle est affectée par la chance ; compétences et équipements ne sont pas concernés."
+  },
+  "RandomDebuffOnInteract": {
+    "stacking": [
+      {
+        "stat": "Debuffs",
+        "rename": "Expected Debuffs",
+        "model": "table",
+        "expr": "0.5 * n * n",
+        "formula": "0,5 × n²",
+        "note": "Chaque copie ajoute un jet et un malus : en moyenne 0,5, 2 puis 4,5 malus par interaction."
+      }
+    ],
+    "luck": "affected",
+    "explain": "Chaque cumul ajoute à la fois un malus et un tirage à 50 %, donc le nombre moyen de malus augmente très vite (0,5 ; 2 ; 4,5…). La chance (trèfle) réduit le risque de malus. Les malus de dégâts sur la durée te blessent avec tes propres dégâts."
+  },
+  "Missile": {
+    "links": [
+      {
+        "kind": "combo",
+        "id": "firering",
+        "why": "2 missiles suffisent pour déclencher le bracelet avec presque toute attaque."
+      },
+      {
+        "kind": "combo",
+        "id": "icering",
+        "why": "Pareil que Kjaro : les missiles font de gros coups."
+      },
+      {
+        "kind": "combo",
+        "id": "chainlightning",
+        "why": "Deux objets à dégâts TOTAUX qui se déclenchent l'un l'autre."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Trigger Chance",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance par coup, multipliée par le coefficient de proc de l'attaque."
+      }
+    ],
+    "explain": "La chance de 10 % est multipliée par le coefficient de proc de l'attaque, et le missile est critique si le coup déclencheur l'était."
+  },
+  "CritGlasses": {
+    "limit": "100 % à 10 copies : les suivantes ne servent plus (sauf Railgunner).",
+    "links": [
+      {
+        "kind": "combo",
+        "id": "healoncrit",
+        "why": "Chaque critique vous soigne."
+      },
+      {
+        "kind": "combo",
+        "id": "attackspeedoncrit",
+        "why": "Chaque critique augmente votre vitesse d'attaque."
+      },
+      {
+        "kind": "combo",
+        "id": "missile",
+        "why": "Les missiles tirés par un critique sont critiques."
+      }
+    ],
+    "explain": "Au-delà de 10 lunettes (100 % de critique), les copies supplémentaires ne servent à rien, sauf pour Railgunner qui convertit la chance de critique en dégâts critiques. La chance de critique profite de la chance (trèfle) et ne dépend pas du coefficient de proc de l'attaque."
+  },
+  "Syringe": {
+    "links": [
+      {
+        "kind": "combo",
+        "id": "missile",
+        "why": "Plus de coups = plus de chances de tirer."
+      },
+      {
+        "kind": "combo",
+        "id": "stickybomb",
+        "why": "Plus de coups = plus de bombes."
+      }
+    ]
+  },
+  "bfg": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Explosion damage",
+        "model": "none",
+        "base": 8000,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts réels (le jeu annonce 4000 %). Chute jusqu'à ~25 % entre 15 et 20 m du centre. Proc 1.0."
+      },
+      {
+        "stat": "Explosion radius",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'explosion finale."
+      },
+      {
+        "stat": "Tendril damage per bolt",
+        "model": "none",
+        "base": 400,
+        "add": 0,
+        "unit": "%",
+        "note": "3 éclairs par seconde (1200 %/s réels, le jeu annonce 600 %/s). Proc 0.1."
+      },
+      {
+        "stat": "Tendril range",
+        "model": "none",
+        "base": 35,
+        "add": 0,
+        "unit": "m",
+        "note": "Portée des éclairs de la boule."
+      }
+    ],
+    "explain": "Après 2 s de charge, tire une grosse boule lente qui électrocute les ennemis proches puis explose au contact d'un ennemi ou du décor. Les dégâts réels sont le double de ceux annoncés. Les éclairs peuvent déclencher les Bagues (Kjaro, Runald, Singularité) avant l'explosion."
+  },
+  "knockbackhitenemies": {
+    "addStacking": [
+      {
+        "stat": "Bonus damage taken per launch",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Par charge de débuff restante sur l'ennemi (2 +1 par cumul)."
+      },
+      {
+        "stat": "Recharge",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "s",
+        "note": "Selon le texte du jeu ; le wiki indique 10 s."
+      }
+    ],
+    "explain": "Toucher un ennemi au sol le projette en l'air et l'étourdit ; chaque coup suivant en l'air le relance et retire une charge, et chaque charge restante augmente ses dégâts subis de 10 %. Ne marche pas sur un ennemi déjà en l'air ni immunisé aux chutes, mais marche sur les boss. S'il subit des dégâts de chute en ayant encore le débuff, ils deviennent un coup critique."
+  },
+  "pageupgradeitem": {
+    "explain": "Vise un objet au sol (30 m max, ligne de vue) et le remplace par 2 exemplaires d'un objet du tier inférieur, choisi de préférence avec des tags similaires. Les objets blancs, lunaires, de nourriture, pages et Void blancs ne peuvent pas être ciblés ; une cible invalide ne consomme pas la page. Posséder des Pages ajoute des catastrophes aux téléporteurs suivants."
+  },
+  "armorplate": {
+    "explain": "Retire un montant fixe à chaque coup reçu, après l'armure, y compris à chaque tick de dégâts sur la durée. Très fort contre les petits coups rapides, de moins en moins utile quand la difficulté monte. N'affecte pas le Brouillard du Néant."
+  },
+  "elitehauntedequipment": {
+    "explain": "Équipement passif (ne s'active pas) obtenu très rarement (1/4000) sur un élite Céleste. Vos attaques ralentissent fortement les ennemis et une grande aura rend invisibles vos alliés proches. Les alliés invisibles n'attirent plus les ennemis, qui se concentrent donc sur vous."
+  },
+  "wardonlevel": {
+    "addStacking": [
+      {
+        "stat": "Attack & movement speed",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de vitesse d'attaque et de déplacement dans la zone de la bannière."
+      }
+    ],
+    "explain": "Une bannière est posée à chaque montée de niveau et au début de l'événement du téléporteur. Tous les alliés dans la zone (drones et tourelles compris) gagnent 30 % de vitesse d'attaque et de déplacement."
+  },
+  "thorns": {
+    "addStacking": [
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 160,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts par cible touchée à chaque coup reçu. Proc 0.5."
+      }
+    ],
+    "explain": "Se déclenche chaque fois que vous perdez des PV, y compris par dégâts auto-infligés (chute, Autel de sang, Teinture d'Helfire). Ne se déclenche pas si le coup est bloqué (Ténacité, Espaces sûrs, invincibilité)."
+  },
+  "behemoth": {
+    "explain": "Toutes vos attaques, y compris celles des objets, explosent. Le rayon est multiplié par le coefficient de proc du coup : un coup à 0 (ex. saignement) n'explose pas. La description en jeu (+1,5 m) est fausse : c'est +2,5 m par cumul."
+  },
+  "eliteaurelioniteequipment": {
+    "addStacking": [
+      {
+        "stat": "Gold per nugget",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "",
+        "note": "Or par pépite, augmente avec le temps ; la pépite disparaît après 10 s."
+      },
+      {
+        "stat": "Outer ring damage",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "%",
+        "note": "Premier anneau de pics (actif)."
+      },
+      {
+        "stat": "Inner ring damage",
+        "model": "none",
+        "base": 150,
+        "add": 0,
+        "unit": "%",
+        "note": "Second anneau, après un court délai."
+      }
+    ],
+    "explain": "Les ennemis touchés lâchent des pépites d'or à ramasser (environ une toutes les 0,5 s, même pendant la recharge). L'activation fait surgir des pics là où vous visez, en deux anneaux."
+  },
+  "shocknearby": {
+    "addStacking": [
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 200,
+        "add": 0,
+        "unit": "%",
+        "note": "Par éclair, toutes les 0,5 s. Proc 0.3. Traverse le décor."
+      },
+      {
+        "stat": "Range",
+        "model": "none",
+        "base": 35,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de recherche des cibles."
+      }
+    ],
+    "explain": "La bobine alterne seule entre 10 s allumée et 10 s éteinte. Allumée, elle frappe automatiquement les ennemis à 35 m, même à travers les murs."
+  },
+  "sprintbonus": {
+    "explain": "Bonus de vitesse uniquement pendant le sprint. Il n'augmente pas le multiplicateur de sprint, donc ne renforce pas les autres objets de vitesse comme le Sabot de chèvre de Paul."
+  },
+  "dronesdropdynamite": {
+    "addStacking": [
+      {
+        "stat": "Recharge",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai entre deux largages de dynamite, en combat."
+      }
+    ],
+    "explain": "Donne un drone, le Lt. Droneboy. En combat, tous vos alliés mécaniques (pas seulement les drones) lâchent de la dynamite qui étourdit, toutes les 10 s."
+  },
+  "stickybomb": {
+    "addStacking": [
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 180,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts TOTAUX de l'explosion. Proc 0.0."
+      },
+      {
+        "stat": "Explosion radius",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "m",
+        "note": "Plus de dégâts au centre (chute de dégâts)."
+      },
+      {
+        "stat": "Fuse delay",
+        "model": "none",
+        "base": 1.5,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai avant explosion."
+      }
+    ]
+  },
+  "stunandpierce": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Chance",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance fixe, multipliée par le coefficient de proc du coup."
+      }
+    ],
+    "explain": "Le boomerang traverse les ennemis à l'aller et au retour, donc peut toucher deux fois. Après le premier impact, il inflige en continu de petits coups (proc 0.2). Il peut se coincer dans le décor et toucher en boucle les ennemis proches."
+  },
+  "critatlowerelevation": {
+    "addStacking": [
+      {
+        "stat": "Max crit chance bonus",
+        "model": "linear",
+        "base": 10,
+        "add": 10,
+        "unit": "%",
+        "note": "Au maximum de 10 charges du buff."
+      }
+    ],
+    "explain": "Il faut que votre centre soit au-dessus de celui de l'ennemi (environ à mi-hauteur) pour gagner une charge. N'importe quel coup ensuite, même d'en dessous, rafraîchit la durée de 10 s. Le buff monte à 10 charges, chaque cumul d'objet augmentant le bonus par charge."
+  },
+  "novaonlowhealth": {
+    "stacking": [
+      {
+        "stat": "Recharge Speed",
+        "model": "reciprocal",
+        "base": 15,
+        "add": 0.5,
+        "unit": "s",
+        "note": "Temps de recharge réel (le jeu annonce 30 s). S'y ajoutent 3 s de charge (réduites par la vitesse d'attaque) et 2 s d'explosion."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 6000,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE. Proc 1.0."
+      },
+      {
+        "stat": "Explosion radius",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'explosion."
+      }
+    ],
+    "explain": "Se déclenche quand vos PV passent sous 25 % du total PV + bouclier. La charge avant explosion est plus courte avec plus de vitesse d'attaque, et si vous êtes encore sous le seuil à la fin de la recharge, ça repart tout seul."
+  },
+  "firering": {
+    "addStacking": [
+      {
+        "stat": "Trigger threshold",
+        "model": "none",
+        "base": 400,
+        "add": 0,
+        "unit": "%",
+        "note": "Le coup doit faire au moins 400 % de dégâts de base et avoir un proc > 0."
+      },
+      {
+        "stat": "Recharge",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Partagée avec la Bague de Runald."
+      },
+      {
+        "stat": "Tornado duration",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "s",
+        "note": "Touche toutes les 0,3 s dans ~5 m."
+      }
+    ],
+    "explain": "Seul le pourcentage de la compétence compte pour atteindre 400 % : critiques et bonus d'objets ne permettent pas d'y arriver (sauf Exposition du Mercenaire et Ruine du Faux Fils). Se déclenche toujours en même temps que la Bague de Runald."
+  },
+  "icering": {
+    "addStacking": [
+      {
+        "stat": "Trigger threshold",
+        "model": "none",
+        "base": 400,
+        "add": 0,
+        "unit": "%",
+        "note": "Le coup doit faire au moins 400 % de dégâts de base et avoir un proc > 0."
+      },
+      {
+        "stat": "Recharge",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Partagée avec la Bague de Kjaro."
+      },
+      {
+        "stat": "Slow",
+        "model": "none",
+        "base": 80,
+        "add": 0,
+        "unit": "%",
+        "note": "Ralentissement de déplacement."
+      }
+    ],
+    "explain": "Seul le pourcentage de la compétence compte pour atteindre 400 % : critiques et bonus d'objets ne permettent pas d'y arriver. Ne gèle pas : ralentit de 80 % une seule cible. Se déclenche toujours avec la Bague de Kjaro."
+  },
+  "barrieronkill": {
+    "explain": "La barrière diminue avec le temps en fonction de vos PV max, alors que le gain par kill est fixe : il en faut beaucoup en fin de partie. La barrière ne peut pas dépasser PV max + bouclier."
+  },
+  "vendingmachine": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Impact damage",
+        "model": "none",
+        "base": 2000,
+        "add": 0,
+        "unit": "%",
+        "note": "Proc 1.0, plus de dégâts au centre."
+      },
+      {
+        "stat": "Impact radius",
+        "model": "none",
+        "base": 16,
+        "add": 0,
+        "unit": "m",
+        "note": ""
+      },
+      {
+        "stat": "Heal per can",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "%",
+        "note": "Des PV max de celui qui ramasse la canette."
+      }
+    ],
+    "explain": "La machine tombe 5 s après l'activation. Elle peut ensuite être utilisée 12 fois contre un peu d'or (5 de base) pour donner jusqu'à 3 canettes de soin. Chaque utilisation déclenche les objets « à l'interaction » (Feux d'artifice, Polype de calmar). Une seule machine à la fois."
+  },
+  "jumpboost": {
+    "explain": "Marche sur tous les sauts de base du personnage (y compris le double saut du Mercenaire), mais pas sur les sauts en plus de la Plume Hopoo."
+  },
+  "sanguinechalice": {
+    "explain": "Chaque tick de saignement ou d'hémorragie sur un ennemi vous soigne, multiplié par le nombre total de cumuls de saignement sur lui (même ceux d'autres joueurs). Le saignement tique 4 fois par seconde, donc ça soigne vite. Les 10 % de chance s'ajoutent à la Dague tri-pointe et sont multipliés par le coefficient de proc."
+  },
+  "pageteaminvisibility": {
+    "addStacking": [
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "s",
+        "note": ""
+      },
+      {
+        "stat": "Movement speed",
+        "model": "none",
+        "base": 40,
+        "add": 0,
+        "unit": "%",
+        "note": ""
+      },
+      {
+        "stat": "Armor",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "",
+        "note": ""
+      }
+    ],
+    "explain": "Après 1 s d'incantation, toute votre équipe (joueurs, drones, tourelles, sbires) est concernée, où qu'elle soit sur la carte. Utilisable une fois par niveau avec le N'tormat."
+  },
+  "multishopcard": {
+    "addStacking": [
+      {
+        "stat": "Gold refund",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "De l'or dépensé, arrondi à l'inférieur."
+      }
+    ],
+    "explain": "Se déclenche tout seul à chaque achat avec de l'or (pas d'activation manuelle). Pour garder les terminaux ouverts, il ne doit pas être en recharge : maintenez la touche d'interaction plutôt que de la marteler. Ne marche que s'il est l'équipement actif."
+  },
+  "talisman": {
+    "explain": "Chaque kill (même un pot cassé) retire du temps de recharge à l'équipement. Inutile avec les équipements sans recharge (Carte exécutive, équipements d'élite…). Les kills des tourelles d'Ingénieur ne comptent pas."
+  },
+  "equipmentmagazinevoid": {
+    "addStacking": [
+      {
+        "stat": "Special cooldown reduction",
+        "model": "none",
+        "base": 33,
+        "add": 0,
+        "unit": "%",
+        "note": "Non mentionné en jeu."
+      }
+    ],
+    "explain": "Donne des charges en plus de la compétence spéciale et réduit aussi son temps de recharge, ce que le jeu ne dit pas. N'affecte plus l'équipement (contrairement à la Cellule d'énergie)."
+  },
+  "masterbattery": {
+    "explain": "Aucun effet direct. Lâché par la Solus Wing, il se combine chez le CHEF errant avec une clé (Clé rouillée, Clé incrustée, etc.) pour créer le Cervelet exposé, nécessaire pour accéder au Sanctuaire neuronal."
+  },
+  "mastercore": {
+    "explain": "Aucun effet direct. Il se donne à SPEX dans le Computational Exchange pour ouvrir un portail vers le Sanctuaire neuronal. Impossible à recycler ou à mettre au rebut."
+  },
+  "mushroom": {
+    "explain": "Le soin est basé sur les PV max de chaque allié soigné, pas les vôtres, et marche aussi sur drones et tourelles. Le moindre mouvement (même un recul de compétence) coupe l'effet."
+  },
+  "randomequipmenttrigger": {
+    "explain": "À chaque activation de votre équipement, lance aussi un ou plusieurs autres équipements au hasard. Certains sont exclus (Météorite, Teinture d'Helfire, Chrysalide, Recycleur, Carte exécutive…). Avec la Carte exécutive, ça se déclenche à chaque achat."
+  },
+  "mushshot": {
+    "procCoefficient": 0.5,
+    "addStacking": [
+      {
+        "stat": "Spore clouds",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "",
+        "note": "Nombre de nuages par atterrissage."
+      },
+      {
+        "stat": "Damage per tick",
+        "model": "linear",
+        "base": 25,
+        "add": 5,
+        "unit": "%",
+        "note": "4 ticks par seconde pendant 10 s. Proc 0.5."
+      },
+      {
+        "stat": "Slow",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Pendant 2 s, non mentionné en jeu."
+      }
+    ],
+    "explain": "Annule tous les dégâts de chute. Les nuages n'apparaissent que si l'atterrissage aurait fait des dégâts de chute : ralentir avant (double saut) les empêche. Les nuages ralentissent aussi les ennemis."
+  },
+  "extrastatsonlevelup": {
+    "addStacking": [
+      {
+        "stat": "Experience gained",
+        "model": "linear",
+        "base": 100,
+        "add": 25,
+        "unit": "%",
+        "note": "XP gagnée par l'objet, réduite de 2,5 % par charge déjà consommée (min 20 % +5 %)."
+      }
+    ],
+    "explain": "L'objet gagne de l'expérience avec vous et accumule des charges. Les stats ne sont données que quand vous vous en séparez (broyeur, imprimante, chaudron) : vous gagnez alors une partie de vos PV, régénération et dégâts par niveau pour chaque charge."
+  },
+  "secondaryskillmagazine": {
+    "explain": "Ajoute des charges à votre compétence secondaire mais ne réduit pas son temps de recharge."
+  },
+  "slowonhit": {
+    "addStacking": [
+      {
+        "stat": "Slow",
+        "model": "none",
+        "base": 60,
+        "add": 0,
+        "unit": "%",
+        "note": "Ralentissement de déplacement."
+      }
+    ],
+    "explain": "Marche à chaque coup, quel que soit le coefficient de proc. Ne ralentit que le déplacement, pas la vitesse d'attaque : peu utile contre les ennemis à distance."
+  },
+  "jetpack": {
+    "addStacking": [
+      {
+        "stat": "Flight duration",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "s",
+        "note": ""
+      }
+    ],
+    "explain": "Permet de voler 15 s ; sauter donne un élan sans recharge. Le bonus de 20 % de vitesse annoncé ne s'applique pas en réalité."
+  },
+  "ghostblades": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Blade damage",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Par contact ; chaque lame touche un ennemi au plus une fois par seconde."
+      },
+      {
+        "stat": "Blade bleed",
+        "model": "none",
+        "base": 240,
+        "add": 0,
+        "unit": "%",
+        "note": "Saignement sur 3 s par coup de lame."
+      },
+      {
+        "stat": "Blade duration",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": ""
+      }
+    ],
+    "explain": "Le vol de vie est multiplié par le coefficient de proc et ignore les critiques. Chaque fois que vos soins cumulés atteignent 10 % de vos PV max, une lame apparaît (la régénération ne compte pas). La compétence secondaire lance toutes les lames vers l'avant."
+  },
+  "pageclarity": {
+    "addStacking": [
+      {
+        "stat": "Cooldown reduction",
+        "model": "none",
+        "base": 75,
+        "add": 0,
+        "unit": "%",
+        "note": "Compétences et équipement."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": ""
+      }
+    ],
+    "explain": "Recharge immédiatement toutes les compétences (toutes les charges) et l'équipement, puis réduit les recharges de 75 % pendant 10 s. Une recharge d'équipement lancée pendant le buff reste réduite même après la fin. Utilisable une fois par niveau avec le N'tormat."
+  },
+  "artifactkey": {
+    "explain": "Lâchée par les ennemis pendant un défi d'Artefact dans le Bulwark's Ambry. Sert à endommager le Reliquaire d'artefact ; toutes les clés détenues et au sol sont consommées à l'utilisation. Non affectée par la chance."
+  },
+  "treasurecachevoid": {
+    "explain": "Une cache violette apparaît à chaque niveau ; l'ouvrir consomme une clé et propose 3 objets du Néant au choix. Les chances réelles sont d'environ 42 % commun, 51 % peu commun, 7 % légendaire. En multijoueur, une cache par joueur."
+  },
+  "treasurecache": {
+    "addStacking": [
+      {
+        "stat": "Uncommon chance",
+        "model": "none",
+        "base": 80,
+        "add": 0,
+        "unit": "%",
+        "note": "Le coffre rouillé contient un objet vert (80 %) ou rouge (20 %), comme un grand coffre."
+      }
+    ],
+    "explain": "Un seul coffre rouillé apparaît par étage pour chaque joueur qui possède au moins une clé : avoir plusieurs clés n'ajoute pas de coffres, ça permet juste d'en ouvrir sur plusieurs étages. Le coffre n'apparaît qu'à partir de l'étage suivant le ramassage de la clé."
+  },
+  "powerpyramid": {
+    "explain": "Sert surtout à activer les Terminaux Sentinelles de Conduit Canyon (chemins et téléporteur). Le bonus de vitesse ne se cumule pas, et la clé ne peut pas être recyclée en ferraille jaune."
+  },
+  "speedonpickup": {
+    "luck": null,
+    "addStacking": [
+      {
+        "stat": "Buff duration",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de chaque bonus après un ramassage."
+      },
+      {
+        "stat": "Max all-stats bonus",
+        "model": "linear",
+        "base": 9,
+        "add": 6,
+        "unit": "%",
+        "note": "Bonus max quand tous les cumuls sont actifs (3 % × nombre de cumuls max). Bonus multiplicatif, appliqué après les autres objets."
+      }
+    ],
+    "explain": "Chaque ramassage (objet, équipement, orbe de soin, pépite d'or, pack de munitions, ouverture de baril…) donne un cumul de +3 % à presque toutes les stats pendant 20 s. Le bonus est multiplicatif : il est fort sur les stats déjà élevées mais faible sur les coups critiques ; il n'augmente pas l'accélération."
+  },
+  "elitelunarequipment": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Bomb damage",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "%",
+        "note": "4 bombes de 30 % de dégâts chacune, toutes les 10 s en combat."
+      },
+      {
+        "stat": "Bomb interval",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai entre deux salves de 4 bombes (en combat)."
+      },
+      {
+        "stat": "Movement Speed",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "%",
+        "note": "Vitesse de déplacement bonus de l'élite Parfait."
+      },
+      {
+        "stat": "Max health",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "%",
+        "note": "+25 % de vie max, mais toute la vie sauf 1 PV devient du bouclier."
+      }
+    ],
+    "explain": "Équipement passif (ne s'active pas) : vous devenez un élite Parfait. Vos attaques infligent Estropié, vous gagnez +30 % de vitesse et +25 % de vie, mais toute votre vie sauf 1 PV est convertie en bouclier qui ne se soigne pas normalement, comme avec Transcendance."
+  },
+  "deathmark": {
+    "addStacking": [
+      {
+        "stat": "Damage taken",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Les ennemis marqués subissent +50 % de dégâts de toutes les sources (y compris des alliés)."
+      },
+      {
+        "stat": "Debuffs required",
+        "model": "none",
+        "base": 4,
+        "add": 0,
+        "unit": "",
+        "note": "Nombre de débuffs différents requis sur l'ennemi."
+      }
+    ],
+    "explain": "Il faut 4 débuffs DIFFÉRENTS sur l'ennemi, puis que le porteur le touche avec une attaque à coefficient de proc > 0 (les dégâts sur la durée ne marquent pas). Étourdir ou geler ne compte pas comme débuff. La marque ne peut pas être prolongée, mais reste même si les débuffs disparaissent."
+  },
+  "lightning": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 3000,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de la foudre sur la cible visée, 0,5 s après l'activation."
+      },
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'impact ; la cible peut esquiver pendant le délai."
+      }
+    ]
+  },
+  "shockdamageaura": {
+    "addStacking": [
+      {
+        "stat": "Buff duration",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée du buff Énergisé."
+      },
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 45,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de la vague qui énergise les alliés."
+      }
+    ],
+    "explain": "Le buff Énergisé touche tous les alliés à 45 m. Les coups critiques garantis ne s'appliquent qu'aux dégâts électriques (Ukulélé, Perforateur chargé, Condensateur royal, certaines compétences d'Artificière, Loader, Captain…). Seule la fréquence des vagues s'améliore avec les cumuls."
+  },
+  "energizedonequipmentuse": {
+    "addStacking": [
+      {
+        "stat": "Attack Speed",
+        "model": "none",
+        "base": 70,
+        "add": 0,
+        "unit": "%",
+        "note": "Vitesse d'attaque du buff Énergisé."
+      }
+    ]
+  },
+  "extraequipment": {
+    "explain": "Chaque exemplaire ajoute un emplacement d'équipement ; on change d'équipement actif en appuyant en même temps sur Interagir et Équipement. Le temps de recharge est lié à l'emplacement, pas à l'équipement. Si vous perdez l'objet, les équipements en trop tombent au sol."
+  },
+  "goldonhit": {
+    "stacking": [
+      {
+        "stat": "Gold Lost",
+        "bad": true
+      }
+    ],
+    "explain": "L'or gagné par coup augmente avec la difficulté de la partie (2 × difficulté par exemplaire), et la chance de 30 % dépend du coefficient de proc et de la chance. Quand vous êtes touché, vous perdez le même pourcentage de votre or que de vie max perdue (×2 avec 2 exemplaires…)."
+  },
+  "missilevoid": {
+    "addStacking": [
+      {
+        "stat": "Shield",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Bouclier égal à 10 % de la vie max (premier exemplaire seulement)."
+      }
+    ],
+    "explain": "Chaque coup avec un coefficient de proc > 0 tire un missile tant que vous avez du bouclier, sans jet de chance. Le texte du jeu (+50 % par cumul) est faux : c'est +40 % de dégâts TOTAUX par cumul. Le missile ignore le terrain et ne change pas de cible si la sienne meurt."
+  },
+  "nearbydamagebonus": {
+    "addStacking": [
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 13,
+        "add": 0,
+        "unit": "m",
+        "note": "Seuls les ennemis à moins de 13 m du porteur subissent le bonus (anneau rouge au sol)."
+      }
+    ],
+    "explain": "Tous vos dégâts sont augmentés contre les ennemis proches, y compris les dégâts sur la durée et ceux des objets. Les objets à dégâts TOTAUX se basent sur le coup avant le bonus, puis reçoivent eux-mêmes le bonus s'ils touchent un ennemi proche."
+  },
+  "bouncenearby": {
+    "addStacking": [
+      {
+        "stat": "Damage per hook",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts TOTAUX par crochet."
+      },
+      {
+        "stat": "Range",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "m",
+        "note": "Portée de recherche des cibles autour de l'ennemi touché."
+      }
+    ],
+    "explain": "La chance stacke de façon hyperbolique (16,7 % avec 1 exemplaire, malgré les 20 % affichés), alors que le nombre de cibles augmente linéairement. Les crochets attirent les ennemis vers celui touché, pratique pour les grouper."
+  },
+  "lunarsecondaryreplacement": {
+    "procCoefficient": 0.2,
+    "addStacking": [
+      {
+        "stat": "Maelstrom damage per second",
+        "model": "none",
+        "base": 875,
+        "add": 0,
+        "unit": "%",
+        "note": "Jusqu'à 5 touches par seconde de 175 % chacune (coefficient de proc 0,2)."
+      },
+      {
+        "stat": "Explosion damage",
+        "model": "none",
+        "base": 700,
+        "add": 0,
+        "unit": "%",
+        "note": "Explosion après 3 s, coefficient de proc 1,0."
+      },
+      {
+        "stat": "Explosion radius",
+        "model": "none",
+        "base": 14,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'explosion qui enracine les ennemis."
+      }
+    ]
+  },
+  "dagger": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Daggers",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "",
+        "note": "Nombre de dagues par ennemi tué."
+      },
+      {
+        "stat": "Homing range",
+        "model": "none",
+        "base": 130,
+        "add": 0,
+        "unit": "m",
+        "note": "Portée de recherche des dagues ; elles disparaissent après 10 s sans cible."
+      }
+    ],
+    "explain": "Toute mort causée par vous ou vos objets fait apparaître 3 dagues qui foncent sur les ennemis proches ; chaque dague fait son propre jet de critique. Elles ne contournent pas les murs et peuvent s'y bloquer."
+  },
+  "regeneratingscrap": {
+    "explain": "Utilisée en priorité dans les imprimantes 3D vertes et les chaudrons légendaires du Bazar, elle devient alors « consommée » puis revient au prochain étage. La passer au broyeur la transforme en ferraille verte normale, qui ne se régénère pas."
+  },
+  "dreamdemon": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Haunt chance",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance par coup de compétence, multipliée par le coefficient de proc."
+      },
+      {
+        "stat": "Charge required",
+        "model": "none",
+        "base": 1600,
+        "add": 0,
+        "unit": "%",
+        "note": "Charge nécessaire, en % de vos dégâts de base infligés à l'ennemi hanté."
+      },
+      {
+        "stat": "Explosion radius",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "m",
+        "note": "Les dégâts diminuent linéairement jusqu'au bord du rayon."
+      }
+    ],
+    "explain": "Seuls les dégâts de compétences peuvent hanter et charger le démon (pas les objets ni les dégâts sur la durée), et ceux de n'importe quel joueur comptent. Dès 800 % de charge, on peut le faire exploser pour moitié moins de dégâts. Un seul démon par ennemi."
+  },
+  "tooth": {
+    "addStacking": [
+      {
+        "stat": "Flat heal",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "",
+        "note": "Soin fixe en PV ajouté au pourcentage de vie max."
+      },
+      {
+        "stat": "Orb lifetime",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée approximative avant disparition de l'orbe."
+      }
+    ]
+  },
+  "tonicaffliction": {
+    "stacking": [
+      {
+        "stat": "Most",
+        "bad": true,
+        "note": "Toutes les stats sauf la vie max : -5 % multiplicatif par cumul."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Max health reduction",
+        "model": "hyperbolic",
+        "base": 10,
+        "add": 10,
+        "unit": "%",
+        "note": "La vie max baisse de 1-1/(1+0,1·n) : 9,09 %, 16,67 %, 23,08 %… (modèle hyperbolique, pas -5 %)."
+      }
+    ],
+    "explain": "Obtenue avec 20 % de chance quand le buff du Tonique de spinelle se termine. Les malus sont annulés tant que le buff du Tonique est actif, et la Douche explosive ne les retire pas. La vie max ne peut pas descendre sous 1 PV."
+  },
+  "parry": {
+    "addStacking": [
+      {
+        "stat": "Parry window",
+        "model": "none",
+        "base": 0.5,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de la posture de parade."
+      },
+      {
+        "stat": "Cooldown refund",
+        "model": "none",
+        "base": 75,
+        "add": 0,
+        "unit": "%",
+        "note": "Réduction de la recharge de l'équipement après une parade réussie (45 s rendues)."
+      }
+    ],
+    "explain": "Pendant 0,5 s, le prochain coup reçu (n'importe lequel, même chute ou dégâts sur la durée) est annulé. Une parade réussie donne la Bénédiction : votre prochain coup de compétence déclenche à coup sûr tous vos effets à chance (et les effets à la mort s'il tue). Sur un tir à plusieurs projectiles, un seul est béni."
+  },
+  "laserturbine": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Explosion radius",
+        "model": "none",
+        "base": 14,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'explosion (dégâts plus faibles loin du centre)."
+      },
+      {
+        "stat": "Kills to charge",
+        "model": "none",
+        "base": 4,
+        "add": 0,
+        "unit": "",
+        "note": "Éliminations en 7 s nécessaires pour lancer le disque."
+      }
+    ],
+    "explain": "Le texte du jeu se trompe : l'explosion inflige 4000 % de dégâts de base, pas 1000 %. Le disque vise l'ennemi entouré du plus d'ennemis dans un rayon de 100 m. Casser des pots ou des barils compte comme des éliminations."
+  },
+  "elitefireequipment": {
+    "totalDamage": true,
+    "procCoefficient": 0,
+    "addStacking": [
+      {
+        "stat": "Burn damage",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Brûlure de 50 % des dégâts TOTAUX du coup, sur la durée."
+      }
+    ],
+    "explain": "Équipement passif (ne s'active pas) : vous devenez un élite Ardent. Chaque coup enflamme l'ennemi et vous laissez une traînée de feu qui blesse ceux qui la touchent. Le Réservoir d'allumage rend cet équipement beaucoup plus fort."
+  },
+  "cleanse": {
+    "addStacking": [
+      {
+        "stat": "Projectile radius",
+        "model": "none",
+        "base": 6,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon dans lequel les projectiles ennemis sont détruits."
+      }
+    ],
+    "explain": "Retire seulement les débuffs temporaires (pas les malus permanents ni les Afflictions de tonique). Recharge aussi certains objets à recharge (Bandes, Kit furtif, Nageoire…), mais pas l'Écho déformé."
+  },
+  "duplicator": {
+    "stacking": [
+      {
+        "stat": "Temporary item duration increase",
+        "unit": "s"
+      }
+    ],
+    "explain": "Chaque objet ramassé donne aussi une copie temporaire. Les objets des imprimantes ne comptent pas. Un objet interdit en temporaire (Ferraille régénérante, Étoile soldée…) donne à la place un objet temporaire aléatoire de même rareté ; les objets lunaires et de quête ne donnent rien."
+  },
+  "delayeddamage": {
+    "addStacking": [
+      {
+        "stat": "Damage reduction",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Réduction du coup absorbé avant sa répartition."
+      },
+      {
+        "stat": "Echo interval",
+        "model": "none",
+        "base": 0.75,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai entre deux coups répartis."
+      }
+    ],
+    "explain": "Le coup absorbé est réparti en plusieurs coups espacés de 0,75 s, ce qui laisse le temps de se soigner ou de devenir invincible. Seul le dernier coup peut tuer. Les bonus de dégâts subis (Lunar Ruin, Montre délicate…) peuvent s'appliquer deux fois."
+  },
+  "barrieroncooldown": {
+    "explain": "La barrière est proportionnelle au temps de recharge DE BASE de la compétence : les longues recharges en donnent plus. Les charges supplémentaires (Chargeur de secours, etc.) donnent aussi de la barrière à chaque charge récupérée, mais pas le rechargement des tirs de Bandit."
+  },
+  "crippleward": {
+    "addStacking": [
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'effigie (affecte joueurs et ennemis)."
+      },
+      {
+        "stat": "Slow",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Ralentissement d'Estropié."
+      },
+      {
+        "stat": "Armor reduction",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "",
+        "note": "Armure retirée par Estropié."
+      }
+    ],
+    "explain": "L'effigie est permanente et touche aussi vous et vos alliés. Avec plus de 5 effigies, la plus ancienne disparaît."
+  },
+  "lunarsun": {
+    "addStacking": [
+      {
+        "stat": "Bomb damage",
+        "model": "none",
+        "base": 360,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de chaque bombe à l'impact."
+      },
+      {
+        "stat": "Item conversion interval",
+        "model": "none",
+        "base": 60,
+        "add": 0,
+        "unit": "s",
+        "note": "Un objet aléatoire devient Égocentrisme toutes les 60 s (fixe)."
+      }
+    ],
+    "explain": "Le temps entre deux bombes est 3 s divisé par le nombre d'exemplaires. L'objet converti est tiré au hasard parmi tous vos objets (pas les objets sans rareté ni la Solitude), quel que soit son nombre d'exemplaires. Les bombes traversent le terrain."
+  },
+  "gainarmor": {
+    "addStacking": [
+      {
+        "stat": "Armor",
+        "model": "none",
+        "base": 500,
+        "add": 0,
+        "unit": "",
+        "note": "+500 d'armure, soit environ 83 % de réduction des dégâts."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée du buff d'armure."
+      }
+    ]
+  },
+  "healingpotion": {
+    "addStacking": [
+      {
+        "stat": "Heal",
+        "model": "none",
+        "base": 75,
+        "add": 0,
+        "unit": "%",
+        "note": "Soin en % de la vie max."
+      },
+      {
+        "stat": "Health threshold",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "%",
+        "note": "Déclenché quand un coup vous fait passer sous 25 % de vie."
+      }
+    ],
+    "explain": "Un seul exemplaire est consommé à chaque fois et devient une Bouteille vide. Il se déclenche avant la Montre délicate, ce qui la protège."
+  },
+  "teleportonlowhealth": {
+    "addStacking": [
+      {
+        "stat": "Barrier",
+        "model": "none",
+        "base": 60,
+        "add": 0,
+        "unit": "%",
+        "note": "Barrière temporaire en % de la vie max, à l'activation."
+      },
+      {
+        "stat": "Aura duration",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "s",
+        "note": "Chaque ennemi tué par l'aura ajoute 1 s, jusqu'à 10 s maximum."
+      }
+    ],
+    "explain": "Sous 25 % de vie, vous recevez une grosse barrière et une aura qui téléporte au loin les ennemis et leur inflige 3 cumuls de saignement. L'objet est consommé à la fin de l'effet puis revient au prochain étage ; il empêche les autres objets « bas niveau de vie » (Elixir, Montre délicate…) de se déclencher."
+  },
+  "vilecenser": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Stun duration",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de l'étourdissement."
+      },
+      {
+        "stat": "Max stun chance",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "%",
+        "note": "La chance dépend de la vie manquante de la cible : 0 % à pleine vie, ~11 % à mi-vie, 20 % presque morte."
+      }
+    ],
+    "explain": "Le texte du jeu se trompe : la chance d'étourdir n'est pas 10 % fixe mais dépend de la vie manquante de l'ennemi, et le rayon de chaîne est 14 m (+4 m), pas 10 m (+5 m). Seuls les coups de compétence sur une cible étourdie libèrent les vrilles ; les ennemis non étourdissables (boss) ont une chance selon leur vie manquante."
+  },
+  "monstersonshrineuse": {
+    "stacking": [
+      {
+        "stat": "Enemy Difficulty",
+        "bad": true
+      }
+    ],
+    "explain": "Chaque utilisation d'autel ou de bassin de purification fait apparaître des ennemis, comme un Autel de combat, avec un budget basé sur la difficulté à l'entrée de l'étage. Plus d'exemplaires = ennemis plus forts ou plus nombreux, qui donnent aussi plus d'or et d'XP."
+  },
+  "jumpdamagestrike": {
+    "stacking": [
+      {
+        "stat": "Explosive Discharge Area",
+        "base": 32.3,
+        "add": 7.5,
+        "note": "Rayon à 100 % de charge (5 m minimum à faible charge). Le rayon affiché ne fait que la moitié du vrai rayon (bug)."
+      },
+      {
+        "stat": "Jump Height",
+        "note": "+200 % de puissance de saut, soit environ +800 % de hauteur de saut."
+      }
+    ],
+    "explain": "La charge monte en vous déplaçant et augmente vitesse, saut et rayon de la décharge, mais pas ses dégâts. Sauter (y compris en l'air) avec au moins 25 % de charge déclenche la décharge et vide la charge. Un saut très puissant peut causer des dégâts de chute."
+  },
+  "triggerenemydebuffs": {
+    "addStacking": [
+      {
+        "stat": "Bleed Damage",
+        "model": "none",
+        "base": 240,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE sur 3 s par cumul de saignement (durée et chance × coefficient de proc)."
+      }
+    ],
+    "explain": "Sa chance de saignement s'additionne à celle de la Tri-Tip Dagger (un seul jet), et chance comme durée sont multipliées par le coefficient de proc du coup. À la mort d'un ennemi, un tiers de chacun de ses cumuls de malus (arrondi au supérieur, donc au moins 1) est transféré aux ennemis proches : saignement, brûlure, poison, ralentissements, etc."
+  },
+  "bearvoid": {
+    "stacking": [
+      {
+        "stat": "Recharge",
+        "note": "Plancher d'une image (~0,017 s), atteint à 65 exemplaires."
+      }
+    ],
+    "explain": "Bloque entièrement le prochain coup reçu, quelle que soit sa force, puis doit se recharger avant d'en bloquer un autre. Ne bloque pas les dégâts du brouillard du Vide ; un Blast Shower le recharge immédiatement."
+  },
+  "passivehealing": {
+    "addStacking": [
+      {
+        "stat": "Heal per Second",
+        "model": "none",
+        "base": 1.5,
+        "add": 0,
+        "unit": "%",
+        "note": "% de la vie max, soin continu de la cible du Woodsprite."
+      },
+      {
+        "stat": "Instant Heal",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "% de la vie max de l'allié ciblé, à l'activation."
+      }
+    ],
+    "explain": "Le Woodsprite soigne son porteur en continu. L'activer l'envoie sur un allié (même derrière un mur) qui reçoit un soin immédiat puis le soin continu à votre place ; vous cibler vous-même le rappelle, et il revient si l'allié meurt."
+  },
+  "vengefulspiritragemode": {
+    "addStacking": [
+      {
+        "stat": "Attack Speed",
+        "model": "none",
+        "base": 40,
+        "add": 0,
+        "unit": "%",
+        "note": "Pendant le bonus déclenché par une mort d'allié."
+      },
+      {
+        "stat": "Skill Cooldown Reduction",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "%",
+        "note": "Pendant le bonus déclenché par une mort d'allié."
+      },
+      {
+        "stat": "Buff Duration",
+        "model": "linear",
+        "base": 15,
+        "add": 15,
+        "unit": "s",
+        "note": "Une nouvelle mort remet la durée au maximum, sans l'additionner."
+      }
+    ],
+    "explain": "C'est un Vengeful Spirit dont l'esprit protecteur a été tué. Chaque mort d'allié (joueur, drone, tourelle, serviteur, autre esprit) donne le bonus. Il redevient un Vengeful Spirit au stage suivant, sauf dans les royaumes cachés des épreuves de N'kuhana."
+  },
+  "elitecollectiveequipment": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Dome Radius",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "m",
+        "note": "Dôme qui bloque les projectiles."
+      },
+      {
+        "stat": "Skill Cooldown Reduction",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "%",
+        "note": "Pour vous et les alliés dans le dôme."
+      },
+      {
+        "stat": "Death Explosion Damage",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE à votre mort ; les alliés sous 25 % de vie dans le dôme meurent et explosent aussi."
+      },
+      {
+        "stat": "Item Disable Duration",
+        "model": "none",
+        "base": 2.5,
+        "add": 0,
+        "unit": "s",
+        "note": "Les ennemis touchés par l'explosion perdent l'effet de leurs objets."
+      },
+      {
+        "stat": "Dome Downtime",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "s",
+        "note": "Le dôme se coupe 8 s à chaque coup de compétence reçu."
+      }
+    ],
+    "explain": "Vous devenez un élite Collective : un dôme de 30 m bloque les projectiles et réduit les temps de recharge de vos compétences et de celles des alliés. À votre mort, vous explosez et désactivez les objets des ennemis touchés ; être touché par une compétence coupe le dôme 8 s (les attaques de monstres et drones ne comptent pas)."
+  },
+  "vengefulspirit": {
+    "addStacking": [
+      {
+        "stat": "Vengeful Attack Speed",
+        "model": "none",
+        "base": 40,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de l'Esprit dormant à chaque mort d'allié."
+      },
+      {
+        "stat": "Vengeful Cooldown Reduction",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de l'Esprit dormant à chaque mort d'allié."
+      },
+      {
+        "stat": "Spirit Health",
+        "model": "none",
+        "base": 90,
+        "add": 0,
+        "unit": "",
+        "note": "Vie de base de chaque esprit, +27 par niveau, sans armure."
+      }
+    ],
+    "explain": "La moitié des dégâts subis (après armure) est partagée entre vos esprits ; plus d'esprits ne redirigent pas plus de dégâts mais tiennent plus longtemps. Chaque esprit tué transforme un exemplaire en Esprit dormant jusqu'à la fin du stage, qui donne vitesse d'attaque et recharges réduites à chaque mort d'allié."
+  },
+  "igniteonkill": {
+    "stacking": [
+      {
+        "stat": "Damage",
+        "note": "Dégâts de BASE de la brûlure, sur toute sa durée (3 s +1,5 s par cumul) ; l'explosion fait 150 % fixe."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Explosion Damage",
+        "model": "none",
+        "base": 150,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE de l'explosion au kill, ne change pas avec les cumuls."
+      },
+      {
+        "stat": "Burn Duration",
+        "model": "linear",
+        "base": 3,
+        "add": 1.5,
+        "unit": "s",
+        "note": "Seule la durée augmente ; la force de la brûlure reste la même."
+      }
+    ],
+    "explain": "Chaque kill fait exploser l'ennemi et enflamme ceux autour. Les exemplaires supplémentaires n'augmentent pas la force de la brûlure, seulement sa durée (donc plus de dégâts au total) ; la brûlure est renforcée par l'Ignition Tank."
+  },
+  "lunarspecialreplacement": {
+    "addStacking": [
+      {
+        "stat": "Detonation Damage",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de base de la détonation, par ennemi marqué."
+      },
+      {
+        "stat": "Damage per Ruin Stack",
+        "model": "none",
+        "base": 120,
+        "add": 0,
+        "unit": "%",
+        "note": "Ajoutés à la détonation pour chaque cumul de Ruine."
+      }
+    ],
+    "explain": "Remplace votre compétence spéciale. Chaque coup a une chance d'ajouter un cumul de Ruine selon son coefficient de proc ; les dégâts sur la durée, les drones et les attaques pendant la recharge n'en appliquent pas. L'activation tire un projectile infaillible sur chaque ennemi marqué, à portée illimitée et à travers les murs."
+  },
+  "lowerpricedchests": {
+    "stacking": [
+      {
+        "stat": "Extra item chance",
+        "model": "table",
+        "expr": "n<=35 ? [0,0,30,43,46.7,50,53.1,55.9,58.6,61,63.3,65.5,67.5,69.4,71.2,72.9,74.4,75.9,77.4,78.7,80,81.2,82.4,83.5,84.5,85.6,86.5,87.4,88.3,89.2,90,90.8,91.5,92.3,93,93.6][n] : n<=40 ? 93.6+(n-35)*0.62 : n<60 ? 96.7+(n-40)*0.165 : 100",
+        "note": "Chance d'avoir au moins 3 objets du coffre (le 2e est garanti) ; jusqu'à 5 objets max."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Guaranteed Extra Item",
+        "model": "none",
+        "base": 1,
+        "add": 0,
+        "unit": "",
+        "note": "Objet en plus garanti sur le premier coffre du stage."
+      }
+    ],
+    "explain": "Le premier coffre ouvert du stage donne un objet de plus, puis tous les exemplaires sont consommés et reviennent au stage suivant. À partir de 2 exemplaires, des jets en plus peuvent monter jusqu'à 5 objets. Marche sur coffres, barils d'équipement, Rusty Lockbox, coffres légendaires et adaptatifs, mais pas sur les sanctuaires du hasard, multishops, capsules lunaires ni contenus du Vide."
+  },
+  "increasedamageonmultikill": {
+    "stacking": [
+      {
+        "stat": "Damage",
+        "note": "Par cumul de buff (1 par kill). Bonus max = valeur × cumuls max : 35 % à 1 objet, 67,5 % à 2, 110 % à 3."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Buff Duration",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "s",
+        "note": "Infliger des dégâts relance le chrono."
+      }
+    ],
+    "explain": "Chaque kill ajoute un cumul de bonus de dégâts pendant 7 s, et chaque coup infligé relance le chrono. Le bonus s'ajoute à la fin du calcul : il n'est pas amplifié par les bonus de dégâts de base (Prayer Beads, Hearty Stew, Artefact de verre) mais l'est par les bonus conditionnels (Focus Crystal, Armor-Piercing Rounds…)."
+  },
+  "healoncrit": {
+    "explain": "Seul le premier exemplaire donne 5 % de critique. Le soin de chaque critique est multiplié par le coefficient de proc de l'attaque : les attaques à faible coefficient soignent moins."
+  },
+  "explodeondeath": {
+    "explain": "Une seconde après le kill, une explosion apparaît là où l'ennemi est mort. Ses dégâts diminuent pour les ennemis loin du centre."
+  },
+  "explodeondeathvoid": {
+    "explain": "Se déclenche au premier coup porté à un ennemi dont la vie est pleine (0,2 s après), pas au kill. Si un allié ou un drone le touche avant vous, l'effet ne se déclenche plus ; les dégâts diminuent loin du centre."
+  },
+  "clovervoid": {
+    "explain": "Au début de chaque stage, choisit au hasard des objets blancs ou verts et transforme toute la pile en un objet aléatoire de la rareté au-dessus (4 Mocha deviennent 4 d'un même objet vert). Légendaires, boss, Vide, lunaires et repas ne sont jamais transformés ; on peut perdre des objets importants."
+  },
+  "helpwake": {
+    "procCoefficient": 1,
+    "stacking": [
+      {
+        "stat": "Surge Damage",
+        "note": "1200 % réels (le texte du jeu dit 2000 %), basé sur vos dégâts, décroît avec la distance."
+      }
+    ],
+    "explain": "Ne s'obtient que pendant The Wake : interagir avec un Soul Conduit consomme une fleur, le soigne, le purifie et détruit les projectiles proches, puis une onde frappe les ennemis 0,5 s après. Les dégâts baissent avec la distance et les fleurs disparaissent à la fin de l'événement."
+  },
+  "repeatheal": {
+    "stacking": [
+      {
+        "stat": "Maximum Heal",
+        "bad": true
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Heal Storage Cap",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Soin stocké maximum, en % de la vie max."
+      }
+    ],
+    "explain": "Vos soins sont augmentés mais stockés, puis rendus petit à petit toutes les 0,2 s, avec un plafond par seconde qui baisse à chaque exemplaire. La régénération naturelle n'est pas augmentée."
+  },
+  "sprintoutofcombat": {
+    "addStacking": [
+      {
+        "stat": "Out of Combat Delay",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Temps sans compétence offensive avant le bonus."
+      }
+    ],
+    "explain": "« Hors combat » veut dire ne pas utiliser de compétence offensive pendant 5 s. Subir des dégâts, utiliser son équipement ou une compétence de mobilité n'enlève pas le bonus ; une compétence d'attaque l'annule."
+  },
+  "wisponkill": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Explosion Damage",
+        "model": "none",
+        "base": 360,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE par tir d'esprit, sans perte de dégâts avec la distance."
+      },
+      {
+        "stat": "Explosion Radius",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "m",
+        "note": ""
+      },
+      {
+        "stat": "Kills per Spirit",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "",
+        "note": "Seuls vos kills directs comptent."
+      },
+      {
+        "stat": "Max Spirits",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "",
+        "note": ""
+      }
+    ],
+    "explain": "Tous les 5 kills faits par vous (pas par vos serviteurs), un esprit apparaît. À chacun de vos coups non mortels qui ont un coefficient de proc, un esprit tire un projectile à tête chercheuse ; chaque coup use une charge, donc les attaques très rapides vident vite les esprits. Ils disparaissent en fin de stage."
+  },
+  "fruit": {
+    "addStacking": [
+      {
+        "stat": "Heal",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "% de la vie max, instantané."
+      }
+    ]
+  },
+  "personalshield": {
+    "addStacking": [
+      {
+        "stat": "Recharge Delay",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "s",
+        "note": "Le bouclier se recharge après 7 s sans subir de dégâts."
+      }
+    ],
+    "explain": "Ajoute un bouclier qui ne se soigne pas : il se recharge seulement après 7 s sans subir de dégâts. Il est réduit par Shaped Glass, et à partir de 2 exemplaires la protection anti-one-shot dépend du bouclier."
+  },
+  "beetlegland": {
+    "addStacking": [
+      {
+        "stat": "Guard Damage Bonus",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "4× les dégâts d'un Garde scarabée normal."
+      },
+      {
+        "stat": "Guard Health Bonus",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "2× la vie d'un Garde scarabée normal."
+      }
+    ],
+    "explain": "Chaque glande donne un Garde scarabée allié renforcé. À cause d'un bug, le délai de 30 s ne s'applique pas : un garde mort est remplacé presque tout de suite. Les tourelles de l'Engineer n'héritent pas de cet objet."
+  },
+  "gummyclone": {
+    "addStacking": [
+      {
+        "stat": "Clone Damage",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "Des dégâts de base du joueur."
+      },
+      {
+        "stat": "Clone Health",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "De la vie max du joueur."
+      },
+      {
+        "stat": "Clone Duration",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "s",
+        "note": ""
+      },
+      {
+        "stat": "Max Clones",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "",
+        "note": ""
+      }
+    ],
+    "explain": "Lance une goutte qui crée un clone de vous avec vos compétences mais sans vos objets ; il meurt automatiquement au bout de 30 s, même soigné. 3 clones maximum à la fois."
+  },
+  "healandrevive": {
+    "addStacking": [
+      {
+        "stat": "Invulnerability",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "s",
+        "note": "Après la résurrection."
+      }
+    ],
+    "explain": "Si vous mourez en le portant, vous revenez à la vie et il devient « consommé », sans subir le temps de recharge. En multijoueur, l'activer ressuscite tous les survivants morts quelle que soit la distance ; en solo, il ne sert qu'automatiquement à la mort."
+  },
+  "healandreviveconsumed": {
+    "addStacking": [
+      {
+        "stat": "Heal per Orb",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "%",
+        "note": "% de la vie max."
+      },
+      {
+        "stat": "Orbs",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "",
+        "note": "Un orbe toutes les 0,5 s pendant 5 s (20 % de vie au total)."
+      }
+    ],
+    "explain": "Plante une pousse qui fait tomber 10 orbes de soin en 5 s, soit jusqu'à 20 % de vie max au total."
+  },
+  "titangoldduringtp": {
+    "stacking": [
+      {
+        "stat": "Damage",
+        "model": "table",
+        "expr": "Math.round(10*Math.sqrt(n))*10",
+        "note": "Racine carrée du nombre d'exemplaires, arrondie à 10 % (le texte du jeu est faux)."
+      }
+    ],
+    "explain": "Aurelionite apparaît comme alliée au début de chaque événement de téléporteur et meurt quand il est chargé ; les graines vous reviennent alors. Les exemplaires de toute l'équipe s'additionnent. Elle aide aussi contre Mithrix (phase 4) mais se bat contre vous face au False Son (phase 3)."
+  },
+  "seed": {
+    "explain": "Chaque coup porté soigne, et le soin est multiplié par le coefficient de proc du coup : les attaques à faible coefficient soignent moins et les dégâts sur la durée (saignement, brûlure) ne soignent pas."
+  },
+  "stunchanceonhit": {
+    "addStacking": [
+      {
+        "stat": "Stun Duration",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "s",
+        "note": ""
+      }
+    ],
+    "explain": "La chance est multipliée par le coefficient de proc de l'attaque et les exemplaires se cumulent de façon dégressive. N'étourdit pas la plupart des boss."
+  },
+  "fallboots": {
+    "addStacking": [
+      {
+        "stat": "Min Damage",
+        "model": "none",
+        "base": 1000,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE à faible hauteur de chute."
+      },
+      {
+        "stat": "Max Damage",
+        "model": "none",
+        "base": 10000,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE après 150 m de chute ; perte de dégâts loin du centre."
+      },
+      {
+        "stat": "Min Radius",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "m",
+        "note": ""
+      },
+      {
+        "stat": "Max Radius",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "m",
+        "note": "Après 150 m de chute."
+      }
+    ],
+    "explain": "En l'air, maintenez la touche Interagir pour plonger : l'explosion grandit avec la hauteur de chute (maximum après 150 m) et peut faire un critique. L'objet augmente aussi fortement la hauteur de saut quand il est prêt et annule toujours les dégâts de chute."
+  },
+  "movespeedonkill": {
+    "addStacking": [
+      {
+        "stat": "Movement Speed",
+        "model": "none",
+        "base": 125,
+        "add": 0,
+        "unit": "%",
+        "note": "5 cumuls de +25 % qui s'effacent un par un."
+      }
+    ],
+    "explain": "Un kill donne 5 cumuls de +25 % de vitesse qui disparaissent l'un après l'autre ; les exemplaires rallongent seulement la durée."
+  },
+  "moremissile": {
+    "stacking": [
+      {
+        "stat": "Damage",
+        "note": "Bonus en dégâts TOTAUX des missiles, à partir du 2e exemplaire."
+      }
+    ],
+    "explain": "Chaque missile tiré par vos objets, équipements et certaines compétences (AtG, Bundle of Fireworks, Plasma Shrimp, War Bonds, Disposable Missile Launcher, harpons de l'Engineer, drones lance-missiles) devient 3 missiles. Les exemplaires suivants n'ajoutent pas de missiles mais des dégâts ; avec War Bonds, les missiles en plus ne font que 50 %."
+  },
+  "immunetodebuff": {
+    "addStacking": [
+      {
+        "stat": "Barrier",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "% de la vie max par malus bloqué."
+      }
+    ],
+    "explain": "Annule les malus temporaires, pas les malus permanents, le brouillard du Vide ni les afflictions du Spinel Tonic. Après avoir bloqué autant de malus que d'exemplaires, il se recharge 5 s."
+  },
+  "infusion": {
+    "explain": "Les PV max gagnés sont permanents tant que vous gardez au moins une Infusion ; c'est l'orbe rouge qui suit le kill qui donne le bonus. Les tourelles de l'Engineer ont leur propre compteur de kills."
+  },
+  "attackspeedoncrit": {
+    "addStacking": [
+      {
+        "stat": "Attack Speed per Buff",
+        "model": "none",
+        "base": 12,
+        "add": 0,
+        "unit": "%",
+        "note": "Par cumul gagné sur un coup critique."
+      },
+      {
+        "stat": "Buff Duration",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "s",
+        "note": "Multipliée par le coefficient de proc du coup."
+      },
+      {
+        "stat": "Max Buff Stacks",
+        "model": "linear",
+        "base": 3,
+        "add": 2,
+        "unit": "",
+        "note": ""
+      }
+    ],
+    "explain": "Chaque critique donne un cumul de vitesse d'attaque pendant 3 s (durée multipliée par le coefficient de proc). Seul le premier exemplaire donne 5 % de critique ; les suivants augmentent le nombre max de cumuls."
+  },
+  "critonuse": {
+    "addStacking": [
+      {
+        "stat": "Crit Chance",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": ""
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "s",
+        "note": ""
+      }
+    ]
+  },
+  "pagesummonferaltoddlers": {
+    "addStacking": [
+      {
+        "stat": "Lynx Pups",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "",
+        "note": "Sans limite de durée."
+      },
+      {
+        "stat": "Bite Damage",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts du chiot (12 de base, +2,4 par niveau), coefficient de proc 1,0."
+      }
+    ],
+    "explain": "Rituel lançable une fois par stage si vous avez le N'tormat : invoque 10 chiots lynx alliés qui restent jusqu'à leur mort. Posséder des Pages ajoute des catastrophes aux prochains téléporteurs."
+  },
+  "armorreductiononhit": {
+    "addStacking": [
+      {
+        "stat": "Armor Reduction",
+        "model": "none",
+        "base": 60,
+        "add": 0,
+        "unit": "",
+        "note": ""
+      },
+      {
+        "stat": "Hits Required",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "",
+        "note": ""
+      }
+    ],
+    "explain": "Il faut 5 coups rapprochés avec un coefficient de proc (les dégâts sur la durée ne comptent pas) pour retirer 60 d'armure. Cela revient en moyenne à environ +38 % de dégâts sur les monstres normaux."
+  },
+  "phasing": {
+    "addStacking": [
+      {
+        "stat": "Health Threshold",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "%",
+        "note": ""
+      },
+      {
+        "stat": "Movement Speed",
+        "model": "none",
+        "base": 40,
+        "add": 0,
+        "unit": "%",
+        "note": ""
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Invisibilité et vitesse."
+      }
+    ]
+  },
+  "medkit": {
+    "addStacking": [
+      {
+        "stat": "Flat Heal",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "",
+        "note": "PV fixes, en plus du % de vie max."
+      },
+      {
+        "stat": "Delay",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "s",
+        "note": "Relancé à chaque nouveau dégât."
+      }
+    ],
+    "explain": "Le soin arrive 2 s après le dernier dégât subi : chaque nouveau dégât relance le délai, donc il est peu efficace sous un flot de coups ou de dégâts sur la durée."
+  },
+  "commandmissile": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Missiles",
+        "model": "none",
+        "base": 12,
+        "add": 0,
+        "unit": "",
+        "note": "Tirés à 8 par seconde."
+      },
+      {
+        "stat": "Damage per Missile",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": ""
+      }
+    ]
+  },
+  "attackspeedpernearbyallyorenemy": {
+    "stacking": [
+      {
+        "stat": "Attack Speed",
+        "note": "Par ennemi ou allié dans 20 m (par cumul du buff), jusqu'au nombre max de cumuls."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "m",
+        "note": ""
+      }
+    ],
+    "explain": "Chaque ennemi ou allié à moins de 20 m donne un cumul de vitesse d'attaque, jusqu'au maximum ; les cumuls s'ajoutent et disparaissent instantanément quand ils entrent ou sortent de la zone."
+  },
+  "extralifevoid": {
+    "addStacking": [
+      {
+        "stat": "Invulnerability",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "s",
+        "note": "Après la résurrection."
+      }
+    ],
+    "explain": "À la mort, vous revenez après quelques secondes et un exemplaire est consommé, mais tous vos objets qui ont une version du Vide sont corrompus (par exemple les 57 Leaf Clover deviennent Benthic Bloom, les objets de boss deviennent Newly Hatched Zoea). Les effets déclenchés à la mort ont quand même lieu."
+  },
+  "goldgat": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Damage per Bullet",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Perte de dégâts avec la distance."
+      },
+      {
+        "stat": "Max Fire Rate",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "",
+        "note": "Tirs par seconde après 10 s (3 au départ)."
+      }
+    ],
+    "explain": "Pas de temps de recharge : l'activer allume ou éteint le tir continu. Chaque balle coûte de l'or selon votre niveau (pas selon le temps, contrairement au texte du jeu), et le tir s'arrête quand vous n'avez plus d'or."
+  },
+  "dronebackup": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Strike Drones",
+        "model": "none",
+        "base": 4,
+        "add": 0,
+        "unit": "",
+        "note": "4 drones d'attaque invoqués à chaque activation."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "s",
+        "note": "Les drones s'autodétruisent après 25 à 28 s."
+      }
+    ],
+    "explain": "Invoque 4 drones d'attaque alliés qui tirent à la mitrailleuse pendant environ 25 s puis s'autodétruisent. Leurs tirs ne déclenchent pas tes objets « à l'impact », et ils comptent dans la limite de 20 alliés."
+  },
+  "meteorattackonhighdamage": {
+    "stacking": [
+      {
+        "stat": "Meteor chance per 100% damage",
+        "note": "Chance totale (3 % + bonus) plafonnée à 75 %, atteinte avec un coup de 2400 % (1 cumul) ou 1200 % (2 cumuls)."
+      },
+      {
+        "stat": "Meteor bonus damage per 100% damage",
+        "note": "Dégâts totaux du météore (2000 % + bonus) plafonnés à 7500 % des dégâts de base."
+      }
+    ],
+    "addStacking": [
+      {
+        "stat": "Meteor Damage",
+        "model": "none",
+        "base": 2000,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE du météore avant bonus ; plafond total 7500 %."
+      },
+      {
+        "stat": "Max Meteor Chance",
+        "model": "none",
+        "base": 75,
+        "add": 0,
+        "unit": "%",
+        "note": "Plafond de la chance de déclenchement."
+      },
+      {
+        "stat": "Max Meteor Damage",
+        "model": "none",
+        "base": 7500,
+        "add": 0,
+        "unit": "%",
+        "note": "Plafond des dégâts du météore (dégâts de base)."
+      }
+    ],
+    "explain": "Plus le coup qui déclenche est fort, plus le météore a de chances de tomber et plus il frappe fort (plafonné à 75 % de chance et 7500 % de dégâts). Un seul météore à la fois par joueur, et seule l'explosion au sol inflige des dégâts : les ennemis en l'air loin du sol sont épargnés."
+  },
+  "healwhilesafe": {
+    "addStacking": [
+      {
+        "stat": "Health Regen per Level",
+        "model": "linear",
+        "base": 0.6,
+        "add": 0.6,
+        "unit": "",
+        "note": "PV/s supplémentaires par niveau du joueur."
+      },
+      {
+        "stat": "Activation Delay",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "s",
+        "note": "Actif après 7 s sans subir de dégâts."
+      }
+    ],
+    "explain": "S'active après 7 s sans subir de dégâts (et non « hors combat » comme l'indique le jeu) et s'arrête dès que tu es touché. Le bonus de régénération augmente aussi avec ton niveau."
+  },
+  "firework": {
+    "procCoefficient": 0.2,
+    "addStacking": [
+      {
+        "stat": "Damage per Firework",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE par feu d'artifice, explosion de 5 m."
+      },
+      {
+        "stat": "Explosion Radius",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon d'explosion de chaque feu d'artifice."
+      }
+    ],
+    "explain": "Chaque interaction (coffre, sanctuaire, imprimante… mais pas le recycleur) lance des fusées à tête chercheuse. Le critique est tiré une seule fois pour toute la salve, et le faible coefficient de proc déclenche mal les objets à chance."
+  },
+  "blightzone": {
+    "stacking": [
+      {
+        "stat": "Cloud Growth per 1% Charge",
+        "model": "table",
+        "expr": "0.95/Math.max(0.1,1-0.1*(n-1))",
+        "note": "Le texte du jeu est faux : le nuage atteint sa taille maximale 10 % de charge plus tôt par cumul d'équipe (taille max immédiate à partir de 11)."
+      },
+      {
+        "stat": "Blight Damage per Second",
+        "note": "Dégâts de BASE par seconde, cumuls de toute l'équipe ; actifs seulement 3 s toutes les 5 s."
+      }
+    ],
+    "procCoefficient": 0,
+    "addStacking": [
+      {
+        "stat": "Average Damage per Second",
+        "model": "linear",
+        "base": 108,
+        "add": 36,
+        "unit": "%",
+        "note": "Moyenne réelle dans le temps (Fléau appliqué toutes les 5 s pour 3 s), dégâts de base."
+      },
+      {
+        "stat": "Blight Pulse Interval",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Toutes les 5 s, les ennemis du nuage reçoivent des cumuls de Fléau de 3 s."
+      }
+    ],
+    "explain": "Pendant le téléporteur et les autres zones à tenir, un nuage grandit autour de la zone et applique du Fléau toutes les 5 s. Les cumuls de toute l'équipe s'additionnent, mais le Fléau ne dure que 3 s sur 5 : les dégâts réels moyens sont donc plus faibles qu'affiché."
+  },
+  "slipperyground": {
+    "explain": "Le sol se comporte comme si tu étais en l'air : démarrer, freiner et tourner devient difficile. Avec 1 Hex, il ne reste qu'environ 18 % de ton accélération normale au sol ; la pénalité ajoutée par chaque cumul est dégressive."
+  },
+  "shareitemswithenemies": {
+    "addStacking": [
+      {
+        "stat": "Share Interval",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "s",
+        "note": "Partage toutes les 15 s (nouvel essai après 7,5 s si aucun ennemi ou objet éligible)."
+      },
+      {
+        "stat": "Range",
+        "model": "none",
+        "base": 65,
+        "add": 0,
+        "unit": "m",
+        "note": "Ennemis choisis au hasard dans un rayon de 65 m."
+      }
+    ],
+    "explain": "Toutes les 15 s, jusqu'à 3 ennemis au hasard à moins de 65 m reçoivent des copies éthérées de tes objets ; tu gardes les originaux. Beaucoup d'objets sont exclus (effets à l'élimination, liés au sprint ou à l'équipement, rebuts, Hex…)."
+  },
+  "barrierenemiesonkill": {
+    "addStacking": [
+      {
+        "stat": "Minimum Barrier",
+        "model": "linear",
+        "base": 1,
+        "add": 1,
+        "unit": "%",
+        "note": "Chaque ennemi reçoit au moins ce % de SA propre vie max en barrière (plus gros boss : 1 % +0,5 %)."
+      }
+    ],
+    "explain": "Quand tu tues un ennemi, les autres ennemis proches gagnent une barrière basée sur la vie max de la victime, avec un minimum basé sur leur propre vie. Le rayon s'agrandit avec la taille de l'ennemi tué, et seules tes propres éliminations comptent."
+  },
+  "blindness": {
+    "explain": "Tout ce qui est au-delà de la distance de vision est caché par un brouillard, et certains ciblages automatiques (Royal Capacitor, Trophy Hunter's Tricorn) ne trouvent plus de cibles au-delà. La distance est divisée par deux à chaque cumul."
+  },
+  "hexmountain": {
+    "explain": "Chaque Hex détenu par l'équipe (même par un joueur mort) compte comme un Sanctuaire de la Montagne de plus pour le boss du téléporteur, mais sans objet bonus. Seuls les cumuls détenus au moment d'activer le téléporteur comptent."
+  },
+  "lowerhealing": {
+    "explain": "Réduit tous les soins reçus, y compris la régénération, mais de façon dégressive : 28,6 % avec 1 Hex au lieu des 40 % affichés, et jamais 100 %. La régénération négative est aussi réduite."
+  },
+  "outoftpradius": {
+    "addStacking": [
+      {
+        "stat": "Base Damage per Second",
+        "model": "none",
+        "base": 1,
+        "add": 0,
+        "unit": "%",
+        "note": "% de la vie max combinée (bouclier inclus) par seconde hors de la zone du téléporteur."
+      }
+    ],
+    "explain": "Seulement pendant la charge du téléporteur : tout allié hors de la zone perd 1 % de sa vie max par seconde, et ces dégâts sont multipliés toutes les 10 s passées dehors (remis à zéro en revenant). Ils ignorent l'armure, ne peuvent pas être bloqués et peuvent tuer ; les cumuls de toute l'équipe s'additionnent."
+  },
+  "roamingitemdisable": {
+    "addStacking": [
+      {
+        "stat": "Disable Interval",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "s",
+        "note": "Cycle de 30 s ; premier blocage 3 s après la prise de l'Hex."
+      }
+    ],
+    "explain": "Le pourcentage compte les types d'objets, pas le nombre d'exemplaires, et les objets bloqués suivent l'ordre de ramassage (pas au hasard). Un objet bloqué n'a plus aucun effet et ne peut être ni recyclé ni imprimé ; les Hex eux-mêmes ne sont jamais bloqués."
+  },
+  "increaseddifficulty": {
+    "explain": "N'ajoute pas 25 % de difficulté d'un coup : accélère la montée de la difficulté avec le temps, de façon rétroactive (la prendre tard fait bondir la difficulté immédiatement). Les cumuls de toute l'équipe s'additionnent, mais l'effet par cumul est réduit en multijoueur."
+  },
+  "weakasshamstring": {
+    "addStacking": [
+      {
+        "stat": "Max Penalty Jumps",
+        "model": "none",
+        "base": 4,
+        "add": 0,
+        "unit": "",
+        "note": "La pénalité s'accumule sur 4 sauts maximum (vitesse de saut divisée par 2)."
+      }
+    ],
+    "explain": "Chaque saut réduit la puissance des sauts suivants (le premier saut après récupération est toujours complet), jusqu'à 4 sauts accumulés ; la pénalité disparaît ensuite progressivement. Les cumuls supplémentaires n'allongent que la récupération, et la distance de chute sans dégâts n'est réduite que pendant la pénalité."
+  },
+  "hexcurse": {
+    "explain": "Réduit aussi le bouclier maximal et supprime totalement la protection contre la mort en un seul coup. La pénalité s'additionne à celle de Shaped Glass au lieu de se multiplier."
+  },
+  "tphealingnova": {
+    "addStacking": [
+      {
+        "stat": "Healing per Nova",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Soigne 50 % de la vie max de tous les alliés dans la zone."
+      }
+    ],
+    "explain": "Les marguerites de toute l'équipe s'additionnent : les soins sont répartis à intervalles réguliers pendant la charge (ex. 33 % et 66 % avec 2). Ça marche aussi dans les autres zones à tenir (Void Fields, piliers de Commencement…)."
+  },
+  "causticpheromones": {
+    "luck": "affected",
+    "addStacking": [
+      {
+        "stat": "Hits to Brand",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "",
+        "note": "Marques nécessaires (chance par coup = coefficient de proc)."
+      },
+      {
+        "stat": "Stun Duration",
+        "model": "none",
+        "base": 1,
+        "add": 0,
+        "unit": "s",
+        "note": "Étourdissement réel de 1 s, pas sur les boss ni champions."
+      },
+      {
+        "stat": "Re-brand Cooldown",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai avant de pouvoir marquer à nouveau la même cible."
+      }
+    ],
+    "explain": "Chaque coup de compétence a une chance égale à son coefficient de proc d'ajouter une marque, qui n'expire jamais ; à 10 marques, l'ennemi est marqué et toutes les IA à 40 m (alliées comme ennemies) l'attaquent. L'étourdissement ne dure qu'1 s et ne touche pas les boss ; tu récupères l'or et l'XP s'il est tué par un monstre."
+  },
+  "ghostonkill": {
+    "addStacking": [
+      {
+        "stat": "Ghost Chance",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance à l'élimination, affectée par la chance."
+      },
+      {
+        "stat": "Ghost Damage",
+        "model": "none",
+        "base": 1500,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de dégâts du fantôme."
+      }
+    ],
+    "explain": "Le fantôme garde les objets et le statut d'élite de l'ennemi, ne subit pas de dégâts normaux mais perd de la vie chaque seconde. Attention : certains fantômes (Clay Dunestrider, Grandparent, ennemis du Vide, Lynx Totem) peuvent quand même te blesser."
+  },
+  "powercube": {
+    "explain": "Ne donne que +50 % de l'armure DE BASE du survivant : la plupart n'en ont pas, donc l'effet est souvent nul (+10 d'armure pour Mercenary, REX, Loader, Acrid…). Ne se cumule pas ; sert surtout à activer le Matrix Terminal."
+  },
+  "captaindefensematrix": {
+    "addStacking": [
+      {
+        "stat": "Range",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon d'interception des projectiles."
+      },
+      {
+        "stat": "Recharge Interval",
+        "model": "none",
+        "base": 0.5,
+        "add": 0,
+        "unit": "s",
+        "note": "Intervalle de base, réduit par la vitesse d'attaque."
+      }
+    ],
+    "explain": "Détruit les projectiles ennemis proches (boules de feu, flaques, bombes…), mais pas les attaques instantanées comme les lasers ou tirs directs. En pratique réservé au Captain."
+  },
+  "molotov": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Molotov Damage",
+        "model": "none",
+        "base": 250,
+        "add": 0,
+        "unit": "%",
+        "note": "Grosse et petites bouteilles : 250 %, rayon 7 m, enflamment (le texte du jeu dit 500 %, faux)."
+      },
+      {
+        "stat": "Molotovs",
+        "model": "none",
+        "base": 6,
+        "add": 0,
+        "unit": "",
+        "note": "Petites bouteilles après éclatement."
+      },
+      {
+        "stat": "Fire Pool Damage per Second",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Flaques de feu, coefficient de proc 0,5."
+      },
+      {
+        "stat": "Fire Pool Duration",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée des flaques de feu."
+      },
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon d'explosion, sans atténuation."
+      }
+    ],
+    "explain": "La grosse bouteille éclate en 6 petites qui ne cassent qu'au contact du sol (elles rebondissent sur les ennemis) et laissent des flaques de feu. Les vrais dégâts sont plus faibles que le texte du jeu (250 % et 100 %/s)."
+  },
+  "fragiledamagebonus": {
+    "explain": "Se brise quand ta vie + bouclier tombe sous 25 % après un coup ; tous les exemplaires cassent ensemble. Unstable Transmitter puis Power Elixir se déclenchent en priorité et peuvent l'éviter."
+  },
+  "bossdamagebonus": {
+    "explain": "Fonctionne sur les ennemis à barre de vie rouge : boss et Hordes du téléporteur, boss spéciaux, vagues 5 et 10 du Simulacrum, Umbrae. Les boss apparus naturellement hors téléporteur ne comptent pas."
+  },
+  "itemdropchanceonkill": {
+    "explain": "Les boss lâchent toujours un objet (seule la dernière phase de Mithrix ou False Son compte), et un boss élite peut en lâcher deux. Rien ne tombe si un drone porte le coup fatal ; butin 80 % blanc, 20 % vert, 0,1 % rouge. Le texte du jeu (4 %) est faux : c'est 5 % de base."
+  },
+  "boostallstats": {
+    "explain": "Chaque buff DIFFÉRENT actif (Warbanner, Opal prêt, Prison Matrix…) donne +4 % multiplicatif à vie, régénération, vitesse, dégâts, vitesse d'attaque, critique et armure, mais pas à l'accélération. Les cumuls n'augmentent que le nombre de buffs pris en compte, pas les 4 %."
+  },
+  "knurl": {
+    "addStacking": [
+      {
+        "stat": "Health Regen per Level",
+        "model": "linear",
+        "base": 0.32,
+        "add": 0.32,
+        "unit": "",
+        "note": "PV/s supplémentaires par niveau du joueur (+20 % par niveau)."
+      }
+    ]
+  },
+  "physicsprojectile": {
+    "addStacking": [
+      {
+        "stat": "Heavy Target Impact Damage",
+        "model": "none",
+        "base": 1000,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts supplémentaires en percutant un ennemi lourd ; tous les dégâts sont multipliés par la vitesse (×1,45 minimum en sprint)."
+      },
+      {
+        "stat": "Pet Cooldown",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "s",
+        "note": "Caresser l'unité purge les malus une fois toutes les 15 s."
+      },
+      {
+        "stat": "Respawn Time",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "s",
+        "note": "Réapparaît 30 s après sa destruction."
+      }
+    ],
+    "explain": "Un Solus allié fonce sur les ennemis ; ses dégâts sont multipliés par sa vitesse et il hérite de tes objets de vitesse (Goat Hoof, Energy Drink, Mocha…). Le caresser (interaction, 15 s de recharge) purge les malus et effets de recharge de lui, de toi et des alliés proches."
+  },
+  "minorconstructonkill": {
+    "addStacking": [
+      {
+        "stat": "Construct Bonus Damage",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de dégâts de chaque Alpha Construct allié."
+      },
+      {
+        "stat": "Construct Bonus Health",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de vie de chaque Alpha Construct allié."
+      }
+    ],
+    "explain": "Limité par le plafond global de 20 alliés, donc peu utile au-delà de 4-5 cumuls. Les constructs disparaissent si tu restes à plus de 100 m pendant 30 s ; les tourelles de l'Engineer ont leur propre limite."
+  },
+  "roboballbuddy": {
+    "addStacking": [
+      {
+        "stat": "Respawn Interval",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "s",
+        "note": "Les sondes détruites sont réinvoquées toutes les 30 s."
+      },
+      {
+        "stat": "Probes",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "",
+        "note": "Deux sondes Solus alliées."
+      }
+    ],
+    "explain": "Les sondes gagnent des dégâts pour chaque allié de l'équipe (drones, tourelles, autres joueurs, minions et l'autre sonde, mais pas toi), donc elles commencent à ×2. Elles ont 4× plus de vie et encaissent peu de dégâts de zone."
+  },
+  "barrageonboss": {
+    "addStacking": [
+      {
+        "stat": "Base Missiles",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "",
+        "note": "Missiles tirés au début de chaque combat de boss."
+      },
+      {
+        "stat": "Gold per Extra Missile",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "",
+        "note": "Or à gagner par missile bonus (augmente avec le temps)."
+      }
+    ],
+    "explain": "Les missiles infligent un % de la vie max du boss ; sans boss ciblé, ils font 3200 % de dégâts chacun. Leur coefficient de proc est 0, donc ils ne déclenchent aucun objet."
+  },
+  "fireballdash": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Impact Damage",
+        "model": "none",
+        "base": 500,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts en percutant un ennemi (une fois par ennemi et par utilisation)."
+      },
+      {
+        "stat": "Detonation Damage",
+        "model": "none",
+        "base": 800,
+        "add": 0,
+        "unit": "%",
+        "note": "Explosion finale."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Relancée à chaque ennemi touché."
+      },
+      {
+        "stat": "Speed",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "m",
+        "note": "Vitesse fixe de 30 m/s, non affectée par la vitesse de déplacement."
+      }
+    ],
+    "explain": "Tu voles en boule de feu vers ton viseur sans pouvoir utiliser tes compétences ; chaque ennemi touché relance le minuteur de 5 s. Tu peux exploser plus tôt avec la touche d'interaction, et tu restes vulnérable pendant la transformation."
+  },
+  "meteor": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Damage per Meteor",
+        "model": "none",
+        "base": 600,
+        "add": 0,
+        "unit": "%",
+        "note": "Touche TOUS les personnages, toi compris ; atténuation linéaire depuis le centre."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de la pluie de météores."
+      }
+    ],
+    "explain": "Les météores sont des explosions placées près des personnages sur toute la carte : ils tombent même sous un toit et Defensive Microbots ne les bloque pas. Les cercles bleus indiquent les impacts à éviter."
+  },
+  "outofcombatarmor": {
+    "addStacking": [
+      {
+        "stat": "Activation Delay",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "s",
+        "note": "Buff récupéré après 7 s sans subir de dégâts."
+      }
+    ],
+    "explain": "Le bonus d'armure est actif après 7 s sans subir de dégâts et se perd au premier coup encaissé (sauf s'il est bloqué par Tougher Times, Safer Spaces…). 100 d'armure réduit les dégâts de 50 %, donc les cumuls sont vite dégressifs."
+  },
+  "novaonheal": {
+    "addStacking": [
+      {
+        "stat": "Soul Energy Threshold",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Un crâne est tiré chaque fois que l'énergie atteint 10 % de la vie max (bouclier inclus)."
+      },
+      {
+        "stat": "Targeting Range",
+        "model": "none",
+        "base": 40,
+        "add": 0,
+        "unit": "m",
+        "note": "Les crânes ciblent les ennemis dans un rayon de 40 m."
+      }
+    ],
+    "explain": "Chaque soin, même à pleine vie, remplit l'énergie d'âme ; à 10 % de ta vie max, un crâne à tête chercheuse part (10 par seconde maximum). La partie fixe utilise tes dégâts de BASE, et la partie énergie vaut environ 25 % de ta vie max par crâne."
+  },
+  "teamwarcry": {
+    "addStacking": [
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de la frénésie."
+      },
+      {
+        "stat": "Movement Speed",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de vitesse de déplacement pendant la frénésie."
+      },
+      {
+        "stat": "Attack Speed",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de vitesse d'attaque pendant la frénésie."
+      }
+    ],
+    "explain": "Touche tous les alliés, drones et tourelles compris. Ce buff ne se cumule pas avec le cri de guerre de l'Épaulière du berserker : le plus récent remplace l'autre."
+  },
+  "randomlylunar": {
+    "luck": "unaffected",
+    "explain": "Le remplacement est tiré à la génération de l'étape, pour chaque objet (coffres, imprimantes, berceaux du Vide, récompense du téléporteur, chaudrons du Bazar, objets donnés aux monstres). C'est un effet global pour toute l'équipe ; ramassé en cours d'étape, il n'agit qu'à l'étape suivante. Les équipements d'élite ne sont jamais remplacés."
+  },
+  "pageshredded": {
+    "explain": "S'obtient uniquement en recyclant une autre Page au Recycleur. Elle compte comme une Page pour faire apparaître le N'tormat, mais pas dans le total de Pages qui maudit les téléporteurs."
+  },
+  "deathprojectile": {
+    "addStacking": [
+      {
+        "stat": "Triggers",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "",
+        "note": "Déclenchements des effets « à l'élimination », un par seconde."
+      },
+      {
+        "stat": "Interval",
+        "model": "none",
+        "base": 1,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai entre deux déclenchements."
+      },
+      {
+        "stat": "Max active dolls",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "",
+        "note": "Poupées actives simultanément par joueur."
+      }
+    ],
+    "explain": "La poupée se colle à la surface touchée et simule une élimination à cet endroit chaque seconde. Les effets à condition ne se déclenchent pas : Brainstalks, Masque le plus joyeux, Sillage des vautours, Rate éclatée, Noyau de défense. Elle charge quand même Infusion et le Disque de résonance."
+  },
+  "lunarutilityreplacement": {
+    "addStacking": [
+      {
+        "stat": "Movement Speed",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de vitesse pendant Fondu d'ombre."
+      },
+      {
+        "stat": "Cooldown",
+        "model": "none",
+        "base": 6,
+        "add": 0,
+        "unit": "s",
+        "note": "Recharge, qui démarre à la fin de l'effet."
+      }
+    ],
+    "explain": "Le soin réel est de 18,2 % des PV max par cumul, réparti sur la durée, et non 25 %. Pendant l'effet vous êtes intouchable mais sans compétences ; les dégâts du Sanctuaire de sang, de chute et les dégâts sur la durée déjà appliqués continuent."
+  },
+  "lightningstrikeonhit": {
+    "totalDamage": true,
+    "addStacking": [
+      {
+        "stat": "Chance",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance par coup."
+      }
+    ],
+    "explain": "La foudre tombe avec un léger délai, une cible rapide peut l'esquiver. Contrairement aux autres objets à dégâts TOTAUX, elle tire son propre coup critique. Elle plaque violemment les ennemis volants au sol."
+  },
+  "fireballsonhit": {
+    "totalDamage": true,
+    "addStacking": [
+      {
+        "stat": "Chance",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance par coup."
+      },
+      {
+        "stat": "Magma balls",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "",
+        "note": "Boules de magma par déclenchement, chacune inflige les dégâts."
+      },
+      {
+        "stat": "Explosion Radius",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon d'explosion de chaque boule."
+      }
+    ],
+    "explain": "Les boules jaillissent de l'ennemi touché et ratent souvent les petites cibles, mais touchent bien les gros ennemis et les boss. Avec un Réservoir d'allumage, elles infligent la brûlure renforcée."
+  },
+  "shinypearl": {
+    "stacking": [
+      {
+        "stat": "Health Regen",
+        "model": "linear",
+        "base": 0.1,
+        "add": 0.1,
+        "note": "PV/s par cumul au niveau 1 (+0,02 PV/s par niveau et par cumul)."
+      }
+    ],
+    "luck": null,
+    "explain": "L'armure n'est multipliée que sur l'armure de base du personnage : au mieux +2 (Loader), rien si l'armure de base est 0. La régénération est un bonus plat, et non vraiment +10 %."
+  },
+  "lunartrinket": {
+    "explain": "Aucun effet en jeu, sauf si vous vous oblitérez à l'Obélisque d'Un Moment, fracturé : vous êtes envoyé dans Un Moment, entier affronter un Scavenger tordu. En cumuler plusieurs ne change rien ; c'est un objet lunaire sans risque à donner au Bassin de purification."
+  },
+  "sprintwisp": {
+    "addStacking": [
+      {
+        "stat": "Range",
+        "model": "none",
+        "base": 40,
+        "add": 0,
+        "unit": "m",
+        "note": "Portée des feux follets."
+      }
+    ],
+    "explain": "Ne tire qu'en sprintant. L'intervalle de 1,6 s baisse avec la vitesse de déplacement (environ 0,83 s à 14 m/s). Les tourelles d'Engineer ne sprintent pas et n'en profitent pas."
+  },
+  "bonushealthboost": {
+    "explain": "Multiplie seulement les PV max et la régénération apportés par des objets ou compétences, pas ceux gagnés en montant de niveau. Sans ce type de bonus, l'objet ne fait rien."
+  },
+  "droneweapons": {
+    "addStacking": [
+      {
+        "stat": "Missile Chance",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance par coup d'un drone de tirer un missile."
+      },
+      {
+        "stat": "Missile Damage",
+        "model": "none",
+        "base": 150,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts TOTAUX du coup déclencheur."
+      },
+      {
+        "stat": "Chain Gun Shots",
+        "model": "none",
+        "base": 7,
+        "add": 0,
+        "unit": "",
+        "note": "Tirs par rafale, 50 % de dégâts chacun."
+      },
+      {
+        "stat": "Chain Gun Damage",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts par tir de mitrailleuse."
+      },
+      {
+        "stat": "Chain Gun Bounces",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "",
+        "note": "Ricochets vers d'autres ennemis."
+      }
+    ],
+    "explain": "Touche tous les alliés mécaniques : drones, tourelles d'Engineer, Meilleur pote, sondes des Noyaux d'empathie, drone d'équipement. Pas la tourelle-calmar ni les Alpha Constructs. Col. Droneman réapparaît à chaque étape s'il est détruit."
+  },
+  "bleedonhitvoid": {
+    "addStacking": [
+      {
+        "stat": "Collapse Damage",
+        "model": "none",
+        "base": 400,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE par cumul d'effondrement, infligés d'un coup."
+      },
+      {
+        "stat": "Collapse Delay",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai après le premier cumul avant l'explosion."
+      }
+    ],
+    "explain": "La chance est multipliée par le coefficient de proc du coup. 3 s après le premier cumul, tous les cumuls éclatent ensemble ; les nouveaux coups ne repoussent pas ce délai. Le saignement de Rate éclatée, Épine nocive et Calice sanguin n'est pas remplacé."
+  },
+  "plant": {
+    "addStacking": [
+      {
+        "stat": "Healing",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "PV max par seconde (5 % toutes les 0,5 s) à tous les alliés dans la zone."
+      },
+      {
+        "stat": "Plant Duration",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de vie de chaque plante."
+      },
+      {
+        "stat": "Grow Delay",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai avant l'apparition de la plante."
+      }
+    ],
+    "explain": "Le rayon de base réel est de 10 m, pas 5 m comme l'indique le jeu. Chaque élimination fait pousser une plante à l'endroit de la mort ; plusieurs plantes se cumulent."
+  },
+  "parentegg": {
+    "explain": "Le soin s'applique avant les dégâts de chaque coup, il peut donc vous sauver. Il se déclenche aussi sur les dégâts sur la durée, de chute et auto-infligés, mais pas dans le brouillard du Vide. Très fort contre les petits coups rapides."
+  },
+  "transferdebuffonhit": {
+    "stacking": [
+      {
+        "stat": "Armor",
+        "add": -15,
+        "bad": true
+      },
+      {
+        "stat": "Attack Damage, Attack Speed, Movement Speed",
+        "bad": true
+      }
+    ],
+    "explain": "Vous le transmettez à un ennemi en le touchant. À sa mort, il ne revient pas forcément au tueur : il va au personnage adverse le plus proche (y compris un drone). Le projectile disparaît après 5 s sans cible et lâche les poids ; s'il tombe dans le décor ou si vous changez d'étape, l'objet est perdu."
+  },
+  "chainlightningvoid": {
+    "addStacking": [
+      {
+        "stat": "Chance",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance par coup."
+      },
+      {
+        "stat": "Damage per hit",
+        "model": "none",
+        "base": 60,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts TOTAUX par impact."
+      }
+    ],
+    "explain": "Tous les impacts frappent la même cible, contrairement au Ukulélé qui rebondit sur plusieurs ennemis. Plus efficace en combat singulier, notamment contre les boss finaux."
+  },
+  "squid": {
+    "addStacking": [
+      {
+        "stat": "Turret Duration",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée normale de la tourelle (perte de PV continue)."
+      },
+      {
+        "stat": "Turret Damage",
+        "model": "none",
+        "base": 500,
+        "add": 0,
+        "unit": "%",
+        "note": "Par tir toutes les 0,75 s, basé sur les dégâts de la tourelle (4, +0,8 par niveau) ; coefficient de proc 0,1."
+      }
+    ],
+    "explain": "Tout interactable compte, sauf les Recycleurs, les recycleurs de drones et les essences de l'artefact Commandement. La durée vient d'une perte de PV : la soigner la prolonge, la blesser l'abrège. La tourelle a le niveau des monstres, pas le vôtre."
+  },
+  "pagewarpgate": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 150,
+        "add": 0,
+        "unit": "%",
+        "note": "De 150 % (trajet de 7,5 m ou moins) à 15 000 % (450 m ou plus) selon la distance ; peut être critique."
+      },
+      {
+        "stat": "Explosion Radius",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'explosion à l'arrivée."
+      },
+      {
+        "stat": "Freeze Duration",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "s",
+        "note": "Gel fixe des ennemis gelables, quelle que soit la distance."
+      },
+      {
+        "stat": "Max Range",
+        "model": "none",
+        "base": 1500,
+        "add": 0,
+        "unit": "m",
+        "note": "Distance maximale de visée."
+      },
+      {
+        "stat": "Uses per gate",
+        "model": "none",
+        "base": 4,
+        "add": 0,
+        "unit": "",
+        "note": "Utilisations avant disparition de la porte."
+      }
+    ],
+    "explain": "Lancé une fois par étape avec le N'tormat. Chaque sortie de la porte compte comme une utilisation, même une annulation ou une destination invalide. Au-delà de 125 m, la visée s'accroche aux ennemis."
+  },
+  "utilityskillmagazine": {
+    "addStacking": [
+      {
+        "stat": "Utility Cooldown Reduction",
+        "model": "none",
+        "base": 33,
+        "add": 0,
+        "unit": "%",
+        "note": "Réduction fixe, n'augmente pas avec les cumuls."
+      }
+    ]
+  },
+  "extrashrineitem": {
+    "explain": "En cas de réussite au Sanctuaire du hasard, l'objet est tiré dans une liste spéciale : 79 % vert, 20 % rouge, 1 % boss, jamais blanc. Il peut donc parfois remplacer un rouge par un vert, mais la qualité moyenne augmente. Affecté par la chance."
+  },
+  "lunarbadluck": {
+    "stacking": [
+      {
+        "stat": "Luck",
+        "bad": true
+      }
+    ],
+    "explain": "La réduction de 2 s est appliquée après les autres réductions en pourcentage, avec un minimum de 0,5 s par compétence. La malchance s'annule avec autant de trèfles à 57 feuilles ; les effets qui peuvent atteindre 100 % (coups critiques, Dague tri-pointe...) restent utilisables. Tougher Times n'est pas affecté."
+  },
+  "pagepurify": {
+    "addStacking": [
+      {
+        "stat": "Max HP reduction",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Ennemis normaux ; environ 23,1 % pour les champions et 9,1 % pour les boss."
+      },
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "m",
+        "note": "Onde qui s'étend en 2 s."
+      }
+    ],
+    "explain": "Lancé une fois par étape avec le N'tormat. La réduction est permanente jusqu'à la mort de la cible, se cumule entre lancers et touche aussi les monstres neutres et du Vide. Aucun dégât n'est infligé."
+  },
+  "randomdamagezone": {
+    "addStacking": [
+      {
+        "stat": "Damage Bonus",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de dégâts dans la zone, pour les alliés ET les ennemis."
+      },
+      {
+        "stat": "Ward Duration",
+        "model": "none",
+        "base": 27,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée approximative avant que la zone se déplace."
+      }
+    ],
+    "explain": "La zone apparaît au hasard près de vous et renforce tout le monde, ennemis compris, tant qu'ils restent dedans. Son rayon réel est un peu plus petit que l'indicateur ; chaque cumul agrandit le rayon de 50 % du précédent."
+  },
+  "stew": {
+    "explain": "La pleine santé ignore les boucliers. La régénération dépend de la difficulté (plus forte en Drizzle, plus faible en Monsoon), donc le bonus de dégâts aussi."
+  },
+  "bleedonhitandexplode": {
+    "addStacking": [
+      {
+        "stat": "Bleed Damage",
+        "model": "none",
+        "base": 240,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE sur 3 s, par cumul de saignement (coup critique)."
+      },
+      {
+        "stat": "Explosion Radius",
+        "model": "none",
+        "base": 16,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'explosion à la mort."
+      }
+    ],
+    "explain": "Un ennemi tué d'un seul coup critique n'explose pas, car il meurt avant de saigner. Le saignement est le même que celui de la Dague tri-pointe : les deux ne s'ajoutent pas sur un même coup."
+  },
+  "recycle": {
+    "explain": "Transforme un objet au sol en un autre de même rareté, jamais en lui-même. Chaque objet ne peut être recyclé qu'une fois. Impossible sur les équipements d'élite, la Batterie de carburant et les objets uniques."
+  },
+  "pagedie": {
+    "procCoefficient": 0,
+    "addStacking": [
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 6,
+        "add": 0,
+        "unit": "m",
+        "note": "Cercle de hauteur infinie sous le lanceur."
+      },
+      {
+        "stat": "Delay",
+        "model": "none",
+        "base": 2,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai avant la frappe."
+      },
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "%",
+        "note": "Des PV max pour les cibles de plus de 200 PV de base ; ignore l'armure. Les autres sont tuées."
+      }
+    ],
+    "explain": "Le cercle touche tout le monde dedans, alliés compris, et vous pouvez en sortir avant la frappe. Lancé dans une zone de sacrifice (le chat l'annonce), il permet de voyager vers d'autres lieux."
+  },
+  "icicle": {
+    "addStacking": [
+      {
+        "stat": "Damage per second",
+        "model": "none",
+        "base": 1200,
+        "add": 0,
+        "unit": "%",
+        "note": "300 % toutes les 0,25 s ; coefficient de proc 0,2, jamais critique."
+      },
+      {
+        "stat": "Starting Radius",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon initial, +2 m par élimination."
+      },
+      {
+        "stat": "Uptime per kill",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée ajoutée par élimination."
+      },
+      {
+        "stat": "Slow",
+        "model": "none",
+        "base": 80,
+        "add": 0,
+        "unit": "%",
+        "note": "Ralentissement des ennemis touchés."
+      }
+    ],
+    "explain": "La tempête grandit à chaque élimination jusqu'au rayon maximal. Les pots et barils détruits comptent comme éliminations."
+  },
+  "ultimatemeal": {
+    "explain": "Ne compte qu'à pleine santé (boucliers ignorés). C'est la même chance que deux trèfles à 57 feuilles, mais seulement à pleine vie."
+  },
+  "strengthenburn": {
+    "explain": "Remplace votre Embrasement par une brûlure renforcée. Ne touche pas l'Anneau de Kjaro, le Feu follet ni la Flamme envoyée par le Vide, qui n'infligent pas d'Embrasement. Booste aussi les dégâts que vous inflige la Teinture d'Helfire."
+  },
+  "questvolatilebattery": {
+    "procCoefficient": 0,
+    "addStacking": [
+      {
+        "stat": "Trigger threshold",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Explose quand vous tombez à 50 % de vos PV max."
+      },
+      {
+        "stat": "Explosion Damage",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "Des PV max + boucliers du porteur, réduits par l'armure."
+      },
+      {
+        "stat": "Explosion Radius",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "m",
+        "note": "Touche toutes les entités."
+      },
+      {
+        "stat": "Explosion Delay",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "s",
+        "note": "Délai avant l'explosion."
+      }
+    ],
+    "explain": "Ne s'active pas manuellement. Elle sert surtout à réparer le robot des Abyssal Depths pour débloquer REX ; elle est détruite en explosant. Les réductions de PV max sans dégâts ne la déclenchent pas."
+  },
+  "elitedeathequipment": {
+    "addStacking": [
+      {
+        "stat": "Revive Radius",
+        "model": "none",
+        "base": 60,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon où les morts reviennent en fantôme."
+      },
+      {
+        "stat": "Ghost Duration",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de vie d'un fantôme."
+      },
+      {
+        "stat": "Max Ghosts",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "",
+        "note": "Fantômes simultanés."
+      }
+    ],
+    "explain": "Aucun effet actif. Les serviteurs et joueurs alliés qui meurent près de vous reviennent en fantômes (+45 % vitesse, -70 % recharges) ; drones et tourelles exclus. Porté par un joueur, l'aspect ne donne pas de bonus de PV ni de dégâts."
+  },
+  "elitepoisonequipment": {
+    "addStacking": [
+      {
+        "stat": "Healing Disabled",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée du blocage des soins infligé par vos attaques."
+      },
+      {
+        "stat": "Spike Ball Damage",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Explosion à l'impact, puis pièges à épines à 100 % au contact."
+      }
+    ],
+    "explain": "Passif, ne s'active pas ; ni la réduction de recharge ni les charges de Fuel Cell ne l'affectent. Vous lancez des boules à épines (3 au minimum) et un Oursin de malachite apparaît à votre mort."
+  },
+  "goldonhurt": {
+    "explain": "Le gain augmente avec la difficulté au fil du temps. Tout dégât venant d'un autre personnage compte, y compris chaque tic de dégâts sur la durée ; pas les dégâts auto-infligés, de chute ni le brouillard du Vide."
+  },
+  "elitebeadequipment": {
+    "addStacking": [
+      {
+        "stat": "Tethered allies",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "",
+        "note": "Alliés reliés au maximum."
+      },
+      {
+        "stat": "Tether Radius",
+        "model": "none",
+        "base": 35,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de liaison."
+      },
+      {
+        "stat": "Armor",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "",
+        "note": "Armure bonus des alliés reliés."
+      },
+      {
+        "stat": "Spike Ball Damage",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Après 10 coups subis par les alliés ; applique la Ruine lunaire."
+      },
+      {
+        "stat": "Cooldown",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Recharge après le lancer de la boule, liaisons comprises."
+      }
+    ],
+    "explain": "Passif, ne s'active pas. Les alliés reliés gagnent beaucoup d'armure, et les coups qu'ils subissent chargent une boule lunaire qui part vers un ennemi."
+  },
+  "eliteearthequipment": {
+    "addStacking": [
+      {
+        "stat": "Healing",
+        "model": "none",
+        "base": 40,
+        "add": 0,
+        "unit": "%",
+        "note": "Des dégâts de BASE du porteur, 4 fois par seconde, à l'allié le plus proche."
+      },
+      {
+        "stat": "Heal Radius",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "m",
+        "note": "Portée du soin."
+      }
+    ],
+    "explain": "Passif, ne s'active pas. Le soin ignore les bonus de dégâts (Montre délicate, Cristal de concentration). Un Noyau de soin apparaît à votre mort."
+  },
+  "lifestealonhit": {
+    "addStacking": [
+      {
+        "stat": "Lifesteal",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "%",
+        "note": "Des dégâts directs infligés."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée du buff."
+      }
+    ]
+  },
+  "scanner": {
+    "addStacking": [
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 500,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de détection des interactifs."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée d'affichage des marqueurs."
+      }
+    ],
+    "explain": "Marque d'une icône chaque interactif (coffres, autels, drones, téléporteur, objets au sol...) dans un rayon de 500 m pendant 10 s. Le rayon n'est pas infini : certains interactifs éloignés peuvent échapper au scan."
+  },
+  "saw": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Blades",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "",
+        "note": "Nombre de lames lancées en éventail."
+      },
+      {
+        "stat": "Damage per blade",
+        "model": "none",
+        "base": 400,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts par lame, à l'aller ET au retour (chaque lame peut toucher 2 fois), applique Saignement."
+      },
+      {
+        "stat": "Damage per tick",
+        "model": "none",
+        "base": 140,
+        "add": 0,
+        "unit": "%",
+        "note": "Après l'impact, chaque lame inflige 140 % en tics rapides (coef. de proc 0,2) et applique Saignement à chaque tic ; le jeu indique 100 % à tort."
+      }
+    ],
+    "explain": "Les trois lames partent en éventail, reviennent vers vous et peuvent toucher à l'aller comme au retour ; elles reviennent immédiatement si elles touchent le décor. Le saignement n'est appliqué que si le Sawmerang est encore votre équipement actif quand les lames touchent."
+  },
+  "permanentdebuffonhit": {
+    "explain": "La chance de 100 % est multipliée par le coefficient de proc du coup. Malgré le mot « permanent », la réduction d'armure disparaît au stage suivant ; l'armure négative plafonne à +100 % de dégâts subis, donc les cumuls ont des rendements décroissants."
+  },
+  "primaryskillshuriken": {
+    "addStacking": [
+      {
+        "stat": "Full reload time",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Temps de recharge de toutes les shurikens ; une shuriken revient toutes les 10/(cumuls+2) s (3,33 s avec 1 objet, 2,5 s avec 2)."
+      }
+    ],
+    "explain": "Chaque appui sur la compétence principale lance une shuriken tant qu'il en reste en stock, même si la compétence est en recharge. Les projectiles visent faiblement l'ennemi le plus proche."
+  },
+  "autocastequipment": {
+    "explain": "Chaque Fuel Cell s'ajoute au nombre de Gestes pour la réduction de 15 % supplémentaire. L'équipement se déclenche tout seul dès qu'il est prêt (seul l'équipement actif de MUL-T est concerné) ; certains, comme le Royal Capacitor, attendent une cible."
+  },
+  "elitelightningequipment": {
+    "procCoefficient": 0,
+    "totalDamage": true,
+    "addStacking": [
+      {
+        "stat": "Bomb damage",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts TOTAUX de chaque bombe électrique posée par vos attaques, sans coefficient de proc."
+      },
+      {
+        "stat": "Health converted to shield",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "50 % de vos PV max sont remplacés par du bouclier."
+      }
+    ],
+    "explain": "Effet passif (ne s'active pas) : vos attaques collent des bombes qui explosent après un court délai pour 50 % des dégâts du coup, et la moitié de vos PV devient du bouclier, qui ne se soigne pas et ne revient qu'après 7 s sans dégâts. Les Fuel Cells et la réduction de recharge n'ont aucun effet."
+  },
+  "headhunter": {
+    "explain": "Tuer un élite vous donne son affixe d'élite (et ses effets : feu, glace, bouclier électrique...) pendant la durée indiquée ; on peut cumuler plusieurs affixes à la fois. Attention : l'affixe électrique ou lunaire remplace temporairement une partie de vos PV par du bouclier."
+  },
+  "onlevelupfreeunlock": {
+    "stacking": [
+      {
+        "stat": "Free unlock",
+        "cap": 3,
+        "note": "Plafonné à 3 déblocages gratuits par niveau (3 cumuls)."
+      },
+      {
+        "stat": "Experience received",
+        "cap": 20.75,
+        "note": "% de l'XP du niveau suivant par tranche de 25 $ (échelonnée) ; plafonné à 20,75 % (8 cumuls). Non indiqué en jeu."
+      },
+      {
+        "stat": "Cost increase",
+        "bad": true
+      }
+    ],
+    "explain": "Tout l'or ramassé est converti en expérience (environ 25 $ échelonnés donnent 12 % d'un niveau) et chaque montée de niveau donne un achat gratuit utilisable sur n'importe quel interactif. Plusieurs niveaux gagnés d'un coup ne donnent qu'un seul déblocage ; au niveau 91 l'objet se transforme en Perle."
+  },
+  "eliteiceequipment": {
+    "procCoefficient": 0.75,
+    "addStacking": [
+      {
+        "stat": "Slow",
+        "model": "none",
+        "base": 80,
+        "add": 0,
+        "unit": "%",
+        "note": "Ralentissement infligé par toutes vos attaques."
+      },
+      {
+        "stat": "Slow duration",
+        "model": "none",
+        "base": 1.5,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de base, multipliée par le coefficient de proc du coup."
+      },
+      {
+        "stat": "Death explosion damage",
+        "model": "none",
+        "base": 150,
+        "add": 0,
+        "unit": "%",
+        "note": "À votre mort, explosion qui gèle les ennemis (coef. de proc 0,75)."
+      }
+    ],
+    "explain": "Effet passif (ne s'active pas) : toutes vos attaques ralentissent fortement les ennemis, plus longtemps avec les coups à fort coefficient de proc. L'explosion gelante ne se produit qu'à votre mort, donc surtout utile avec une vie supplémentaire."
+  },
+  "sharedsuffering": {
+    "addStacking": [
+      {
+        "stat": "Damage copied to pool",
+        "model": "none",
+        "base": 45,
+        "add": 0,
+        "unit": "%",
+        "note": "Part de TOUS les dégâts subis par les ennemis infectés (alliés, sbires, DoT compris) ajoutée à la réserve."
+      },
+      {
+        "stat": "Pool interval",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "s",
+        "note": "Toutes les 3 s, chaque infecté subit 100 % de la réserve, sans coefficient de proc ni critique, puis elle est vidée."
+      }
+    ],
+    "explain": "Les premiers ennemis touchés par un coup à coefficient de proc supérieur à 0 sont infectés jusqu'à leur mort ; pour infecter de nouvelles cibles il faut tuer un infecté. L'infection est un debuff permanent qui ne se purge pas."
+  },
+  "warcryonmultikill": {
+    "addStacking": [
+      {
+        "stat": "Movement Speed",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de vitesse pendant la frénésie."
+      },
+      {
+        "stat": "Attack Speed",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Bonus de vitesse d'attaque pendant la frénésie."
+      }
+    ],
+    "explain": "Il ne faut pas tuer 4 ennemis en 1 s : il suffit d'atteindre une série de 4 éliminations, la série se remettant à zéro si 1 s passe sans kill. Ne se cumule pas avec le Gorag's Opus, le dernier activé remplace l'autre."
+  },
+  "shieldbooster": {
+    "addStacking": [
+      {
+        "stat": "Pulse radius",
+        "model": "none",
+        "base": 12.5,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'onde, sans atténuation, coefficient de proc 1,0."
+      }
+    ],
+    "explain": "L'armure ne s'applique que tant qu'il vous reste du bouclier ; l'onde part quand le bouclier tombe à zéro et inflige un choc (pas un vrai étourdissement). Le bouclier ne revient qu'après 7 s sans subir de dégâts."
+  },
+  "burnnearby": {
+    "addStacking": [
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 12,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de l'aura ; le debuff persiste 3 s après être sorti de la zone."
+      },
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 15,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de l'aura de feu."
+      },
+      {
+        "stat": "Enemy burn",
+        "model": "none",
+        "base": 120,
+        "add": 0,
+        "unit": "% PV max/s",
+        "note": "Dégâts aux ennemis par seconde, en % de VOS PV max (5 tics/s de 24 %)."
+      },
+      {
+        "stat": "Self burn",
+        "model": "none",
+        "base": 2.5,
+        "add": 0,
+        "unit": "% PV max/s",
+        "bad": true,
+        "note": "Dégâts subis par vous (jamais mortels) ; les alliés subissent 1,25 %/s de vos PV max."
+      }
+    ],
+    "explain": "Les dégâts sont basés sur vos PV max : plus vous avez de vie, plus la brûlure fait mal aux ennemis (et à vous). Elle ne peut jamais vous tuer (vous restez à 1 PV) mais peut tuer vos alliés ; elle tique très vite, ce qui déclenche des objets comme le Razorwire."
+  },
+  "slowonhitvoid": {
+    "explain": "La chance est multipliée par le coefficient de proc du coup. Un ennemi enraciné ne peut plus marcher, mais les volants peuvent encore monter ou descendre et certains se téléportent."
+  },
+  "killelitefrenzy": {
+    "explain": "Pendant la frénésie, les recharges ne tombent pas à zéro mais au minimum de 0,5 s. Le Forgive Me Please ne déclenche jamais cet effet."
+  },
+  "increaseprimarydamage": {
+    "addStacking": [
+      {
+        "stat": "Charges required",
+        "model": "none",
+        "base": 3,
+        "add": 0,
+        "unit": "",
+        "note": "Charges nécessaires pour activer les éclairs."
+      },
+      {
+        "stat": "Secondary cooldown reduction",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "%",
+        "note": "Réduction de recharge de la compétence secondaire (premier exemplaire seulement)."
+      }
+    ],
+    "explain": "Chaque utilisation de la compétence secondaire donne une charge ; à partir de 3 charges, chaque coup de compétence principale qui touche consomme une charge pour lancer un éclair (coef. de proc 1,0). Les shurikens ne consomment pas de charge."
+  },
+  "bonusgoldpackonkill": {
+    "explain": "Le trésor rapporte l'équivalent du prix d'un petit coffre, donc sa valeur augmente avec le temps, et l'or est donné à tous les joueurs. Il ne disparaît jamais mais n'est pas toujours aspiré vers vous ; 25 exemplaires donnent 100 %."
+  },
+  "tonic": {
+    "addStacking": [
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée du boost."
+      },
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Multiplicateur : amplifie aussi vos autres bonus."
+      },
+      {
+        "stat": "Attack Speed",
+        "model": "none",
+        "base": 70,
+        "add": 0,
+        "unit": "%",
+        "note": "Multiplicateur : amplifie aussi vos autres bonus."
+      },
+      {
+        "stat": "Armor",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "",
+        "note": "Armure plate."
+      },
+      {
+        "stat": "Max Health",
+        "model": "none",
+        "base": 50,
+        "add": 0,
+        "unit": "%",
+        "note": "Multiplicateur de PV max."
+      },
+      {
+        "stat": "Health Regen",
+        "model": "none",
+        "base": 300,
+        "add": 0,
+        "unit": "%",
+        "note": "Régénération ×4."
+      },
+      {
+        "stat": "Movement Speed",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "%",
+        "note": "Multiplicateur de vitesse."
+      },
+      {
+        "stat": "Affliction chance",
+        "model": "none",
+        "base": 20,
+        "add": 0,
+        "unit": "%",
+        "bad": true,
+        "note": "Chance d'Affliction quand l'effet se termine (réduite par le Trèfle : 4 % avec 1). Chaque Affliction : -5 % aux stats (cumul composé), PV réduits de façon hyperbolique (-9,1 % pour 1)."
+      }
+    ],
+    "explain": "Les bonus (sauf l'armure) sont des multiplicateurs qui amplifient vos autres objets. Le tirage d'Affliction se fait à l'activation mais n'est appliqué qu'à la fin de l'effet ; les Afflictions sont ignorées tant que le Tonique est actif, et changer de stage pendant l'effet évite l'Affliction."
+  },
+  "goldengoose": {
+    "procCoefficient": 1,
+    "addStacking": [
+      {
+        "stat": "Damage threshold",
+        "model": "none",
+        "base": 400,
+        "add": 0,
+        "unit": "%",
+        "note": "Le coup doit atteindre 400 % de dégâts (hors critique)."
+      },
+      {
+        "stat": "Gild duration",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée d'immobilisation (4,25 s élites, 3,5 s champions, 2 s boss champions)."
+      },
+      {
+        "stat": "Recharge",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Recharge de l'effet après déclenchement."
+      }
+    ],
+    "explain": "Le rayon réel est de 10 m (+10 m par cumul), pas 5 m comme l'indique le jeu. Un ennemi doré tué lâche 4 trésors valant le bonus d'or, calculé selon le nombre de Totems du tueur ; si le coup déclencheur tue la cible, elle ne lâche rien."
+  },
+  "spawnaltar": {
+    "addStacking": [
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 60,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de l'autel (se termine dès le niveau 3)."
+      },
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "m",
+        "note": "Rayon de la zone de tir allié."
+      },
+      {
+        "stat": "Placement range",
+        "model": "none",
+        "base": 40,
+        "add": 0,
+        "unit": "m",
+        "note": "Distance max de pose devant vous."
+      }
+    ],
+    "explain": "Premier appui : aperçu de l'emplacement, second appui : pose et consomme l'équipement. Le tir allié touche toutes les équipes dans la zone (monstres compris) ; chaque mort remplit l'autel jusqu'au niveau 3, qui donne un objet et invoque autant d'alliés fantômes (+1500 % de dégâts) que son niveau."
+  },
+  "shieldonly": {
+    "explain": "Votre vie devient presque entièrement du bouclier : il ne se soigne pas, mais se recharge complètement en 2 s après 7 s sans subir de dégâts (les dégâts sur la durée repoussent ce délai). Les soins deviennent quasi inutiles, sauf avec l'Aegis, et les dégâts de chute deviennent négligeables."
+  },
+  "clover": {
+    "explain": "Chaque jet de chance raté est retenté une fois de plus par trèfle : avec 20 % de base, 1 trèfle donne 36 %. Ça marche sur tous les objets à chance (y compris les coups critiques), mais pas sur Tougher Times ni sur le contenu des coffres ou les Shrines of Chance. Chaque Purity annule un trèfle."
+  },
+  "bleedonhit": {
+    "addStacking": [
+      {
+        "stat": "Bleed damage",
+        "model": "none",
+        "base": 240,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE sur 3 s par cumul de saignement (20 % par tic, 4 tics/s) ; durée multipliée par le coef. de proc."
+      }
+    ],
+    "explain": "La chance de saignement est multipliée par le coefficient de proc du coup. Les cumuls de saignement se rafraîchissent mutuellement, donc ils peuvent s'empiler sans limite tant que vous continuez à en appliquer."
+  },
+  "bosshunter": {
+    "explain": "Ne s'active qu'en visant un boss possédant un objet de boss associé (un réticule apparaît) : il meurt instantanément et lâche cet objet. Le Tricorne devient ensuite consommé ; ne l'utilisez jamais sur Mithrix, qui renvoie l'exécution et vous tue."
+  },
+  "bosshunterconsumed": {
+    "explain": "N'a aucun effet à part écrire « Ahoy! » dans le chat, mais compte comme une activation d'équipement (utile pour le War Horn par exemple)."
+  },
+  "chainlightning": {
+    "addStacking": [
+      {
+        "stat": "Chance",
+        "model": "none",
+        "base": 25,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance au toucher, multipliée par le coefficient de proc du coup."
+      },
+      {
+        "stat": "Damage",
+        "model": "none",
+        "base": 80,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts TOTAUX par cible touchée par l'éclair (coef. de proc 0,2)."
+      }
+    ]
+  },
+  "siphononlowhealth": {
+    "addStacking": [
+      {
+        "stat": "Damage per second",
+        "model": "none",
+        "base": 100,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de base par seconde par lien (25 % toutes les 0,25 s), sans coef. de proc ; soigne de 100 % des dégâts."
+      },
+      {
+        "stat": "Radius",
+        "model": "none",
+        "base": 13,
+        "add": 0,
+        "unit": "m",
+        "note": "Portée des liens."
+      }
+    ],
+    "explain": "Ne fonctionne qu'en combat, mais sans avoir besoin de toucher un ennemi. Les liens ralentissent avec du goudron et peuvent faire des critiques, mais ne déclenchent pas les effets au toucher ni sur critique."
+  },
+  "rechargeablejump": {
+    "explain": "À la prise de l'objet ou au début du stage vous n'avez que 3 sauts, les autres doivent se recharger au sol ; utiliser un de ces sauts relance le minuteur. L'armure s'applique aussi en l'air jusqu'à ce que vous atterrissiez."
+  },
+  "gateway": {
+    "addStacking": [
+      {
+        "stat": "Max length",
+        "model": "none",
+        "base": 1000,
+        "add": 0,
+        "unit": "m",
+        "note": "Longueur max du tunnel ; au-delà l'équipement ne s'active pas."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 30,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de vie du tunnel."
+      }
+    ],
+    "explain": "Tous les joueurs peuvent emprunter le tunnel, par les deux bouts, et on reste vulnérable pendant le trajet. Évitez les tunnels vers le bas : la vitesse acquise peut causer de gros dégâts de chute."
+  },
+  "critglassesvoid": {
+    "explain": "La chance est multipliée par le coefficient de proc du coup et ne s'applique pas aux ennemis à barre de vie rouge (boss), ni aux joueurs. L'exécution se transmet aux explosions du Brilliant Behemoth."
+  },
+  "wyrmonhit": {
+    "addStacking": [
+      {
+        "stat": "Proc chance",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "%",
+        "note": "Chance au toucher, multipliée par le coef. de proc et divisée par (vers actifs + 1) ; 1 s de recharge entre deux invocations."
+      },
+      {
+        "stat": "Duration",
+        "model": "none",
+        "base": 10,
+        "add": 0,
+        "unit": "s",
+        "note": "Durée de vie du ver."
+      },
+      {
+        "stat": "Max wyrms",
+        "model": "none",
+        "base": 8,
+        "add": 0,
+        "unit": "",
+        "note": "Nombre max de vers actifs."
+      }
+    ],
+    "explain": "Le ver frappe toutes les 0,2 s (coef. de proc 0,5) et ajoute une brûlure ; il traverse le décor et peut viser d'autres ennemis que celui touché. Plus vous avez de vers actifs, plus il est difficile d'en invoquer un nouveau."
+  },
+  "executelowhealthelite": {
+    "explain": "L'élite est exécuté quand VOUS le touchez sous le seuil (pas vos alliés). Un ennemi qui a encore du bouclier ne peut pas être exécuté, ce qui limite le seuil effectif à 50 % sur les élites électriques."
+  },
+  "critdamage": {
+    "explain": "Augmente le bonus des coups critiques : avec 1 exemplaire, un critique inflige ×3 au lieu de ×2. Ne donne aucune chance de critique."
+  },
+  "lunarprimaryreplacement": {
+    "addStacking": [
+      {
+        "stat": "Shard damage",
+        "model": "none",
+        "base": 120,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de BASE de l'explosion de chaque éclat (coef. de proc 1,0)."
+      },
+      {
+        "stat": "Initial hit damage",
+        "model": "none",
+        "base": 5,
+        "add": 0,
+        "unit": "%",
+        "note": "Dégâts de base du contact initial (coef. de proc 0,1)."
+      }
+    ],
+    "explain": "Toutes les charges se rechargent d'un coup après 2 s sans tirer ; chaque tir relance ce délai. La vitesse d'attaque accélère les tirs mais pas la recharge ; les réductions de recharge, elles, l'accélèrent."
+  }
+}
