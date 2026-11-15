@@ -446,7 +446,44 @@
     "explain": "Se déclenche chaque fois que vous perdez des PV, y compris par dégâts auto-infligés (chute, Autel de sang, Teinture d'Helfire). Ne se déclenche pas si le coup est bloqué (Ténacité, Espaces sûrs, invincibilité)."
   },
   "behemoth": {
-    "explain": "Toutes vos attaques, y compris celles des objets, explosent. Le rayon est multiplié par le coefficient de proc du coup : un coup à 0 (ex. saignement) n'explose pas. La description en jeu (+1,5 m) est fausse : c'est +2,5 m par cumul."
+    "explain": "Toutes vos attaques, y compris celles des objets, explosent. Le rayon est multiplié par le coefficient de proc du coup : un coup à 0 (ex. saignement) n'explose pas. La description en jeu (+1,5 m) est fausse : c'est +2,5 m par cumul.",
+    "links": [
+      {
+        "kind": "boost",
+        "id": "critdamage",
+        "why": "Les explosions sont critiques quand le coup l'est : la Visée laser double aussi leur bonus critique."
+      },
+      {
+        "kind": "boost",
+        "id": "syringe",
+        "why": "Chaque coup explose : +15 % de vitesse d'attaque, c'est +15 % d'explosions."
+      },
+      {
+        "kind": "combo",
+        "id": "attackspeedoncrit",
+        "why": "Critiques plus fréquents et plus de coups par seconde : les deux ressorts du Béhémoth à la fois."
+      },
+      {
+        "kind": "combo",
+        "id": "igniteonkill",
+        "why": "Les explosions tuent en groupe, chaque mort embrase les voisins : les packs fondent en chaîne."
+      },
+      {
+        "kind": "none",
+        "id": "chainlightning",
+        "why": "Coef. de proc 0,2 : les éclairs explosent dans un rayon 5 fois plus petit."
+      },
+      {
+        "kind": "none",
+        "id": "stickybomb",
+        "why": "Coef. de proc 0 : l'explosion de la bombe n'explose pas une seconde fois."
+      },
+      {
+        "kind": "none",
+        "id": "bleedonhit",
+        "why": "Coef. de proc 0 : les dégâts de saignement n'explosent pas."
+      }
+    ]
   },
   "eliteaurelioniteequipment": {
     "addStacking": [
@@ -2571,7 +2608,10 @@
         "note": "Intervalle de base, réduit par la vitesse d'attaque."
       }
     ],
-    "explain": "Détruit les projectiles ennemis proches (boules de feu, flaques, bombes…), mais pas les attaques instantanées comme les lasers ou tirs directs. En pratique réservé au Captain."
+    "explain": "Détruit les projectiles ennemis proches (boules de feu, flaques, bombes…), mais pas les attaques instantanées comme les lasers ou tirs directs. En pratique réservé au Captain.",
+    "tagsRemove": [
+      "attack-speed"
+    ]
   },
   "molotov": {
     "procCoefficient": 1,
@@ -3035,7 +3075,10 @@
         "note": "Ricochets vers d'autres ennemis."
       }
     ],
-    "explain": "Touche tous les alliés mécaniques : drones, tourelles d'Engineer, Meilleur pote, sondes des Noyaux d'empathie, drone d'équipement. Pas la tourelle-calmar ni les Alpha Constructs. Col. Droneman réapparaît à chaque étape s'il est détruit."
+    "explain": "Touche tous les alliés mécaniques : drones, tourelles d'Engineer, Meilleur pote, sondes des Noyaux d'empathie, drone d'équipement. Pas la tourelle-calmar ni les Alpha Constructs. Col. Droneman réapparaît à chaque étape s'il est détruit.",
+    "tagsRemove": [
+      "attack-speed"
+    ]
   },
   "bleedonhitvoid": {
     "addStacking": [
@@ -3144,7 +3187,10 @@
         "note": "Par tir toutes les 0,75 s, basé sur les dégâts de la tourelle (4, +0,8 par niveau) ; coefficient de proc 0,1."
       }
     ],
-    "explain": "Tout interactable compte, sauf les Recycleurs, les recycleurs de drones et les essences de l'artefact Commandement. La durée vient d'une perte de PV : la soigner la prolonge, la blesser l'abrège. La tourelle a le niveau des monstres, pas le vôtre."
+    "explain": "Tout interactable compte, sauf les Recycleurs, les recycleurs de drones et les essences de l'artefact Commandement. La durée vient d'une perte de PV : la soigner la prolonge, la blesser l'abrège. La tourelle a le niveau des monstres, pas le vôtre.",
+    "tagsRemove": [
+      "attack-speed"
+    ]
   },
   "pagewarpgate": {
     "procCoefficient": 1,

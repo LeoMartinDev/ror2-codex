@@ -5,6 +5,7 @@ export type Related = { kind: LinkKind; item: Item; why: string }
 
 const CLOVER = 'clover'
 const LENS = 'critglasses'
+const BEHEMOTH = 'behemoth'
 
 /** Chance (0-100) for one copy, from a "chance" stat or the description. */
 export function chanceAtOne(item: Item): number | null {
@@ -65,11 +66,18 @@ const isItem = (it: Item) => it.kind === 'item'
 
 const P = {
   attackSpeed: (it: Item) => isItem(it) && has(it, 'attack-speed') && !it.stacking.some((s) => s.bad),
-  onHitChance: (it: Item) => isItem(it) && has(it, 'on-hit') && it.luck === 'affected',
+  /** Set off by your hits: every extra hit is one more roll (or one more explosion, counter tick...). */
+  onHit: (it: Item) => isItem(it) && ((has(it, 'on-hit') && it.luck === 'affected') || it.trigger?.kind === 'hit'),
   crit: (it: Item) => /crit/.test(plain(it)),
+  /** More crits, or stronger ones (Laser Scope). */
   critSource: (it: Item) =>
-    it.stacking.some((s) => /crit/i.test(s.stat.en) && /chance/i.test(s.stat.en)) || /critical (strike )?chance/.test(plain(it)),
+    it.stacking.some((s) => /crit/i.test(s.stat.en) && /chance/i.test(s.stat.en)) ||
+    /critical (strike )?chance|critical strikes deal/.test(plain(it)),
   onKill: (it: Item) => isItem(it) && has(it, 'on-kill'),
+  /** On-kill effects that hurt the enemies around, so kills can chain. */
+  onKillDamage: (it: Item) => isItem(it) && has(it, 'on-kill') && has(it, 'damage'),
+  /** Item attacks whose hits explode at (nearly) full Behemoth radius. */
+  fullProcAttack: (it: Item) => isItem(it) && has(it, 'damage') && (it.procCoefficient ?? 0) >= 0.7,
   aoe: (it: Item) => isItem(it) && has(it, 'aoe') && has(it, 'damage'),
   dot: (it: Item) => has(it, 'dot'),
   shieldGiver: (it: Item) => /(gain|grants?|equal to).{0,40}shield|shield.{0,20}equal|into (regenerating )?shields?/.test(plain(it)),
@@ -99,13 +107,14 @@ const L = (fr: string, en: string): Loc => ({ fr, en })
 /** Families are read from the selected item's point of view; two-way pairs are listed in both directions. */
 const FAMILIES: Family[] = [
   { me: (it) => it.id === CLOVER, them: (it) => it.luck === 'affected' && it.kind === 'item', title: L('Objets à chance', 'Chance-based items'), why: L('Le trèfle relance leurs jets ratés : ils se déclenchent plus souvent.', 'The clover rerolls their failed rolls: they trigger more often.') },
-  { me: P.onHitChance, them: P.attackSpeed, title: L('Plus de coups par seconde', 'More hits per second'), why: L('Ils augmentent la vitesse d’attaque : plus de coups, donc plus de déclenchements.', 'They raise attack speed: more hits, so more triggers.') },
-  { me: P.attackSpeed, them: P.onHitChance, title: L('Se déclenchent plus souvent', 'Trigger more often'), why: L('Objets à l’impact : chaque coup en plus est une chance de plus.', 'On-hit items: every extra hit is one more chance.') },
+  { me: (it) => it.id === BEHEMOTH, them: P.fullProcAttack, title: L('Leurs coups explosent aussi', 'Their hits explode too'), why: L('Attaques d’objets à coef. de proc ≥ 0,7 : chacun de leurs coups explose presque à pleine taille.', 'Item attacks with proc coefficient ≥ 0.7: each of their hits explodes at nearly full size.') },
+  { me: P.onHit, them: P.attackSpeed, title: L('Plus de coups par seconde', 'More hits per second'), why: L('Ils augmentent la vitesse d’attaque : plus de coups, donc plus de déclenchements.', 'They raise attack speed: more hits, so more triggers.') },
+  { me: P.attackSpeed, them: P.onHit, title: L('Se déclenchent plus souvent', 'Trigger more often'), why: L('Objets qui se déclenchent à l’impact : chaque coup en plus les relance.', 'On-hit items: every extra hit sets them off again.') },
   { me: P.shieldUser, them: P.shieldGiver, title: L('Donnent du bouclier', 'Give shield'), why: L('Cet objet a besoin d’un bouclier : ceux-ci en fournissent.', 'This item needs a shield: these provide one.') },
   { me: P.shieldGiver, them: P.shieldUser, title: L('Exploitent le bouclier', 'Use your shield'), why: L('Ils ne marchent que tant que vous avez un bouclier.', 'They only work while you have a shield.') },
   { me: P.onKill, them: P.aoe, title: L('Tuent plusieurs ennemis d’un coup', 'Kill several enemies at once'), why: L('Les dégâts de zone enchaînent les éliminations, donc vos effets « à la mort ».', 'Area damage chains kills, and so your on-kill effects.') },
-  { me: P.aoe, them: P.onKill, title: L('Effets à la mort d’un ennemi', 'On-kill effects'), why: L('Vos dégâts de zone tuent en groupe : ces effets se déclenchent en cascade.', 'Your area damage kills in groups: these effects chain.') },
-  { me: (it) => it.totalDamage, them: P.critSource, title: L('Plus de coups critiques', 'More critical strikes'), why: L('Dégâts TOTAUX : chaque critique rend aussi l’effet critique.', 'TOTAL damage: every crit also makes the effect crit.') },
+  { me: P.aoe, them: P.onKillDamage, title: L('Effets à la mort d’un ennemi', 'On-kill effects'), why: L('Vos dégâts de zone tuent en groupe : ces effets blessent les voisins et s’enchaînent.', 'Your area damage kills in groups: these effects hurt the enemies around and chain.') },
+  { me: (it) => it.totalDamage, them: P.critSource, title: L('Critiques plus fréquents ou plus forts', 'More or stronger crits'), why: L('Dégâts TOTAUX : chaque critique rend aussi l’effet critique.', 'TOTAL damage: every crit also makes the effect crit.') },
   { me: P.crit, them: P.crit, title: L('Autour des critiques', 'Around critical strikes'), why: L('Ils donnent des critiques ou en profitent.', 'They give crits or benefit from them.') },
   { me: P.dot, them: P.dot, title: L('Saignement, brûlure & co.', 'Bleed, burn & co.'), why: L('Ils appliquent ou exploitent les dégâts sur la durée.', 'They apply or exploit damage over time.') },
   { me: (it) => it.kind === 'equipment', them: P.equipBooster, title: L('Améliorent l’équipement', 'Improve your equipment'), why: L('Plus de charges, une recharge plus courte ou des effets en plus.', 'More charges, shorter cooldown or extra effects.') },

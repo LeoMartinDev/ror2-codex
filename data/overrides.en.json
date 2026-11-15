@@ -155,7 +155,16 @@
     }
   },
   "behemoth": {
-    "explain": "All your attacks explode, including item attacks. The radius is multiplied by the hit's proc coefficient: a hit with 0 (e.g. bleed) does not explode. The in-game description (+1.5 m) is wrong: it is +2.5 m per stack."
+    "explain": "All your attacks explode, including item attacks. The radius is multiplied by the hit's proc coefficient: a hit with 0 (e.g. bleed) does not explode. The in-game description (+1.5 m) is wrong: it is +2.5 m per stack.",
+    "links": {
+      "critdamage": "Explosions crit when the hit does: Laser Scope also doubles their crit bonus.",
+      "syringe": "Every hit explodes: +15% attack speed is +15% explosions.",
+      "attackspeedoncrit": "More crits and more hits per second: both of Behemoth's levers at once.",
+      "igniteonkill": "Explosions kill in groups and every death sets its neighbours on fire: packs melt in a chain.",
+      "chainlightning": "Proc coefficient 0.2: the bolts explode in a radius 5 times smaller.",
+      "stickybomb": "Proc coefficient 0: the bomb's blast does not explode a second time.",
+      "bleedonhit": "Proc coefficient 0: bleed damage does not explode."
+    }
   },
   "eliteaurelioniteequipment": {
     "explain": "Enemies you hit drop gold nuggets to pick up (about one every 0.5 s, even during cooldown). Activating it raises spikes where you aim, in two rings.",

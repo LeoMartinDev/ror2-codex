@@ -1,7 +1,8 @@
 import { describe, expect, test } from 'bun:test'
 import data from '../data/items.json'
 import { displayedTrap, gainAt, milestones, ruleText, stacksToCap, trendOf, valueAt, verdictOf } from './stacking'
-import { itemFacts, relatedItems } from './related'
+import { RARITY_ORDER as ORDER } from './catalog'
+import { itemFacts, relatedItems, synergyGroups } from './related'
 import { triggerInfo } from './triggers'
 import type { Item, Stacking } from './types'
 
@@ -149,6 +150,20 @@ describe('related items', () => {
   })
   test('facts mention proc coefficient 0 for Brilliant Behemoth', () => {
     expect(itemFacts(find('behemoth')).find((f) => f.k === 'Enchaîne')?.v).toContain('Non')
+  })
+  test('Brilliant Behemoth: attack speed, full-proc item attacks and crit damage, without the on-kill noise', () => {
+    const b = find('behemoth')
+    const rel = relatedItems(b, byId)
+    const groups = synergyGroups(b, items, ORDER, new Set(rel.map((r) => r.item.id)))
+    const ids = [...rel.map((r) => r.item.id), ...groups.flatMap((g) => g.items.map((i) => i.id))]
+    for (const id of ['syringe', 'critdamage', 'missile', 'dagger', 'explodeondeath', 'igniteonkill']) expect(ids).toContain(id)
+    expect(ids).not.toContain('infusion')
+    expect(groups.find((g) => g.title === 'Leurs coups explosent aussi')?.items.map((i) => i.id)).not.toContain('chainlightning')
+    expect(rel.find((r) => r.item.id === 'stickybomb')?.kind).toBe('none')
+  })
+  test("attack speed items list Behemoth: it triggers on every hit, with no chance roll", () => {
+    const groups = synergyGroups(find('syringe'), items, ORDER)
+    expect(groups.flatMap((g) => g.items.map((i) => i.id))).toContain('behemoth')
   })
 })
 
