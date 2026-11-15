@@ -2,6 +2,7 @@ import { describe, expect, test } from 'bun:test'
 import data from '../data/items.json'
 import { displayedTrap, gainAt, milestones, ruleText, stacksToCap, trendOf, valueAt, verdictOf } from './stacking'
 import { itemFacts, relatedItems } from './related'
+import { triggerInfo } from './triggers'
 import type { Item, Stacking } from './types'
 
 const items = data as Item[]
@@ -148,6 +149,28 @@ describe('related items', () => {
   })
   test('facts mention proc coefficient 0 for Brilliant Behemoth', () => {
     expect(itemFacts(find('behemoth')).find((f) => f.k === 'Enchaîne')?.v).toContain('Non')
+  })
+})
+
+describe('triggers', () => {
+  const find = (id: string) => items.find((x) => x.id === id)!
+  test('AtG Missile: any attack, not only left click, with the chance × proc coefficient', () => {
+    const t = triggerInfo(find('missile'), 'fr')!
+    expect(t.main).toContain('touche un ennemi')
+    expect(t.details.join(' ')).toContain('pas seulement le clic gauche')
+    expect(t.details.join(' ')).toMatch(/10\s%\s× le coef\. de proc/)
+  })
+  test('Razorwire triggers when you get hit, not on your hits', () => {
+    expect(find('thorns').trigger?.kind).toBe('hurt')
+  })
+  test('equipment defaults to activation, elite aspects are passive', () => {
+    expect(find('commandmissile').trigger?.kind).toBe('equipment')
+    expect(find('elitefireequipment').trigger?.kind).toBe('passive')
+  })
+  test('every item that does something has a trigger', () => {
+    const missing = items.filter((it) => !it.trigger && !/consumed|scrap/.test(it.id) && it.rarity !== 'untiered')
+    // Quest items and joke items: nothing to trigger.
+    expect(missing.map((it) => it.id).sort()).toEqual(['artifactkey', 'helpwake', 'lunartrinket', 'mastercore', 'masterbattery', 'pageshredded'].sort())
   })
 })
 

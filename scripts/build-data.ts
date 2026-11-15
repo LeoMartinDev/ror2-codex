@@ -14,7 +14,8 @@ import { loadLanguage, DEFAULT_LANG_DIR } from './lib/lang'
 import { wikiToRich, richToPlain } from './lib/wikitext'
 import { resolveFileUrls, download, dominantColor, readJson, writeJson, COLOR_ALGO_VERSION } from './lib/icons'
 import { TAGS } from '../src/lib/catalog'
-import type { DlcId, Item, RarityId, Stacking, StackModel } from '../src/lib/types'
+import { TRIGGER_KINDS } from '../src/lib/triggers'
+import type { DlcId, Item, RarityId, Stacking, StackModel, TriggerKind } from '../src/lib/types'
 
 const ROOT = join(import.meta.dir, '..')
 const CACHE = join(ROOT, '.cache')
@@ -405,6 +406,24 @@ for (const it of items) {
   if (c) it.id = `${it.id}-${c + 1}`
 }
 
+// ---------------------------------------------------------------- triggers
+// data/triggers.json: id → kind, [kind, FR text, EN text], or null (nothing sets it off).
+// Equipment without an entry is triggered by activating it.
+type TriggerEntry = TriggerKind | [TriggerKind, string, string] | null
+const triggers = readJson<Record<string, TriggerEntry>>(join(ROOT, 'data', 'triggers.json'), {})
+const knownKinds = new Set<string>(TRIGGER_KINDS)
+const ids = new Set(items.map((it) => it.id))
+const noTrigger: string[] = []
+for (const key of Object.keys(triggers)) if (!key.startsWith('_') && !ids.has(key)) console.log(`  ⚠ triggers.json : id inconnu « ${key} »`)
+for (const it of items) {
+  const entry = it.id in triggers ? triggers[it.id] : it.kind === 'equipment' ? 'equipment' : undefined
+  if (entry === undefined) noTrigger.push(it.id)
+  if (!entry) continue
+  const [kind, fr, en] = typeof entry === 'string' ? [entry] : entry
+  if (!knownKinds.has(kind)) throw new Error(`triggers.json : type inconnu « ${kind} » pour ${it.id}`)
+  it.trigger = { kind, ...(fr && en ? { text: { fr, en } } : {}) }
+}
+
 // ---------------------------------------------------------------- icons + colours
 const missingIcons = items.filter((it) => !existsSync(join(ICONS, `${it.id}.png`)))
 if (missingIcons.length) {
@@ -459,5 +478,6 @@ show('ℹ tokens corrigés', report.tokenFixed)
 show('⚠ sans token de langue', report.noToken)
 show('⚠ sans texte FR', report.noFr)
 show('⚠ sans icône', report.noIcon)
+show('⚠ sans déclencheur (data/triggers.json)', noTrigger)
 if (report.untranslatedStats.size) console.log(`  ⚠ stats non traduites : ${report.untranslatedStats.size} (voir .cache/untranslated-stats.json)`)
 if (report.special.length) console.log(`  ℹ stats « spéciales » : ${report.special.length}`)

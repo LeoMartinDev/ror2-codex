@@ -5,6 +5,7 @@ import type { Search } from '#/lib/filters'
 import { useLang } from '#/lib/i18n'
 import { itemFacts, relatedItems, synergyGroups } from '#/lib/related'
 import { RichText } from '#/lib/richText'
+import { triggerInfo } from '#/lib/triggers'
 import type { Item, LinkKind } from '#/lib/types'
 import { ItemTile, useTileTooltip } from './ItemGrid'
 import { StatCard } from './StatCard'
@@ -72,6 +73,7 @@ export function ItemDetail({ item, all, byId, byWikiName, onClose }: Props) {
   const rarity = RARITY_BY_ID[item.rarity]
   const dlc = DLC_BY_ID[item.dlc]
   const facts = itemFacts(item, lang)
+  const trigger = triggerInfo(item, lang)
   const related = relatedItems(item, byId, lang)
   const synergies = synergyGroups(item, all, RARITY_ORDER, new Set(related.map((r) => r.item.id)), lang)
   const corrupts = (item.corrupts?.split(/,\s*/).map((n) => byWikiName.get(n)).filter(Boolean) ?? []) as Item[]
@@ -132,6 +134,23 @@ export function ItemDetail({ item, all, byId, byWikiName, onClose }: Props) {
           <p className="m-0 text-[17px] leading-snug">
             <RichText text={item.pickup[lang] || item.desc[lang]} />
           </p>
+          {trigger && (
+            <div className="relative border-2 border-[#5a4a1c] bg-[linear-gradient(180deg,#1f1a0d,#16130b)] py-2.5 pl-4 pr-3 shadow-[inset_3px_0_0_var(--color-accent)]">
+              <div className="px-label mb-1 flex items-center gap-1.5 text-accent">
+                <svg width="10" height="10" viewBox="0 0 5 5" aria-hidden shapeRendering="crispEdges" fill="currentColor">
+                  <rect x="2" y="0" width="2" height="1" /><rect x="1" y="1" width="2" height="1" />
+                  <rect x="0" y="2" width="5" height="1" /><rect x="2" y="3" width="2" height="1" /><rect x="1" y="4" width="2" height="1" />
+                </svg>
+                {tr('Se déclenche', 'Triggers')}
+              </div>
+              <p className="m-0 text-[16px] font-semibold leading-snug text-ink">{trigger.main}</p>
+              {trigger.details.map((d) => (
+                <p key={d} className="m-0 mt-1.5 text-[14px] leading-snug text-ink-dim">
+                  {d}
+                </p>
+              ))}
+            </div>
+          )}
           {item.explain && (
             <div className="relative border-2 border-[#1f4a66] bg-[linear-gradient(180deg,#10202c,#0d1820)] py-2.5 pl-4 pr-3 shadow-[inset_3px_0_0_var(--color-info)]">
               <div className="px-label mb-1 flex items-center gap-1.5 text-info">

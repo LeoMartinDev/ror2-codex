@@ -24,8 +24,9 @@ Le script `scripts/build-data.ts` combine plusieurs sources :
 1. **Textes officiels FR/EN** lus dans les fichiers de langue du jeu installé. Le chemin par défaut est Steam (`…/Risk of Rain 2_Data/StreamingAssets/Language`), modifiable avec `ROR2_LANG_DIR`.
 2. **Métadonnées du wiki** (`Module:Items/Data`, `Module:Equipment/Data` sur riskofrain2.wiki.gg) : rareté, DLC, catégories et stats de cumul. Elles sont mises en cache dans `.cache/`. Utilise `bun run data --refresh` pour les re-télécharger.
 3. **Corrections manuelles** dans `data/overrides.json`, avec l'ID wiki de l'item comme clé. On peut y forcer la rareté, corriger ou ajouter une stat, ou écrire une formule propre (`"model": "table", "expr": "…"` en fonction de `n`).
-4. **Traductions des noms de stats** dans `data/stat-labels.fr.json`. Celles qui manquent sont listées dans `.cache/untranslated-stats.json`.
-5. **Icônes** téléchargées depuis le wiki, et **couleur dominante** calculée avec `sharp`, ce qui permet le filtre par couleur.
+4. **Déclencheurs** dans `data/triggers.json` (ID de `items.json` comme clé) : ce qui active chaque objet (coup porté, kill, dégâts reçus, sprint…). Les textes par type sont dans `src/lib/triggers.ts` ; on peut remplacer la phrase d'un objet avec `[type, "texte FR", "texte EN"]`. Un objet sans entrée est signalé à la génération.
+5. **Traductions des noms de stats** dans `data/stat-labels.fr.json`. Celles qui manquent sont listées dans `.cache/untranslated-stats.json`.
+6. **Icônes** téléchargées depuis le wiki, et **couleur dominante** calculée avec `sharp`, ce qui permet le filtre par couleur.
 
 Après une mise à jour du jeu : `bun run data --refresh`, lire le rapport affiché en console, puis compléter `overrides.json` si besoin.
 

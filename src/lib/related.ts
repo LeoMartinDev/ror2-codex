@@ -152,22 +152,7 @@ export function itemFacts(item: Item, lang: Lang = 'fr'): Fact[] {
   const fr = lang === 'fr'
   const tr = (a: string, b: string) => (fr ? a : b)
   const facts: Fact[] = []
-  const t = new Set(item.tags)
-  const chance = chanceAtOne(item) !== null
-
-  let when: string | null = null
-  if (item.kind === 'equipment') when = tr('Quand vous activez l’équipement.', 'When you activate the equipment.')
-  else if (t.has('on-kill')) when = tr('Quand un ennemi meurt.', 'When an enemy dies.')
-  else if (t.has('on-hit'))
-    when = chance
-      ? tr('À l’impact. La chance est multipliée par le coef. de proc de l’attaque.', 'On hit. The chance is multiplied by the attack’s proc coefficient.')
-      : tr('À l’impact.', 'On hit.')
-  else if (t.has('low-health')) when = tr('Quand vos PV sont bas.', 'When your health is low.')
-  else if (t.has('teleporter')) when = tr('Pendant l’événement du téléporteur.', 'During the teleporter event.')
-  else if (t.has('stage-start')) when = tr('Au début de chaque niveau.', 'At the start of each stage.')
-  else if (t.has('sprint')) when = tr('En sprintant.', 'While sprinting.')
-  if (when) facts.push({ k: tr('Quand', 'When'), v: when })
-
+  // What sets the item off is shown on its own (see triggerInfo), not in this table.
   if (item.kind === 'equipment' && item.cooldown !== undefined) facts.push({ k: tr('Recharge', 'Cooldown'), v: `${item.cooldown} s` })
   if (item.totalDamage) facts.push({ k: tr('Dégâts', 'Damage'), v: tr('TOTAUX : profite des coups critiques.', 'TOTAL: benefits from critical strikes.') })
   if (item.procCoefficient !== undefined) {

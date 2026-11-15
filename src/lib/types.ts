@@ -67,7 +67,40 @@ export type Stacking = {
   note?: Loc
 }
 
-export type LinkKind = 'boost' | 'combo' | 'none'
+/** What sets an item off. Texts live in src/lib/triggers.ts, per-item choice in data/triggers.json. */
+export type TriggerKind =
+  | 'hit'
+  | 'big-hit'
+  | 'crit'
+  | 'kill'
+  | 'kill-elite'
+  | 'hurt'
+  | 'low-health'
+  | 'heal'
+  | 'sprint'
+  | 'jump'
+  | 'landing'
+  | 'still'
+  | 'interact'
+  | 'pickup'
+  | 'stage-start'
+  | 'teleporter'
+  | 'level-up'
+  | 'equipment'
+  | 'primary'
+  | 'secondary'
+  | 'skill'
+  | 'timer'
+  | 'allies'
+  | 'combat'
+  | 'out-of-combat'
+  | 'death'
+  | 'ritual'
+  | 'passive'
+
+export type Trigger = { kind: TriggerKind; /** Replaces the default sentence of the kind. */ text?: Loc }
+
+export type LinkKind ='boost' | 'combo' | 'none'
 export type ItemLink = { kind: LinkKind; id: string; why: Loc }
 
 export type Item = {
@@ -96,6 +129,8 @@ export type Item = {
   totalDamage: boolean
   /** Hand-written hard limit, e.g. "3 copies". */
   limit?: Loc
+  /** What sets the item off (hand-written, data/triggers.json). */
+  trigger?: Trigger
   /** Plain-language explanation when the game text hides how the item works. */
   explain?: Loc
   /** Hand-written synergies (combos, exceptions). Automatic ones are computed in the UI. */
