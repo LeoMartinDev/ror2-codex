@@ -100,31 +100,33 @@ type Family = {
   them: (it: Item) => boolean
   title: Loc
   why: Loc
+  /** Name of the combo when both sides sit in the same build. Families without one are skipped there. */
+  build?: Loc
 }
 
 const L = (fr: string, en: string): Loc => ({ fr, en })
 
 /** Families are read from the selected item's point of view; two-way pairs are listed in both directions. */
 const FAMILIES: Family[] = [
-  { me: (it) => it.id === CLOVER, them: (it) => it.luck === 'affected' && it.kind === 'item', title: L('Objets à chance', 'Chance-based items'), why: L('Le trèfle relance leurs jets ratés : ils se déclenchent plus souvent.', 'The clover rerolls their failed rolls: they trigger more often.') },
-  { me: (it) => it.id === BEHEMOTH, them: P.fullProcAttack, title: L('Leurs coups explosent aussi', 'Their hits explode too'), why: L('Attaques d’objets à coef. de proc ≥ 0,7 : chacun de leurs coups explose presque à pleine taille.', 'Item attacks with proc coefficient ≥ 0.7: each of their hits explodes at nearly full size.') },
-  { me: P.onHit, them: P.attackSpeed, title: L('Plus de coups par seconde', 'More hits per second'), why: L('Ils augmentent la vitesse d’attaque : plus de coups, donc plus de déclenchements.', 'They raise attack speed: more hits, so more triggers.') },
+  { me: (it) => it.id === CLOVER, them: (it) => it.luck === 'affected' && it.kind === 'item', title: L('Objets à chance', 'Chance-based items'), build: L('Trèfle et objets à chance', 'Clover and chance-based items'), why: L('Le trèfle relance leurs jets ratés : ils se déclenchent plus souvent.', 'The clover rerolls their failed rolls: they trigger more often.') },
+  { me: (it) => it.id === BEHEMOTH, them: P.fullProcAttack, title: L('Leurs coups explosent aussi', 'Their hits explode too'), build: L('Le Béhémoth fait exploser leurs coups', 'Behemoth makes their hits explode'), why: L('Attaques d’objets à coef. de proc ≥ 0,7 : chacun de leurs coups explose presque à pleine taille.', 'Item attacks with proc coefficient ≥ 0.7: each of their hits explodes at nearly full size.') },
+  { me: P.onHit, them: P.attackSpeed, title: L('Plus de coups par seconde', 'More hits per second'), build: L('Vitesse d’attaque et effets à l’impact', 'Attack speed and on-hit effects'), why: L('Ils augmentent la vitesse d’attaque : plus de coups, donc plus de déclenchements.', 'They raise attack speed: more hits, so more triggers.') },
   { me: P.attackSpeed, them: P.onHit, title: L('Se déclenchent plus souvent', 'Trigger more often'), why: L('Objets qui se déclenchent à l’impact : chaque coup en plus les relance.', 'On-hit items: every extra hit sets them off again.') },
-  { me: P.shieldUser, them: P.shieldGiver, title: L('Donnent du bouclier', 'Give shield'), why: L('Cet objet a besoin d’un bouclier : ceux-ci en fournissent.', 'This item needs a shield: these provide one.') },
+  { me: P.shieldUser, them: P.shieldGiver, title: L('Donnent du bouclier', 'Give shield'), build: L('Bouclier fourni et exploité', 'Shield given and used'), why: L('Cet objet a besoin d’un bouclier : ceux-ci en fournissent.', 'This item needs a shield: these provide one.') },
   { me: P.shieldGiver, them: P.shieldUser, title: L('Exploitent le bouclier', 'Use your shield'), why: L('Ils ne marchent que tant que vous avez un bouclier.', 'They only work while you have a shield.') },
-  { me: P.onKill, them: P.aoe, title: L('Tuent plusieurs ennemis d’un coup', 'Kill several enemies at once'), why: L('Les dégâts de zone enchaînent les éliminations, donc vos effets « à la mort ».', 'Area damage chains kills, and so your on-kill effects.') },
+  { me: P.onKill, them: P.aoe, title: L('Tuent plusieurs ennemis d’un coup', 'Kill several enemies at once'), build: L('Zone et effets à la mort', 'Area damage and on-kill effects'), why: L('Les dégâts de zone enchaînent les éliminations, donc vos effets « à la mort ».', 'Area damage chains kills, and so your on-kill effects.') },
   { me: P.aoe, them: P.onKillDamage, title: L('Effets à la mort d’un ennemi', 'On-kill effects'), why: L('Vos dégâts de zone tuent en groupe : ces effets blessent les voisins et s’enchaînent.', 'Your area damage kills in groups: these effects hurt the enemies around and chain.') },
-  { me: (it) => it.totalDamage, them: P.critSource, title: L('Critiques plus fréquents ou plus forts', 'More or stronger crits'), why: L('Dégâts TOTAUX : chaque critique rend aussi l’effet critique.', 'TOTAL damage: every crit also makes the effect crit.') },
-  { me: P.crit, them: P.crit, title: L('Autour des critiques', 'Around critical strikes'), why: L('Ils donnent des critiques ou en profitent.', 'They give crits or benefit from them.') },
-  { me: P.dot, them: P.dot, title: L('Saignement, brûlure & co.', 'Bleed, burn & co.'), why: L('Ils appliquent ou exploitent les dégâts sur la durée.', 'They apply or exploit damage over time.') },
-  { me: (it) => it.kind === 'equipment', them: P.equipBooster, title: L('Améliorent l’équipement', 'Improve your equipment'), why: L('Plus de charges, une recharge plus courte ou des effets en plus.', 'More charges, shorter cooldown or extra effects.') },
+  { me: (it) => it.totalDamage, them: P.critSource, title: L('Critiques plus fréquents ou plus forts', 'More or stronger crits'), build: L('Critiques et dégâts TOTAUX', 'Crits and TOTAL damage'), why: L('Dégâts TOTAUX : chaque critique rend aussi l’effet critique.', 'TOTAL damage: every crit also makes the effect crit.') },
+  { me: P.crit, them: P.crit, title: L('Autour des critiques', 'Around critical strikes'), build: L('Autour des critiques', 'Around critical strikes'), why: L('Ils donnent des critiques ou en profitent.', 'They give crits or benefit from them.') },
+  { me: P.dot, them: P.dot, title: L('Saignement, brûlure & co.', 'Bleed, burn & co.'), build: L('Dégâts sur la durée', 'Damage over time'), why: L('Ils appliquent ou exploitent les dégâts sur la durée.', 'They apply or exploit damage over time.') },
+  { me: (it) => it.kind === 'equipment', them: P.equipBooster, title: L('Améliorent l’équipement', 'Improve your equipment'), build: L('Équipement amélioré', 'Boosted equipment'), why: L('Plus de charges, une recharge plus courte ou des effets en plus.', 'More charges, shorter cooldown or extra effects.') },
   { me: P.equipBooster, them: (it) => it.kind === 'item' && P.equipBooster(it), title: L('Autres objets d’équipement', 'Other equipment items'), why: L('Tous jouent sur votre équipement : ils se complètent.', 'All work on your equipment: they complement each other.') },
-  { me: P.healTrigger, them: P.healTrigger, title: L('Se déclenchent en vous soignant', 'Trigger when you heal'), why: L('Chaque soin alimente aussi ces effets.', 'Every heal also feeds these effects.') },
-  { me: P.barrier, them: P.barrier, title: L('Barrière', 'Barrier'), why: L('Ils donnent de la barrière ou en profitent.', 'They give barrier or benefit from it.') },
-  { me: P.sprint, them: P.sprint, title: L('Sprint', 'Sprint'), why: L('Tous récompensent le sprint.', 'All reward sprinting.') },
-  { me: P.jump, them: P.jump, title: L('Sauts', 'Jumps'), why: L('Tous jouent sur les sauts.', 'All play on jumps.') },
-  { me: P.lowHealth, them: P.lowHealth, title: L('PV bas', 'Low health'), why: L('Tous se déclenchent quand vos PV sont bas.', 'All trigger when your health is low.') },
-  { me: P.teleporter, them: P.teleporter, title: L('Téléporteur', 'Teleporter'), why: L('Tous agissent pendant l’événement du téléporteur.', 'All act during the teleporter event.') },
+  { me: P.healTrigger, them: P.healTrigger, title: L('Se déclenchent en vous soignant', 'Trigger when you heal'), build: L('Effets sur soin', 'On-heal effects'), why: L('Chaque soin alimente aussi ces effets.', 'Every heal also feeds these effects.') },
+  { me: P.barrier, them: P.barrier, title: L('Barrière', 'Barrier'), build: L('Barrière', 'Barrier'), why: L('Ils donnent de la barrière ou en profitent.', 'They give barrier or benefit from it.') },
+  { me: P.sprint, them: P.sprint, title: L('Sprint', 'Sprint'), build: L('Sprint', 'Sprint'), why: L('Tous récompensent le sprint.', 'All reward sprinting.') },
+  { me: P.jump, them: P.jump, title: L('Sauts', 'Jumps'), build: L('Sauts', 'Jumps'), why: L('Tous jouent sur les sauts.', 'All play on jumps.') },
+  { me: P.lowHealth, them: P.lowHealth, title: L('PV bas', 'Low health'), build: L('PV bas', 'Low health'), why: L('Tous se déclenchent quand vos PV sont bas.', 'All trigger when your health is low.') },
+  { me: P.teleporter, them: P.teleporter, title: L('Téléporteur', 'Teleporter'), build: L('Téléporteur', 'Teleporter'), why: L('Tous agissent pendant l’événement du téléporteur.', 'All act during the teleporter event.') },
   { me: P.defense, them: P.defense, title: L('Autres objets de survie', 'Other survival items'), why: L('Ils se cumulent pour encaisser davantage.', 'They stack up so you can take more hits.') },
 ]
 
@@ -152,6 +154,60 @@ export function synergyGroups(
     groups.push({ title: f.title[lang], why: f.why[lang], items: list })
   }
   return groups
+}
+
+export type BuildCombo = {
+  title: string
+  why: string
+  /** For two-sided combos (clover × chance items), the first side. Empty when every item plays the same part. */
+  from: Item[]
+  items: Item[]
+}
+export type BuildWarning = { kind: 'corrupt' | 'none'; a: Item; b: Item; why: string }
+
+/**
+ * Synergies found automatically between the items of one build: families with at least one
+ * pair inside the build, and warnings (a void item that eats another one, hand-written "does not work with").
+ */
+export function buildSynergies(items: Item[], byWikiName: Map<string, Item>, lang: Lang = 'fr'): { combos: BuildCombo[]; warnings: BuildWarning[] } {
+  const fr = lang === 'fr'
+  const combos: BuildCombo[] = []
+  for (const f of FAMILIES) {
+    if (!f.build) continue
+    const me = items.filter(f.me)
+    const them = items.filter(f.them)
+    if (f.me === f.them) {
+      if (me.length >= 2) combos.push({ title: f.build[lang], why: f.why[lang], from: [], items: me })
+      continue
+    }
+    if (!me.length || !them.length) continue
+    const rest = them.filter((it) => !me.includes(it))
+    if (rest.length) combos.push({ title: f.build[lang], why: f.why[lang], from: me, items: rest })
+    // Every item is on both sides (area damage that is also on-kill): one group, if there are two of them.
+    else if (me.length >= 2) combos.push({ title: f.build[lang], why: f.why[lang], from: [], items: me })
+  }
+
+  const warnings: BuildWarning[] = []
+  const inBuild = new Set(items.map((it) => it.id))
+  for (const a of items) {
+    for (const name of a.corrupts?.split(',').map((x) => x.trim()) ?? []) {
+      const b = byWikiName.get(name)
+      if (b && inBuild.has(b.id))
+        warnings.push({
+          kind: 'corrupt',
+          a,
+          b,
+          why: fr
+            ? `${a.name.fr} corrompt ${b.name.fr} : tu ne peux pas garder les deux.`
+            : `${a.name.en} corrupts ${b.name.en}: you cannot keep both.`,
+        })
+    }
+    for (const l of a.links) {
+      const b = items.find((it) => it.id === l.id)
+      if (l.kind === 'none' && b) warnings.push({ kind: 'none', a, b, why: l.why[lang] || l.why.fr })
+    }
+  }
+  return { combos: combos.filter((c) => c.from.length + c.items.length >= 2), warnings }
 }
 
 export type Fact = { k: string; v: string }

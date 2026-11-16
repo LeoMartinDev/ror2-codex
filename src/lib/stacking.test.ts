@@ -4,6 +4,7 @@ import { displayedTrap, gainAt, milestones, ruleText, stacksToCap, trendOf, valu
 import { RARITY_ORDER as ORDER } from './catalog'
 import { itemFacts, relatedItems, synergyGroups } from './related'
 import { triggerInfo } from './triggers'
+import { itemSlug } from './slug'
 import type { Item, Stacking } from './types'
 
 const items = data as Item[]
@@ -201,5 +202,18 @@ describe('data integrity', () => {
   })
   test('Hallowed Concepts content is present', () => {
     expect(items.filter((i) => i.dlc === 'hc').length).toBeGreaterThan(30)
+  })
+})
+
+describe('item URLs', () => {
+  const items = data as Item[]
+  test('every item has a unique, non-empty slug', () => {
+    const slugs = items.map(itemSlug)
+    expect(slugs.every((s) => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(s))).toBe(true)
+    expect(new Set(slugs).size).toBe(items.length)
+  })
+  test('slugs read like the English name', () => {
+    expect(itemSlug({ name: { en: "Hiker's Boots" } })).toBe('hikers-boots')
+    expect(itemSlug({ name: { en: '57 Leaf Clover' } })).toBe('57-leaf-clover')
   })
 })

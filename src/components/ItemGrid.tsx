@@ -3,6 +3,7 @@ import { useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { RARITY_BY_ID, TIERS, TIER_OF, tileColors } from '#/lib/catalog'
 import type { Search } from '#/lib/filters'
 import { useLang } from '#/lib/i18n'
+import { itemSlug } from '#/lib/items'
 import { RichText } from '#/lib/richText'
 import type { Item } from '#/lib/types'
 
@@ -24,8 +25,9 @@ export function ItemTile({
   const hide = () => onHover?.(null)
   return (
     <Link
-      to="/"
-      search={(prev: Search) => ({ ...prev, item: item.id })}
+      to="/items/$slug"
+      params={{ slug: itemSlug(item) }}
+      search={true}
       resetScroll={false}
       aria-label={lang === 'fr' ? `${item.name.fr} (${item.name.en})` : item.name.en}
       aria-current={selected ? 'true' : undefined}
@@ -131,11 +133,11 @@ function groupByTier(items: Item[], lang: 'fr' | 'en'): Group[] {
   return [...groups.values()]
 }
 
-function TileWall({ items, search, onHover }: { items: Item[]; search: Search; onHover: (h: Hover | null) => void }) {
+function TileWall({ items, selectedId, onHover }: { items: Item[]; selectedId?: string; onHover: (h: Hover | null) => void }) {
   return (
     <div className="grid grid-cols-[repeat(auto-fill,56px)] justify-center gap-1.5 sm:justify-start">
       {items.map((it) => (
-        <ItemTile key={it.id} item={it} selected={search.item === it.id} onHover={onHover} />
+        <ItemTile key={it.id} item={it} selected={selectedId === it.id} onHover={onHover} />
       ))}
     </div>
   )
@@ -160,7 +162,7 @@ export function useTileTooltip() {
   return { onHover: setHover, tooltip: hover ? <TileTooltip hover={hover} /> : null }
 }
 
-export function ItemGrid({ items, search }: { items: Item[]; search: Search }) {
+export function ItemGrid({ items, search, selectedId }: { items: Item[]; search: Search; selectedId?: string }) {
   const { lang, tr } = useLang()
   const { onHover: setHover, tooltip } = useTileTooltip()
 
@@ -203,12 +205,12 @@ export function ItemGrid({ items, search }: { items: Item[]; search: Search }) {
                   style={{ background: `linear-gradient(90deg, ${g.color}55, transparent 70%)` }}
                 />
               </h2>
-              <TileWall items={g.items} search={search} onHover={setHover} />
+              <TileWall items={g.items} selectedId={selectedId} onHover={setHover} />
             </section>
           ))}
         </div>
       ) : (
-        <TileWall items={items} search={search} onHover={setHover} />
+        <TileWall items={items} selectedId={selectedId} onHover={setHover} />
       )}
       {tooltip}
     </>

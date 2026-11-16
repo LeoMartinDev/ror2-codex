@@ -9,50 +9,276 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as CatalogRouteImport } from './routes/_catalog'
+import { Route as BuildsRouteRouteImport } from './routes/builds/route'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as CatalogIndexRouteImport } from './routes/_catalog/index'
+import { Route as ApiBuildsRouteImport } from './routes/api/builds'
+import { Route as ApiItemsRouteImport } from './routes/api/items'
+import { Route as BuildsIndexRouteImport } from './routes/builds/index'
+import { Route as BuildsSlugRouteImport } from './routes/builds/$slug'
+import { Route as BuildsEditRouteImport } from './routes/builds/edit'
+import { Route as BuildsViewRouteImport } from './routes/builds/view'
+import { Route as CatalogItemsSlugRouteImport } from './routes/_catalog/items.$slug'
 
-const IndexRoute = IndexRouteImport.update({
+const CatalogRoute = CatalogRouteImport.update({
+  id: '/_catalog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildsRouteRoute = BuildsRouteRouteImport.update({
+  id: '/builds',
+  path: '/builds',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CatalogIndexRoute = CatalogIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => CatalogRoute,
+} as any)
+const ApiBuildsRoute = ApiBuildsRouteImport.update({
+  id: '/api/builds',
+  path: '/api/builds',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiItemsRoute = ApiItemsRouteImport.update({
+  id: '/api/items',
+  path: '/api/items',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuildsIndexRoute = BuildsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BuildsRouteRoute,
+} as any)
+const BuildsSlugRoute = BuildsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BuildsRouteRoute,
+} as any)
+const BuildsEditRoute = BuildsEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => BuildsRouteRoute,
+} as any)
+const BuildsViewRoute = BuildsViewRouteImport.update({
+  id: '/view',
+  path: '/view',
+  getParentRoute: () => BuildsRouteRoute,
+} as any)
+const CatalogItemsSlugRoute = CatalogItemsSlugRouteImport.update({
+  id: '/items/$slug',
+  path: '/items/$slug',
+  getParentRoute: () => CatalogRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/builds': typeof BuildsRouteRouteWithChildren
+  '/': typeof CatalogIndexRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/api/builds': typeof ApiBuildsRoute
+  '/api/items': typeof ApiItemsRoute
+  '/builds/$slug': typeof BuildsSlugRoute
+  '/builds/edit': typeof BuildsEditRoute
+  '/builds/view': typeof BuildsViewRoute
+  '/builds/': typeof BuildsIndexRoute
+  '/items/$slug': typeof CatalogItemsSlugRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/api/builds': typeof ApiBuildsRoute
+  '/api/items': typeof ApiItemsRoute
+  '/builds/$slug': typeof BuildsSlugRoute
+  '/builds/edit': typeof BuildsEditRoute
+  '/builds/view': typeof BuildsViewRoute
+  '/': typeof CatalogIndexRoute
+  '/builds': typeof BuildsIndexRoute
+  '/items/$slug': typeof CatalogItemsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/builds': typeof BuildsRouteRouteWithChildren
+  '/_catalog': typeof CatalogRouteWithChildren
+  '/llms.txt': typeof LlmsDottxtRoute
+  '/api/builds': typeof ApiBuildsRoute
+  '/api/items': typeof ApiItemsRoute
+  '/builds/$slug': typeof BuildsSlugRoute
+  '/builds/edit': typeof BuildsEditRoute
+  '/builds/view': typeof BuildsViewRoute
+  '/_catalog/': typeof CatalogIndexRoute
+  '/builds/': typeof BuildsIndexRoute
+  '/_catalog/items/$slug': typeof CatalogItemsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/builds'
+    | '/'
+    | '/llms.txt'
+    | '/api/builds'
+    | '/api/items'
+    | '/builds/$slug'
+    | '/builds/edit'
+    | '/builds/view'
+    | '/builds/'
+    | '/items/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/llms.txt'
+    | '/api/builds'
+    | '/api/items'
+    | '/builds/$slug'
+    | '/builds/edit'
+    | '/builds/view'
+    | '/'
+    | '/builds'
+    | '/items/$slug'
+  id:
+    | '__root__'
+    | '/builds'
+    | '/_catalog'
+    | '/llms.txt'
+    | '/api/builds'
+    | '/api/items'
+    | '/builds/$slug'
+    | '/builds/edit'
+    | '/builds/view'
+    | '/_catalog/'
+    | '/builds/'
+    | '/_catalog/items/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  BuildsRouteRoute: typeof BuildsRouteRouteWithChildren
+  CatalogRoute: typeof CatalogRouteWithChildren
+  LlmsDottxtRoute: typeof LlmsDottxtRoute
+  ApiBuildsRoute: typeof ApiBuildsRoute
+  ApiItemsRoute: typeof ApiItemsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_catalog': {
+      id: '/_catalog'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof CatalogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/builds': {
+      id: '/builds'
+      path: '/builds'
+      fullPath: '/builds'
+      preLoaderRoute: typeof BuildsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_catalog/': {
+      id: '/_catalog/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof CatalogIndexRouteImport
+      parentRoute: typeof CatalogRoute
+    }
+    '/api/builds': {
+      id: '/api/builds'
+      path: '/api/builds'
+      fullPath: '/api/builds'
+      preLoaderRoute: typeof ApiBuildsRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/api/items': {
+      id: '/api/items'
+      path: '/api/items'
+      fullPath: '/api/items'
+      preLoaderRoute: typeof ApiItemsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/builds/': {
+      id: '/builds/'
+      path: '/'
+      fullPath: '/builds/'
+      preLoaderRoute: typeof BuildsIndexRouteImport
+      parentRoute: typeof BuildsRouteRoute
+    }
+    '/builds/$slug': {
+      id: '/builds/$slug'
+      path: '/$slug'
+      fullPath: '/builds/$slug'
+      preLoaderRoute: typeof BuildsSlugRouteImport
+      parentRoute: typeof BuildsRouteRoute
+    }
+    '/builds/edit': {
+      id: '/builds/edit'
+      path: '/edit'
+      fullPath: '/builds/edit'
+      preLoaderRoute: typeof BuildsEditRouteImport
+      parentRoute: typeof BuildsRouteRoute
+    }
+    '/builds/view': {
+      id: '/builds/view'
+      path: '/view'
+      fullPath: '/builds/view'
+      preLoaderRoute: typeof BuildsViewRouteImport
+      parentRoute: typeof BuildsRouteRoute
+    }
+    '/_catalog/items/$slug': {
+      id: '/_catalog/items/$slug'
+      path: '/items/$slug'
+      fullPath: '/items/$slug'
+      preLoaderRoute: typeof CatalogItemsSlugRouteImport
+      parentRoute: typeof CatalogRoute
     }
   }
 }
 
+interface BuildsRouteRouteChildren {
+  BuildsSlugRoute: typeof BuildsSlugRoute
+  BuildsEditRoute: typeof BuildsEditRoute
+  BuildsViewRoute: typeof BuildsViewRoute
+  BuildsIndexRoute: typeof BuildsIndexRoute
+}
+
+const BuildsRouteRouteChildren: BuildsRouteRouteChildren = {
+  BuildsSlugRoute: BuildsSlugRoute,
+  BuildsEditRoute: BuildsEditRoute,
+  BuildsViewRoute: BuildsViewRoute,
+  BuildsIndexRoute: BuildsIndexRoute,
+}
+
+const BuildsRouteRouteWithChildren = BuildsRouteRoute._addFileChildren(
+  BuildsRouteRouteChildren,
+)
+
+interface CatalogRouteChildren {
+  CatalogIndexRoute: typeof CatalogIndexRoute
+  CatalogItemsSlugRoute: typeof CatalogItemsSlugRoute
+}
+
+const CatalogRouteChildren: CatalogRouteChildren = {
+  CatalogIndexRoute: CatalogIndexRoute,
+  CatalogItemsSlugRoute: CatalogItemsSlugRoute,
+}
+
+const CatalogRouteWithChildren =
+  CatalogRoute._addFileChildren(CatalogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  BuildsRouteRoute: BuildsRouteRouteWithChildren,
+  CatalogRoute: CatalogRouteWithChildren,
+  LlmsDottxtRoute: LlmsDottxtRoute,
+  ApiBuildsRoute: ApiBuildsRoute,
+  ApiItemsRoute: ApiItemsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

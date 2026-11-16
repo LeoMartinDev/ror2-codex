@@ -17,6 +17,8 @@ export const Route = createRootRoute({
     links: [
       { rel: 'stylesheet', href: appCss },
       { rel: 'icon', href: '/icons/syringe.png' },
+      // For AI agents: how to read the items and make builds (see src/routes/llms[.]txt.ts).
+      { rel: 'alternate', type: 'text/plain', href: '/llms.txt', title: 'Instructions for AI agents' },
     ],
   }),
   shellComponent: RootDocument,

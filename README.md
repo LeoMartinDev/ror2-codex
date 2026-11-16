@@ -9,11 +9,22 @@ Stack : Bun, TanStack Start / Router, Tailwind, Cloudflare Workers.
 ```bash
 bun install
 bun run dev        # http://localhost:3000
-bun test           # tests du moteur de cumul + intégrité des données
+bun test           # tests du moteur de cumul, des builds + intégrité des données
 bun run build      # build Workers + prérendu de /
 bun run preview    # build puis runtime Workers local
 bun run deploy     # wrangler deploy (nécessite `bunx wrangler login`)
 ```
+
+## Builds
+
+`/builds` liste des builds, génériques ou par survivant : nom, objets (essentiels ou non, avec leur rôle), compétences, comment le jouer et synergies. L'app ajoute d'elle-même les synergies qu'elle repère entre les objets du build (familles de `src/lib/related.ts`) et signale les conflits (objet du Vide qui en corrompt un autre).
+
+- **Builds du Codex** : `src/data/builds.ts`, écrits en FR et EN, prérendus sur `/builds/<slug>`. `bun test` vérifie que leurs objets existent.
+- **Builds des joueurs** : créés dans l'éditeur (`/builds/edit`), sans serveur. Le lien de partage contient tout le build, compressé dans le hash (`/builds/view#<code>`, voir `src/lib/builds.ts`). « Mes builds » sont gardés dans le `localStorage` du navigateur.
+- **Par un assistant IA** : il suffit de lui donner l'adresse du site. `/llms.txt` lui explique tout, avec des URL absolues : le format JSON d'un build (objets et survivants nommés en FR ou EN), `/api/items?q=…` pour trouver les objets, et `/api/builds?b=<JSON>` (ou POST) qui valide le build, suggère les noms corrects en cas de faute et renvoie le lien court. Sans API, l'agent peut aussi donner directement le lien lisible `/builds/view?b=<JSON>` : la page affiche le build et les erreurs éventuelles. Le format est défini dans `src/lib/buildInput.ts`.
+- **En local** : `bun run build-link build.json [--open]` fait la même chose depuis un fichier, et `--open` ouvre le résultat (pane navigateur Kero, sinon navigateur par défaut). Le lien vise `http://localhost:3000`, sauf `--base <url>` ou `ROR2_CODEX_URL`.
+
+Les portraits des survivants (`public/survivors/`) sont téléchargés par `bun run data`, la liste est dans `src/lib/survivors.ts`.
 
 ## Données
 

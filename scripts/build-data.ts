@@ -3,7 +3,8 @@
  *  - the game's language files (official FR + EN names/descriptions),
  *  - the RoR2 wiki data modules (rarity, DLC, categories, stacking stats),
  *  - data/overrides.json and data/stat-labels.fr.json (hand-curated corrections / translations),
- *  - wiki icons (downloaded once to public/icons, dominant colour cached in .cache/colors.json).
+ *  - wiki icons (downloaded once to public/icons, dominant colour cached in .cache/colors.json),
+ *  - survivor portraits for the builds (downloaded once to public/survivors).
  *
  * Usage: bun run data [--refresh]   (ROR2_LANG_DIR overrides the language folder)
  */
@@ -15,15 +16,18 @@ import { wikiToRich, richToPlain } from './lib/wikitext'
 import { resolveFileUrls, download, dominantColor, readJson, writeJson, COLOR_ALGO_VERSION } from './lib/icons'
 import { TAGS } from '../src/lib/catalog'
 import { TRIGGER_KINDS } from '../src/lib/triggers'
+import { SURVIVORS } from '../src/lib/survivors'
 import type { DlcId, Item, RarityId, Stacking, StackModel, TriggerKind } from '../src/lib/types'
 
 const ROOT = join(import.meta.dir, '..')
 const CACHE = join(ROOT, '.cache')
 const ICONS = join(ROOT, 'public', 'icons')
+const PORTRAITS = join(ROOT, 'public', 'survivors')
 const OUT = join(ROOT, 'src', 'data', 'items.json')
 const refresh = process.argv.includes('--refresh')
 mkdirSync(CACHE, { recursive: true })
 mkdirSync(ICONS, { recursive: true })
+mkdirSync(PORTRAITS, { recursive: true })
 mkdirSync(join(ROOT, 'src', 'data'), { recursive: true })
 
 // ---------------------------------------------------------------- sources
@@ -457,6 +461,17 @@ writeJson(COLOR_CACHE, colorCache)
 // Remove icons that no longer belong to any entry.
 const validIcons = new Set(items.map((it) => `${it.id}.png`))
 for (const f of readdirSync(ICONS)) if (f.endsWith('.png') && !validIcons.has(f)) unlinkSync(join(ICONS, f))
+
+// ---------------------------------------------------------------- survivor portraits
+const missingPortraits = SURVIVORS.filter((s) => !existsSync(join(PORTRAITS, `${s.id}.png`)))
+if (missingPortraits.length) {
+  const urls = await resolveFileUrls(missingPortraits.map((s) => `${s.wiki}.png`))
+  for (const s of missingPortraits) {
+    const url = urls.get(`${s.wiki}.png`)
+    const ok = url && (await download(url, join(PORTRAITS, `${s.id}.png`)).catch(() => false))
+    if (!ok) console.warn(`  ⚠ portrait introuvable : ${s.wiki}.png`)
+  }
+}
 
 // ---------------------------------------------------------------- output
 items.sort((a, b) => a.name.fr.localeCompare(b.name.fr, 'fr'))

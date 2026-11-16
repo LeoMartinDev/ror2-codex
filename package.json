@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "data": "bun run scripts/build-data.ts",
+    "build-link": "bun run scripts/build-link.ts",
     "build": "vite build",
     "preview": "bun run build && vite preview",
     "deploy": "bun run build && wrangler deploy",

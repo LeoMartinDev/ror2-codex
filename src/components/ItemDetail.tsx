@@ -1,15 +1,16 @@
 import { Link } from '@tanstack/react-router'
 import { useEffect, type ReactNode } from 'react'
 import { DLC_BY_ID, RARITY_BY_ID, RARITY_ORDER, tileColors } from '#/lib/catalog'
-import type { Search } from '#/lib/filters'
 import { useLang } from '#/lib/i18n'
+import { itemSlug, itemUrl } from '#/lib/items'
 import { itemFacts, relatedItems, synergyGroups } from '#/lib/related'
 import { RichText } from '#/lib/richText'
+import { useShareLink } from '#/lib/share'
 import { triggerInfo } from '#/lib/triggers'
 import type { Item, LinkKind } from '#/lib/types'
 import { ItemTile, useTileTooltip } from './ItemGrid'
 import { StatCard } from './StatCard'
-import { Button } from './ui'
+import { Button, LinkIcon } from './ui'
 
 type Props = {
   item: Item
@@ -41,8 +42,9 @@ function ItemRow({ item, why, border }: { item: Item; why?: string; border?: str
   const { lang } = useLang()
   return (
     <Link
-      to="/"
-      search={(prev: Search) => ({ ...prev, item: item.id })}
+      to="/items/$slug"
+      params={{ slug: itemSlug(item) }}
+      search={true}
       resetScroll={false}
       className="px-focus group flex items-center gap-3 border-2 border-line bg-card p-1.5 pr-3 transition-colors hover:border-[#3a404c] hover:bg-[#171a20]"
       style={{ borderColor: border }}
@@ -64,6 +66,7 @@ function ItemRow({ item, why, border }: { item: Item; why?: string; border?: str
 export function ItemDetail({ item, all, byId, byWikiName, onClose }: Props) {
   const { lang, tr, loc } = useLang()
   const { onHover, tooltip } = useTileTooltip()
+  const { share, copied } = useShareLink()
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
@@ -115,18 +118,29 @@ export function ItemDetail({ item, all, byId, byWikiName, onClose }: Props) {
             </span>
           </div>
         </div>
-        <Button
-          onClick={onClose}
-          aria-label={tr('Fermer', 'Close')}
-          title={tr('Fermer (Échap)', 'Close (Esc)')}
-          className="absolute right-4 top-4 w-9 justify-center px-0"
-        >
-          <svg width="12" height="12" viewBox="0 0 6 6" aria-hidden shapeRendering="crispEdges" fill="currentColor">
-            <rect x="0" y="0" width="1" height="1" /><rect x="1" y="1" width="1" height="1" /><rect x="2" y="2" width="2" height="2" />
-            <rect x="4" y="4" width="1" height="1" /><rect x="5" y="5" width="1" height="1" /><rect x="5" y="0" width="1" height="1" />
-            <rect x="4" y="1" width="1" height="1" /><rect x="1" y="4" width="1" height="1" /><rect x="0" y="5" width="1" height="1" />
-          </svg>
-        </Button>
+        <div className="absolute right-4 top-4 flex flex-col gap-2">
+          <Button
+            onClick={onClose}
+            aria-label={tr('Fermer', 'Close')}
+            title={tr('Fermer (Échap)', 'Close (Esc)')}
+            className="w-9 justify-center px-0"
+          >
+            <svg width="12" height="12" viewBox="0 0 6 6" aria-hidden shapeRendering="crispEdges" fill="currentColor">
+              <rect x="0" y="0" width="1" height="1" /><rect x="1" y="1" width="1" height="1" /><rect x="2" y="2" width="2" height="2" />
+              <rect x="4" y="4" width="1" height="1" /><rect x="5" y="5" width="1" height="1" /><rect x="5" y="0" width="1" height="1" />
+              <rect x="4" y="1" width="1" height="1" /><rect x="1" y="4" width="1" height="1" /><rect x="0" y="5" width="1" height="1" />
+            </svg>
+          </Button>
+          <Button
+            onClick={() => share(itemUrl(item), item.name[lang])}
+            aria-label={copied ? tr('Lien copié', 'Link copied') : tr('Copier le lien de l’objet', 'Copy the item link')}
+            title={copied ? tr('Lien copié', 'Link copied') : tr('Copier le lien de l’objet', 'Copy the item link')}
+            active={copied}
+            className="w-9 justify-center px-0"
+          >
+            <LinkIcon done={copied} />
+          </Button>
+        </div>
       </header>
 
       <div className="scrollbar-thin min-h-0 flex-1 overflow-y-auto overscroll-contain">

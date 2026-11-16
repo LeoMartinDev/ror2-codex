@@ -3,7 +3,9 @@ import { COLOR_BUCKETS, DLCS, EFFECT_FILTERS, EFFECT_FILTER_BY_ID, EFFECT_GROUPS
 import { countBy, effectIds, joinList, list, type Search } from '#/lib/filters'
 import { LangSwitch, useLang } from '#/lib/i18n'
 import type { Item } from '#/lib/types'
-import { Button, CheckRow, CONTROL_TEXT, Dropdown, FilterChip, Label, Segmented, Select, Swatch } from './ui'
+import { useShareLink } from '#/lib/share'
+import { Logo, SiteNav } from './SiteNav'
+import { Button, CheckRow, CONTROL_TEXT, Dropdown, FilterChip, Label, LinkIcon, Segmented, Select, Swatch } from './ui'
 
 type Props = {
   items: Item[]
@@ -23,6 +25,7 @@ export function FilterBar({ items, search, total, shown, onChange, onReset }: Pr
   const { lang, tr } = useLang()
   const [q, setQ] = useState(search.q ?? '')
   const inputRef = useRef<HTMLInputElement>(null)
+  const { share, copied } = useShareLink()
   useEffect(() => setQ(search.q ?? ''), [search.q])
   // "/" focuses the search, like most catalogues.
   useEffect(() => {
@@ -56,28 +59,8 @@ export function FilterBar({ items, search, total, shown, onChange, onReset }: Pr
   return (
     <div className="topbar border-b-2 border-line">
       <div className="flex flex-wrap items-center gap-3 px-4 py-3 lg:gap-5 lg:px-6">
-        <a href="/" className="px-focus group flex items-center gap-2.5" aria-label={tr('RoR2 Codex, accueil', 'RoR2 Codex, home')}>
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 11 11"
-            aria-hidden
-            shapeRendering="crispEdges"
-            className="drop-shadow-[0_0_8px_rgba(242,201,76,0.45)] transition-transform group-hover:rotate-90"
-          >
-            <rect width="11" height="11" fill="#f2c94c" />
-            <rect x="2" y="2" width="7" height="7" fill="#0a0b0e" />
-            <rect x="4" y="4" width="3" height="3" fill="#f2c94c" />
-          </svg>
-          <span className="flex flex-col">
-            <span className="font-label text-xl leading-none tracking-wide">
-              RoR2<span className="text-accent"> Codex</span>
-            </span>
-            <span className="mt-1 hidden text-[11px] leading-none text-ink-mute xl:block">
-              {tr('Objets, effets & cumuls', 'Items, effects & stacking')}
-            </span>
-          </span>
-        </a>
+        <Logo subtitle={tr('Objets, effets & cumuls', 'Items, effects & stacking')} />
+        <SiteNav current="items" />
 
         <label className="order-last flex h-10 w-full items-center gap-2.5 border-2 border-line-2 bg-[#0b0d10] px-3 shadow-[inset_0_2px_0_rgba(0,0,0,0.4)] transition-colors focus-within:border-accent hover:border-[#3a404c] sm:order-none sm:w-auto sm:flex-[1_1_280px] sm:max-w-[480px]">
           <svg width="14" height="14" viewBox="0 0 7 7" aria-hidden shapeRendering="crispEdges" fill="#8e94a0">
@@ -229,9 +212,19 @@ export function FilterBar({ items, search, total, shown, onChange, onReset }: Pr
         ))}
 
         {hasFilters && (
-          <Button variant="ghost" onClick={onReset}>
-            {tr('Tout effacer', 'Clear all')}
-          </Button>
+          <>
+            <Button
+              onClick={() => share(window.location.href)}
+              active={copied}
+              title={tr('Copier le lien de cette recherche', 'Copy the link to this search')}
+            >
+              <LinkIcon done={copied} />
+              {copied ? tr('Lien copié', 'Link copied') : tr('Partager', 'Share')}
+            </Button>
+            <Button variant="ghost" onClick={onReset}>
+              {tr('Tout effacer', 'Clear all')}
+            </Button>
+          </>
         )}
       </div>
     </div>

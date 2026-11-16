@@ -23,20 +23,37 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'default' | 'ghost'
 }
 
+/** Classes of a Button, for links that must look like one. */
+export function buttonClass({ active, variant = 'default' }: { active?: boolean; variant?: ButtonProps['variant'] } = {}) {
+  return cx(
+    'px-focus inline-flex h-9 shrink-0 items-center gap-2 px-3 disabled:cursor-not-allowed disabled:opacity-40',
+    CONTROL_TEXT,
+    variant === 'ghost' ? 'text-accent hover:underline' : cx(active ? ACTIVE : SURFACE, !active && HOVER, 'border-2'),
+  )
+}
+
 export function Button({ active, variant = 'default', className, children, ...rest }: ButtonProps) {
   return (
-    <button
-      type="button"
-      {...rest}
-      className={cx(
-        'px-focus inline-flex h-9 shrink-0 items-center gap-2 px-3',
-        CONTROL_TEXT,
-        variant === 'ghost' ? 'text-accent hover:underline' : cx(active ? ACTIVE : SURFACE, !active && HOVER, 'border-2'),
-        className,
-      )}
-    >
+    <button type="button" {...rest} className={cx(buttonClass({ active, variant }), className)}>
       {children}
     </button>
+  )
+}
+
+/** Pixel "share" glyph (arrow leaving a box), or a check mark once the link has been copied. */
+export function LinkIcon({ done }: { done?: boolean }) {
+  return done ? (
+    <svg width="14" height="14" viewBox="0 0 7 7" aria-hidden shapeRendering="crispEdges" fill="currentColor">
+      <rect x="0" y="3" width="1" height="1" /><rect x="1" y="4" width="1" height="1" /><rect x="2" y="5" width="1" height="1" />
+      <rect x="3" y="4" width="1" height="1" /><rect x="4" y="3" width="1" height="1" /><rect x="5" y="2" width="1" height="1" />
+      <rect x="6" y="1" width="1" height="1" />
+    </svg>
+  ) : (
+    <svg width="14" height="14" viewBox="0 0 7 7" aria-hidden shapeRendering="crispEdges" fill="currentColor">
+      <rect x="3" y="0" width="4" height="1" /><rect x="6" y="1" width="1" height="2" />
+      <rect x="5" y="1" width="1" height="1" /><rect x="4" y="2" width="1" height="1" /><rect x="3" y="3" width="1" height="1" /><rect x="2" y="4" width="1" height="1" />
+      <rect x="0" y="1" width="3" height="1" /><rect x="0" y="2" width="1" height="4" /><rect x="0" y="6" width="7" height="1" /><rect x="6" y="4" width="1" height="2" />
+    </svg>
   )
 }
 

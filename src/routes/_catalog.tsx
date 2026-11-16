@@ -1,59 +1,58 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useCallback, useEffect, useMemo, useSyncExternalStore } from 'react'
+import { createFileRoute, Outlet, useNavigate, useParams } from '@tanstack/react-router'
+import { useCallback, useEffect, useMemo } from 'react'
+import { useHydrated } from '#/lib/hydrated'
 import { useLang } from '#/lib/i18n'
-import data from '#/data/items.json'
 import { FilterBar } from '#/components/FilterBar'
 import { ItemDetail } from '#/components/ItemDetail'
 import { ItemGrid } from '#/components/ItemGrid'
 import { matches, searchSchema, sortItems, type Search } from '#/lib/filters'
-import type { Item } from '#/lib/types'
+import { BY_ID, BY_SLUG, BY_WIKI_NAME, ITEMS, itemSlug } from '#/lib/items'
 
-const ITEMS = data as Item[]
-const BY_ID = new Map(ITEMS.map((it) => [it.id, it]))
-const BY_WIKI_NAME = new Map(ITEMS.map((it) => [it.wikiName, it]))
-
-export const Route = createFileRoute('/')({
+/**
+ * The catalogue page. "/" and "/items/$slug" are its children, so moving between items or closing
+ * the panel keeps the grid mounted (scroll position, search box). Filters live in the query string
+ * on both paths, so every view can be shared as a link.
+ */
+export const Route = createFileRoute('/_catalog')({
   validateSearch: searchSchema,
-  head: ({ match }) => {
-    const it = match.search.item ? BY_ID.get(match.search.item) : undefined
-    return { meta: it ? [{ title: `${it.name.fr} (${it.name.en}) — RoR2 Codex` }] : [] }
-  },
-  component: ItemsPage,
+  component: CatalogPage,
 })
 
 const EMPTY_SEARCH: Search = {}
-const noop = () => () => {}
 
-/** False during SSR and the hydration pass, true afterwards (and on any later client-only mount). */
-function useHydrated() {
-  return useSyncExternalStore(
-    noop,
-    () => true,
-    () => false,
-  )
-}
-
-function ItemsPage() {
-  // "/" is prerendered without query params, and that same HTML is served for every query string
-  // (?item=…, ?r=…). Hydrate against that empty state first, then apply the URL, so React
-  // never sees a mismatch.
+function CatalogPage() {
+  // Pages are prerendered without query params, and that same HTML is served for every query
+  // string (?q=…, ?r=…). Hydrate against that empty state first, then apply the URL, so React
+  // never sees a mismatch. The item comes from the path, so it is part of the prerendered HTML.
+  const hydrated = useHydrated()
   const urlSearch = Route.useSearch()
-  const search = useHydrated() ? urlSearch : EMPTY_SEARCH
-  const navigate = useNavigate({ from: '/' })
+  const search = hydrated ? urlSearch : EMPTY_SEARCH
+  const { slug } = useParams({ strict: false })
+  const selected = slug ? BY_SLUG.get(slug) : undefined
+  const navigate = useNavigate()
+
+  // Old links opened an item with ?item=<id>: move them to the item's own URL.
+  useEffect(() => {
+    const legacy = urlSearch.item ? BY_ID.get(urlSearch.item) : undefined
+    if (!hydrated || !urlSearch.item) return
+    navigate({
+      to: legacy ? '/items/$slug' : '.',
+      params: legacy ? { slug: itemSlug(legacy) } : undefined,
+      search: (prev) => ({ ...prev, item: undefined }),
+      replace: true,
+      resetScroll: false,
+    })
+  }, [hydrated, urlSearch.item, navigate])
 
   const update = useCallback(
     (patch: Partial<Search>) =>
-      navigate({ search: (prev) => ({ ...prev, ...patch }), replace: true, resetScroll: false }),
+      navigate({ to: '.', search: (prev) => ({ ...prev, ...patch }), replace: true, resetScroll: false }),
     [navigate],
   )
-  const close = useCallback(
-    () => navigate({ search: (prev) => ({ ...prev, item: undefined }), resetScroll: false }),
-    [navigate],
-  )
+  const close = useCallback(() => navigate({ to: '/', search: true, resetScroll: false }), [navigate])
 
   const { lang, tr } = useLang()
   const filtered = useMemo(() => sortItems(ITEMS.filter((it) => matches(it, search)), search, lang), [search, lang])
-  const selected = search.item ? BY_ID.get(search.item) : undefined
   useEffect(() => {
     document.title = selected
       ? `${selected.name[lang]}${lang === 'fr' ? ` (${selected.name.en})` : ''} — RoR2 Codex`
@@ -62,6 +61,7 @@ function ItemsPage() {
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden">
+      <Outlet />
       <div className="relative z-20 shrink-0">
         <FilterBar
           items={ITEMS}
@@ -69,7 +69,7 @@ function ItemsPage() {
           total={ITEMS.length}
           shown={filtered.length}
           onChange={update}
-          onReset={() => navigate({ search: {}, replace: true })}
+          onReset={() => navigate({ to: '.', search: {}, replace: true, resetScroll: false })}
         />
       </div>
 
@@ -77,7 +77,7 @@ function ItemsPage() {
         <main className="bg-dots scrollbar-thin min-w-0 flex-1 overflow-y-auto overscroll-contain px-3 pb-8 sm:px-4 lg:px-6">
           {/* Top spacing lives inside the scroll content so sticky group headers pin flush to the top. */}
           <div className="pt-3">
-            <ItemGrid items={filtered} search={search} />
+            <ItemGrid items={filtered} search={search} selectedId={selected?.id} />
           </div>
         </main>
 
@@ -87,7 +87,7 @@ function ItemsPage() {
             <aside
               className="panel-in fixed inset-0 z-40 overflow-hidden bg-panel lg:static lg:z-auto lg:w-[460px] lg:shrink-0 lg:border-l-2 lg:border-line lg:shadow-[-16px_0_40px_-20px_rgba(0,0,0,0.9)]"
               role="dialog"
-              aria-label={selected.name.fr}
+              aria-label={selected.name[lang]}
             >
               <ItemDetail
                 key={selected.id}
