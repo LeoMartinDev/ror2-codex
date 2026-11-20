@@ -513,6 +513,725 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { label: 'Planula', url: wiki('Planula') },
     ],
   },
+  {
+    slug: 'automatic-lightning',
+    survivor: null,
+    name: L('Foudre automatique', 'Automatic lightning'),
+    tagline: L('Un éclair à 3 000 % qui réveille les bracelets à chaque fois.', 'A 3,000% strike that wakes the bands every time.'),
+    tag: L('Très fort · tous survivants · sans DLC', 'Very strong · any survivor · no DLC'),
+    summary: L(
+      'Le Condensateur royal frappe à 3 000 % avec un coefficient de 1,0 : il dépasse le seuil des bracelets et déclenche tes effets à l’impact, dont les dégâts TOTAUX sont calculés sur l’éclair. Le Signe du noyé le lance tout seul, pile au rythme des bracelets.',
+      'Royal Capacitor hits for 3,000% with a 1.0 proc coefficient: it clears the bands’ threshold and sets off your on-hit effects, whose TOTAL damage is based on the strike. Gesture of the Drowned fires it on its own, right on the bands’ rhythm.',
+    ),
+    skills: {
+      label: L('Assemblage', 'Set'),
+      text: L(
+        'Condensateur royal + Signe du noyé + bracelet(s) ; puis Piles, Missile air-sol et Perforateur chargé',
+        'Royal Capacitor + Gesture of the Drowned + band(s); then Fuel Cells, AtG Missile and Charged Perforator',
+      ),
+    },
+    items: [
+      { id: 'lightning', core: true, role: L('×1 · équipement requis, 3 000 %', '×1 · required equipment, 3,000%') },
+      { id: 'autocastequipment', core: true, role: L('×1 · automatisation, recharge 20 s → 10 s', '×1 · automation, cooldown 20 s → 10 s') },
+      { id: 'icering', core: true, role: L('×1 ou plus · 250 % TOTAL, soit 7 500 % par éclair', '×1 or more · 250% TOTAL, so 7,500% per strike') },
+      { id: 'firering', core: true, role: L('×1 ou plus · 300 % TOTAL, soit 9 000 % par éclair', '×1 or more · 300% TOTAL, so 9,000% per strike') },
+      { id: 'equipmentmagazine', role: L('×3 · un éclair toutes les 6 s environ', '×3 · a strike about every 6 s') },
+      { id: 'missile', role: L('×1 ou plus · missile à 9 000 % sur un éclair', '×1 or more · a 9,000% missile off a strike') },
+      { id: 'lightningstrikeonhit', role: L('×1 ou plus · foudre à 15 000 % sur un éclair', '×1 or more · 15,000% lightning off a strike') },
+      { id: 'clover', role: L('Optionnel · missiles et foudre plus fréquents', 'Optional · missiles and lightning more often') },
+      { id: 'energizedonequipmentuse', role: L('×2 · +70 % de vitesse d’attaque en continu', '×2 · constant +70% attack speed') },
+      { id: 'shockdamageaura', role: L('Optionnel · éclairs toujours critiques sous Énergie · AC', 'Optional · strikes always crit while Energized · AC') },
+      { id: 'randomequipmenttrigger', role: L('Optionnel · un autre équipement à chaque éclair · SotV', 'Optional · another equipment on every strike · SotV') },
+    ],
+    synergies: [
+      {
+        items: ['lightning', 'icering', 'firering'],
+        text: L(
+          'L’éclair (3 000 %, coefficient 1,0) dépasse toujours le seuil de 400 % : les deux bracelets partent ensemble, et leurs dégâts TOTAUX sont calculés sur les 3 000 % de l’éclair.',
+          'The strike (3,000%, proc 1.0) always clears the 400% threshold: both bands fire together, and their TOTAL damage is based on the strike’s 3,000%.',
+        ),
+      },
+      {
+        items: ['lightning', 'autocastequipment', 'equipmentmagazine'],
+        text: L(
+          'Signe seul : un éclair toutes les 10 s, exactement la recharge des bracelets, donc chaque éclair les déclenche. Les Piles ajoutent des éclairs entre deux bracelets : avec 3 Piles, environ 6,1 s.',
+          'Gesture alone: a strike every 10 s, exactly the bands’ cooldown, so every strike triggers them. Fuel Cells add strikes in between: with 3, about 6.1 s.',
+        ),
+      },
+      {
+        items: ['lightning', 'missile', 'lightningstrikeonhit'],
+        text: L(
+          'Leurs dégâts sont TOTAUX : déclenchés par l’éclair, le missile vaut 300 % de 3 000 % et le Perforateur 500 % de 3 000 %. Ils n’ont que 10 % de chance chacun : le Trèfle les fait passer à 19 %.',
+          'Their damage is TOTAL: set off by the strike, the missile is worth 300% of 3,000% and the Perforator 500% of 3,000%. Each only has a 10% chance: Clover raises it to 19%.',
+        ),
+      },
+      {
+        items: ['lightning', 'energizedonequipmentuse'],
+        text: L(
+          'Le Cor de guerre dure 8 s, +4 s par exemplaire : avec 2 Cors (12 s) et un éclair toutes les 10 s, le bonus ne tombe jamais.',
+          'War Horn lasts 8 s, +4 s per copy: with 2 Horns (12 s) and a strike every 10 s, the buff never drops.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Avec le Signe, le Condensateur attend une cible : garde le viseur sur l’ennemi à tuer, l’éclair part tout seul. Il tombe 0,5 s après, dans 3 m : une cible rapide peut l’esquiver.',
+        'With Gesture, the Capacitor waits for a target: keep your crosshair on the enemy to kill and it fires on its own. It lands 0.5 s later, within 3 m: a fast target can dodge it.',
+      ),
+      L(
+        'Aucune cadence de tir ni gros coup demandé : c’est la version tous survivants des builds à bracelets. Mets le reste en mobilité et en protection.',
+        'No fire rate or big hit needed: this is the any-survivor version of band builds. Spend the rest on mobility and protection.',
+      ),
+      L(
+        'Évite la Cellule de Lysat, qui corrompt les Piles, et le Bracelet de singularité, qui remplace les deux bracelets par un seul effet toutes les 20 s.',
+        'Avoid Lysate Cell, which corrupts Fuel Cells, and Singularity Band, which replaces both bands with a single effect every 20 s.',
+      ),
+    ],
+    sources: [
+      { label: 'Royal Capacitor', url: wiki('Royal_Capacitor') },
+      { label: 'Runald’s Band', url: wiki('Runald%27s_Band') },
+      { label: 'Gesture of the Drowned', url: wiki('Gesture_of_the_Drowned') },
+      { label: 'TheGamer: best equipment for Gesture', url: 'https://www.thegamer.com/risk-rain-2-gesture-drowned-best-equipment-combo/' },
+    ],
+  },
+  {
+    slug: 'clover-proc-chain',
+    survivor: null,
+    name: L('Chaîne d’effets', 'Proc chain'),
+    tagline: L('Tes objets déclenchent tes objets.', 'Your items set off your items.'),
+    tag: L('Très fort en fin de partie · sans DLC', 'Very strong late game · no DLC'),
+    summary: L(
+      'Un missile ou une foudre déclenchés par un tir peuvent à leur tour déclencher les autres objets à l’impact, avec des dégâts TOTAUX calculés sur le coup précédent. Le Trèfle à 57 feuilles double presque toutes ces chances : c’est la pièce qui fait basculer le build.',
+      'A missile or lightning bolt set off by a shot can in turn set off your other on-hit items, with TOTAL damage based on the previous hit. 57 Leaf Clover nearly doubles all those chances: it is the piece that tips the build over.',
+    ),
+    skills: {
+      label: L('Assemblage progressif', 'Build-up'),
+      text: L(
+        'Missile air-sol + Ukulélé + cadence ; puis Perforateurs, Crochet à viande et surtout le Trèfle',
+        'AtG Missile + Ukulele + attack speed; then Perforators, Meat Hook and above all the Clover',
+      ),
+    },
+    items: [
+      { id: 'missile', core: true, role: L('×1 ou plus · maillon principal, coefficient 1,0', '×1 or more · main link, proc 1.0') },
+      { id: 'chainlightning', core: true, role: L('×1 ou plus · nettoie les groupes', '×1 or more · clears groups') },
+      { id: 'clover', core: true, role: L('×1 · 10 % → 19 %, 25 % → 44 %', '×1 · 10% → 19%, 25% → 44%') },
+      { id: 'lightningstrikeonhit', role: L('×1 ou plus · 500 % TOTAL, coefficient 1,0', '×1 or more · 500% TOTAL, proc 1.0') },
+      { id: 'fireballsonhit', role: L('×1 ou plus · 3 boules à 300 % TOTAL, contre les boss', '×1 or more · 3 balls at 300% TOTAL, against bosses') },
+      { id: 'bouncenearby', role: L('×1 ou plus · jusqu’à 10 crochets, regroupe les ennemis', '×1 or more · up to 10 hooks, pulls enemies together') },
+      { id: 'stickybomb', role: L('Plusieurs · 5 % par exemplaire, 180 % TOTAL', 'Several · 5% per copy, 180% TOTAL') },
+      { id: 'syringe', role: L('Plusieurs · plus de coups, plus de chaînes', 'Several · more hits, more chains') },
+      { id: 'behemoth', role: L('Optionnel · chaque maillon explose en zone', 'Optional · every link explodes in an area') },
+    ],
+    synergies: [
+      {
+        items: ['missile', 'lightningstrikeonhit', 'fireballsonhit'],
+        text: L(
+          'Le missile a un coefficient de 1,0 : son impact peut déclencher un Perforateur, dont les dégâts TOTAUX sont alors calculés sur le missile (500 % de 300 % du tir d’origine). Et inversement : la foudre du Perforateur chargé peut lancer un missile.',
+          'The missile has a 1.0 proc coefficient: its hit can set off a Perforator, whose TOTAL damage is then based on the missile (500% of 300% of the original shot). And the other way round: Charged Perforator’s lightning can fire a missile.',
+        ),
+      },
+      {
+        items: ['clover', 'missile', 'chainlightning'],
+        text: L(
+          'Le Trèfle relance chaque tirage raté, à chaque maillon de la chaîne : les chances se multiplient entre elles. Un objet ne peut pas se déclencher lui-même dans une même chaîne.',
+          'Clover rerolls every failed roll, at every link of the chain: the odds multiply together. An item cannot trigger itself within the same chain.',
+        ),
+      },
+      {
+        items: ['chainlightning', 'bouncenearby', 'stickybomb'],
+        text: L(
+          'Ces trois-là terminent les chaînes plus qu’ils ne les relancent : coefficient 0,2 pour l’Ukulélé, 0,33 pour les crochets, 0 pour la Bombe collante.',
+          'These three end chains more than they extend them: proc 0.2 for Ukulele, 0.33 for the hooks, 0 for Sticky Bomb.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Marche avec tout survivant qui touche souvent avec un bon coefficient de proc. Les chances sont multipliées par le coefficient du coup : les attaques à 1,0 valent bien plus que les petits projectiles.',
+        'Works with any survivor that hits often with a good proc coefficient. Chances are multiplied by the hit’s coefficient: proc-1 attacks are worth far more than small projectiles.',
+      ),
+      L(
+        'Sans Trèfle, le build fonctionne déjà : empile les Missiles air-sol (+300 % par exemplaire) et la vitesse d’attaque. Avec le Trèfle, prends tout ce qui a une chance à l’impact.',
+        'Without Clover the build already works: stack AtG Missiles (+300% per copy) and attack speed. With Clover, take anything with an on-hit chance.',
+      ),
+      L(
+        'Évite Pureté (chaque exemplaire annule un Trèfle) et la Fleur benthique, qui corrompt les Trèfles. Les Crevettes de plasma et le Polyluth remplacent Missile et Ukulélé : c’est un autre build.',
+        'Avoid Purity (each copy cancels one Clover) and Benthic Bloom, which corrupts Clovers. Plasma Shrimp and Polylute replace the Missile and Ukulele: that is another build.',
+      ),
+    ],
+    sources: [
+      { label: '57 Leaf Clover', url: wiki('57_Leaf_Clover') },
+      { label: 'AtG Missile Mk. 1', url: wiki('AtG_Missile_Mk._1') },
+      { label: 'Charged Perforator', url: wiki('Charged_Perforator') },
+    ],
+  },
+  {
+    slug: 'on-kill-chain-reaction',
+    survivor: null,
+    name: L('Réaction en chaîne', 'Chain reaction'),
+    tagline: L('Un ennemi tué fait tomber tout le groupe.', 'One kill brings the whole pack down.'),
+    tag: L('Nettoyage de foules · sans DLC', 'Crowd clear · no DLC'),
+    summary: L(
+      'Chaque élimination explose, enflamme et lance des dagues ; ces dégâts tuent les voisins, qui explosent à leur tour. Les éliminations faites par tes objets comptent : une fois le premier ennemi tombé, la vague se vide seule.',
+      'Every kill explodes, ignites and throws daggers; that damage kills the neighbours, which explode in turn. Kills made by your items count: once the first enemy falls, the wave clears itself.',
+    ),
+    skills: {
+      label: L('Assemblage progressif', 'Build-up'),
+      text: L(
+        'Essence + Feu follet dès le début ; puis Dague cérémoniale, Relique glacée et Disque de résonance',
+        'Gasoline + Will-o’-the-wisp from the start; then Ceremonial Dagger, Frost Relic and Resonance Disc',
+      ),
+    },
+    items: [
+      { id: 'igniteonkill', core: true, role: L('×2 ou plus · 12 m (+4 m), brûlure plus longue', '×2 or more · 12 m (+4 m), longer burn') },
+      { id: 'explodeondeath', core: true, role: L('×2 ou plus · 350 % (+280 %) dans 12 m', '×2 or more · 350% (+280%) within 12 m') },
+      { id: 'dagger', role: L('×1 ou plus · 3 dagues à 150 % par élimination', '×1 or more · 3 daggers at 150% per kill') },
+      { id: 'icicle', role: L('×1 · tempête à 1 200 %/s qui grandit', '×1 · a growing 1,200%/s storm') },
+      { id: 'laserturbine', role: L('×1 · se charge avec 4 éliminations en 7 s', '×1 · charges with 4 kills in 7 s') },
+      { id: 'strengthenburn', role: L('Optionnel · brûlure de l’Essence ×4 · SotV', 'Optional · Gasoline burn ×4 · SotV') },
+      { id: 'barrieronkill', role: L('Plusieurs · barrière à chaque élimination', 'Several · barrier on every kill') },
+      { id: 'movespeedonkill', role: L('Optionnel · +125 % de vitesse par élimination · SotV', 'Optional · +125% speed per kill · SotV') },
+      { id: 'warcryonmultikill', role: L('Optionnel · +100 % de cadence après 4 éliminations', 'Optional · +100% attack speed after 4 kills') },
+      { id: 'bossdamagebonus', role: L('Plusieurs · le build manque de dégâts sur boss', 'Several · the build lacks boss damage') },
+    ],
+    synergies: [
+      {
+        items: ['igniteonkill', 'explodeondeath', 'dagger'],
+        text: L(
+          'Toute mort causée par toi ou par tes objets relance les trois : l’Essence explose tout de suite, le Feu follet 1 s après, et les dagues vont chercher les ennemis jusqu’à 130 m.',
+          'Any death caused by you or your items sets all three off again: Gasoline explodes at once, the Wisp 1 s later, and the daggers seek enemies up to 130 m away.',
+        ),
+      },
+      {
+        items: ['igniteonkill', 'strengthenburn'],
+        text: L(
+          'Le Réservoir ne renforce que la brûlure de l’Essence : le Feu follet n’inflige pas de brûlure.',
+          'The Tank only boosts Gasoline’s burn: Will-o’-the-wisp does not ignite.',
+        ),
+      },
+      {
+        items: ['icicle', 'laserturbine', 'warcryonmultikill'],
+        text: L(
+          'Ils demandent des éliminations rapprochées, que la chaîne fournit : la tempête gagne 2 m et 5 s par élimination, et la Spalière se déclenche tant que tu tues au moins un ennemi par seconde.',
+          'They need kills in quick succession, which the chain provides: the storm gains 2 m and 5 s per kill, and the Pauldron triggers as long as you kill at least one enemy a second.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Tout se joue sur la première élimination : vise l’ennemi le plus faible au milieu du groupe, pas le plus gros.',
+        'It all hangs on the first kill: aim for the weakest enemy in the middle of the pack, not the biggest.',
+      ),
+      L(
+        'Les dégâts de ces objets sont des dégâts de BASE : ils suivent ton niveau, pas tes compétences. N’importe quel survivant les utilise aussi bien.',
+        'These items deal BASE damage: it follows your level, not your skills. Any survivor uses them just as well.',
+      ),
+      L(
+        'Contre un boss seul, il n’y a personne à tuer : garde une vraie source de dégâts (Munitions perforantes, bracelets). Évite la Flamme venue du vide : elle corrompt les Feux follets et ne se déclenche plus à l’élimination.',
+        'Against a lone boss there is nobody to kill: keep a real damage source (Armor-Piercing Rounds, bands). Avoid Voidsent Flame: it corrupts Will-o’-the-wisps and no longer triggers on kill.',
+      ),
+    ],
+    sources: [
+      { label: 'Gasoline', url: wiki('Gasoline') },
+      { label: 'Will-o’-the-wisp', url: wiki('Will-o%27-the-wisp') },
+      { label: 'Ceremonial Dagger', url: wiki('Ceremonial_Dagger') },
+    ],
+  },
+  {
+    slug: 'death-mark-debuffs',
+    survivor: null,
+    name: L('Condamnation à mort', 'Death Mark'),
+    tagline: L('Quatre altérations, +50 % de dégâts pour tout le monde.', 'Four debuffs, +50% damage for everyone.'),
+    tag: L('Contre les boss · à assembler', 'Boss killer · takes assembling'),
+    summary: L(
+      'Un ennemi qui porte 4 altérations différentes est condamné : il subit +50 % de dégâts de toutes les sources, alliés et drones compris. Il suffit de réunir quatre objets qui posent chacun la leur.',
+      'An enemy with 4 different debuffs is marked for death: it takes +50% damage from all sources, allies and drones included. You just need four items that each apply their own.',
+    ),
+    skills: {
+      label: L('Assemblage', 'Set'),
+      text: L(
+        'Condamnation à mort + Tri-dague + Chronoboule + deux autres altérations (armure, brûlure)',
+        'Death Mark + Tri-Tip Dagger + Chronobauble + two more debuffs (armor, burn)',
+      ),
+    },
+    items: [
+      { id: 'deathmark', core: true, role: L('×1 · +50 % de dégâts subis pendant 7 s (+7 s)', '×1 · +50% damage taken for 7 s (+7 s)') },
+      { id: 'bleedonhit', core: true, role: L('×3 ou plus · saignement', '×3 or more · bleed') },
+      { id: 'slowonhit', core: true, role: L('×1 · ralentissement à chaque coup, sans tirage', '×1 · slow on every hit, no roll') },
+      { id: 'armorreductiononhit', role: L('×1 · −60 d’armure après 5 coups', '×1 · −60 armor after 5 hits') },
+      { id: 'permanentdebuffonhit', role: L('×1 · −2 d’armure par coup · SotV', '×1 · −2 armor per hit · SotV') },
+      { id: 'fireballsonhit', role: L('×1 · brûlure sur les boss', '×1 · burn on bosses') },
+      { id: 'icering', role: L('×1 · ralentissement de 80 %, si tu as un gros coup', '×1 · 80% slow, if you have a big hit') },
+      { id: 'triggerenemydebuffs', role: L('Optionnel · propage les altérations à la mort · SotS', 'Optional · spreads debuffs on death · SotS') },
+      { id: 'syringe', role: L('Plusieurs · poser les altérations plus vite', 'Several · apply debuffs faster') },
+    ],
+    synergies: [
+      {
+        items: ['deathmark', 'bleedonhit', 'slowonhit'],
+        text: L(
+          'Il faut 4 altérations DIFFÉRENTES, puis un coup à coefficient de proc supérieur à 0 pour marquer. L’étourdissement et le gel ne comptent pas. La marque reste même si les altérations disparaissent.',
+          'You need 4 DIFFERENT debuffs, then a hit with a proc coefficient above 0 to mark. Stun and freeze do not count. The mark stays even if the debuffs wear off.',
+        ),
+      },
+      {
+        items: ['slowonhit', 'icering', 'deathmark'],
+        text: L(
+          'Chaque ralentissement est une altération à part : celui de la Chronoboule (60 %) et celui du Bracelet de Runald (80 %) comptent pour deux.',
+          'Each slow is its own debuff: Chronobauble’s (60%) and Runald’s Band’s (80%) count as two.',
+        ),
+      },
+      {
+        items: ['triggerenemydebuffs', 'deathmark'],
+        text: L(
+          'À chaque élimination, l’Épine transfère un tiers des altérations (au moins 1 de chaque) à un ennemi proche : le suivant est condamné presque tout de suite.',
+          'On every kill, the Thorn transfers a third of the debuffs (at least 1 of each) to a nearby enemy: the next one is marked almost at once.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Compte tes altérations fiables : la Chronoboule marche à chaque coup, la Justice en 5 coups. Le saignement et la brûlure dépendent d’un tirage : monte la Tri-dague à 3 ou plus.',
+        'Count your reliable debuffs: Chronobauble works on every hit, Justice in 5 hits. Bleed and burn depend on a roll: get Tri-Tip Dagger to 3 or more.',
+      ),
+      L(
+        'Le bonus profite à toute l’équipe : excellent en coopération, avec des drones ou les tourelles de l’Ingénieur.',
+        'The bonus helps the whole team: excellent in co-op, with drones or Engineer’s turrets.',
+      ),
+      L(
+        'La marque ne se prolonge pas : elle dure 7 s par exemplaire, puis il faut la reposer. Évite la Piqûre d’aiguille (elle remplace le saignement des Tri-dagues) et la Tentaboule (elle remplace la Chronoboule par un tirage à 5 %).',
+        'The mark cannot be extended: it lasts 7 s per copy, then you must apply it again. Avoid Needletick (it replaces Tri-Tip Dagger’s bleed) and Tentabauble (it replaces Chronobauble with a 5% roll).',
+      ),
+    ],
+    sources: [
+      { label: 'Death Mark', url: wiki('Death_Mark') },
+      { label: 'Noxious Thorn', url: wiki('Noxious_Thorn') },
+      { label: 'Gameplay.tips: item synergies', url: 'https://gameplay.tips/guides/6116-risk-of-rain-2.html' },
+    ],
+  },
+  {
+    slug: 'healing-skulls-fruit',
+    survivor: null,
+    name: L('Soins offensifs', 'Offensive healing'),
+    tagline: L('Chaque soin devient un crâne, le surplus une barrière.', 'Every heal becomes a skull, the overflow a barrier.'),
+    tag: L('Très résistant · sans DLC', 'Very tanky · no DLC'),
+    summary: L(
+      'L’Opinion de N’kuhana transforme tous tes soins en crânes à tête chercheuse, même à pleine santé. Le Fruit étranger lancé par le Signe du noyé donne un gros soin régulier ; le Râtelier le double et l’Égide change le surplus en barrière.',
+      'N’kuhana’s Opinion turns all your healing into homing skulls, even at full health. Foreign Fruit fired by Gesture of the Drowned gives a big regular heal; the Rack doubles it and Aegis turns the overflow into barrier.',
+    ),
+    skills: {
+      label: L('Assemblage', 'Set'),
+      text: L(
+        'Opinion de N’kuhana + Fruit étranger + Signe du noyé ; puis Râtelier, Égide, Piles et PV max',
+        'N’kuhana’s Opinion + Foreign Fruit + Gesture of the Drowned; then Rack, Aegis, Fuel Cells and max health',
+      ),
+    },
+    items: [
+      { id: 'novaonheal', core: true, role: L('×1 ou plus · un crâne par 10 % de PV max soignés', '×1 or more · one skull per 10% max health healed') },
+      { id: 'fruit', core: true, role: L('×1 · soin de 50 % des PV max', '×1 · heals 50% of max health') },
+      { id: 'autocastequipment', core: true, role: L('×1 · automatisation, recharge 45 s → 22,5 s', '×1 · automation, cooldown 45 s → 22.5 s') },
+      { id: 'increasehealing', role: L('×1 · soins doublés, donc crânes doublés', '×1 · double healing, so double skulls') },
+      { id: 'barrieronoverheal', role: L('×1 · 50 % du soin en trop devient barrière', '×1 · 50% of overhealing becomes barrier') },
+      { id: 'equipmentmagazine', role: L('×4 · un fruit toutes les 12 s environ', '×4 · a fruit about every 12 s') },
+      { id: 'infusion', role: L('×1 ou plus · PV max, donc crânes plus forts', '×1 or more · max health, so stronger skulls') },
+      { id: 'knurl', role: L('Optionnel · PV max et régénération', 'Optional · max health and regen') },
+      { id: 'healoncrit', role: L('Optionnel · soins entre deux fruits, si critiques', 'Optional · healing between fruits, with crits') },
+      { id: 'seed', role: L('Optionnel · soin à chaque coup', 'Optional · heals on every hit') },
+    ],
+    synergies: [
+      {
+        items: ['fruit', 'novaonheal', 'increasehealing'],
+        text: L(
+          'Un fruit soigne 50 % des PV max : 5 crânes d’un coup, 10 avec le Râtelier. Chaque crâne inflige 250 % de dégâts de base plus environ 25 % de tes PV max.',
+          'A fruit heals 50% of max health: 5 skulls at once, 10 with the Rack. Each skull deals 250% base damage plus about 25% of your max health.',
+        ),
+      },
+      {
+        items: ['fruit', 'barrieronoverheal'],
+        text: L(
+          'À pleine santé, le fruit n’est pas perdu : l’Égide en fait une barrière, et l’Opinion compte le soin quand même.',
+          'At full health the fruit is not wasted: Aegis turns it into barrier, and the Opinion counts the heal anyway.',
+        ),
+      },
+      {
+        items: ['fruit', 'autocastequipment', 'equipmentmagazine'],
+        text: L(
+          '1 Signe : un fruit toutes les 22,5 s. Avec 4 Piles, environ 11,7 s.',
+          '1 Gesture: a fruit every 22.5 s. With 4 Fuel Cells, about 11.7 s.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Les crânes visent seuls dans un rayon de 40 m et grossissent avec tes PV max, pas avec tes dégâts : prends Infusion, Nœud titanesque et Perles plutôt que des objets offensifs.',
+        'Skulls aim on their own within 40 m and scale with your max health, not your damage: take Infusion, Titanic Knurl and Pearls rather than offensive items.',
+      ),
+      L(
+        'Tout soin compte, sauf la régénération naturelle : Faux du moissonneur, Graine sangsue et Dents de monstre remplissent l’intervalle entre deux fruits.',
+        'All healing counts, except natural regen: Harvester’s Scythe, Leeching Seed and Monster Tooth fill the gap between fruits.',
+      ),
+      L(
+        'Évite Transcendance (les soins deviennent presque inutiles) et la Fleur putride, qui étale tes soins dans le temps. Évite aussi la Cellule de Lysat, qui corrompt les Piles.',
+        'Avoid Transcendence (healing becomes nearly useless) and Corpsebloom, which spreads your healing over time. Also avoid Lysate Cell, which corrupts Fuel Cells.',
+      ),
+    ],
+    sources: [
+      { label: 'N’kuhana’s Opinion', url: wiki('N%27kuhana%27s_Opinion') },
+      { label: 'Rejuvenation Rack', url: wiki('Rejuvenation_Rack') },
+      { label: 'Foreign Fruit', url: wiki('Foreign_Fruit') },
+      { label: 'Gameplay.tips: item synergies', url: 'https://gameplay.tips/guides/6116-risk-of-rain-2.html' },
+    ],
+  },
+  {
+    slug: 'bleed-stacking',
+    survivor: null,
+    name: L('Hémorragie', 'Hemorrhage'),
+    tagline: L('100 % de saignement, empilé sans limite.', '100% bleed, stacked without limit.'),
+    tag: L('Fort avec les tirs rapides · sans DLC', 'Strong with fast attacks · no DLC'),
+    summary: L(
+      'Avec 100 % de chance de saignement, chaque coup ajoute une charge de 240 % de dégâts de base, et les charges se rafraîchissent entre elles : sur un boss, elles s’empilent sans limite. Aucun critique demandé.',
+      'With a 100% bleed chance every hit adds a stack worth 240% base damage, and stacks refresh each other: on a boss they pile up without limit. No crits needed.',
+    ),
+    skills: {
+      label: L('Assemblage', 'Set'),
+      text: L(
+        '10 Tri-dagues (ou moins avec l’Épine toxique et le Calice de sang) + vitesse d’attaque',
+        '10 Tri-Tip Daggers (or fewer with Noxious Thorn and Sanguine Chalice) + attack speed',
+      ),
+    },
+    items: [
+      { id: 'bleedonhit', core: true, role: L('×10 · 10 % par exemplaire, 100 % à 10', '×10 · 10% per copy, 100% at 10') },
+      { id: 'syringe', core: true, role: L('Plusieurs · plus de coups, plus de charges', 'Several · more hits, more stacks') },
+      { id: 'triggerenemydebuffs', role: L('×1 · +10 % de saignement, propage à la mort · SotS', '×1 · +10% bleed, spreads on death · SotS') },
+      { id: 'sanguinechalice', role: L('×1 · +10 %, le saignement te soigne · Hallowed Concepts', '×1 · +10%, bleed heals you · Hallowed Concepts') },
+      { id: 'bleedonhitandexplode', role: L('×1 · les ennemis qui saignent explosent', '×1 · bleeding enemies explode') },
+      { id: 'deathmark', role: L('Optionnel · le saignement est déjà 1 altération sur 4', 'Optional · bleed is already 1 debuff out of 4') },
+      { id: 'nearbydamagebonus', role: L('Optionnel · +20 % à moins de 13 m, saignement compris', 'Optional · +20% within 13 m, bleed included') },
+    ],
+    synergies: [
+      {
+        items: ['bleedonhit', 'triggerenemydebuffs', 'sanguinechalice'],
+        text: L(
+          'Les trois chances s’additionnent en un seul tirage : 8 Tri-dagues + Épine + Calice font 100 %. La chance et la durée sont multipliées par le coefficient de proc du coup.',
+          'The three chances add up into a single roll: 8 Tri-Tip Daggers + Thorn + Chalice make 100%. Chance and duration are multiplied by the hit’s proc coefficient.',
+        ),
+      },
+      {
+        items: ['sanguinechalice', 'bleedonhit'],
+        text: L(
+          'Le Calice soigne 0,5 % de tes PV max par tic, multiplié par le nombre de charges sur l’ennemi, 4 fois par seconde : avec 10 charges, 20 % de tes PV max par seconde.',
+          'The Chalice heals 0.5% of your max health per tick, multiplied by the number of stacks on the enemy, 4 times a second: with 10 stacks, 20% of your max health a second.',
+        ),
+      },
+      {
+        items: ['triggerenemydebuffs', 'bleedonhit'],
+        text: L(
+          'Quand un ennemi meurt, l’Épine transfère un tiers de ses charges à un voisin : le saignement passe d’un ennemi à l’autre.',
+          'When an enemy dies, the Thorn transfers a third of its stacks to a neighbour: the bleed jumps from one enemy to the next.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Fait pour les attaques rapides à coefficient 1,0 : Commando, Chasseuse, POL-Y, Mercenaire. Une attaque lente pose trop peu de charges.',
+        'Made for fast proc-1 attacks: Commando, Huntress, MUL-T, Mercenary. A slow attack applies too few stacks.',
+      ),
+      L(
+        'Le saignement est en dégâts de BASE : il suit ton niveau, pas tes compétences, et brille sur les cibles qui vivent longtemps, donc les boss. Le Trèfle ne sert plus une fois à 100 %.',
+        'Bleed is BASE damage: it follows your level, not your skills, and shines on targets that live long, so bosses. Clover does nothing once you reach 100%.',
+      ),
+      L(
+        'Évite la Piqûre d’aiguille : elle corrompt toutes tes Tri-dagues. Le saignement de la Rate explosive, de l’Épine et du Calice, lui, reste.',
+        'Avoid Needletick: it corrupts all your Tri-Tip Daggers. Bleed from Shatterspleen, the Thorn and the Chalice stays.',
+      ),
+    ],
+    sources: [
+      { label: 'Tri-Tip Dagger', url: wiki('Tri-Tip_Dagger') },
+      { label: 'Noxious Thorn', url: wiki('Noxious_Thorn') },
+      { label: 'Shatterspleen', url: wiki('Shatterspleen') },
+      { label: 'GamersDecide: best builds', url: 'https://gamersdecide.com/articles/risk-of-rain-2-best-builds' },
+    ],
+  },
+  {
+    slug: 'sprint-is-damage',
+    survivor: null,
+    name: L('La vitesse tue', 'Speed kills'),
+    tagline: L('Plus tu cours vite, plus tes objets frappent.', 'The faster you run, the harder your items hit.'),
+    tag: L('Mobile · expérimental · AC', 'Mobile · experimental · AC'),
+    summary: L(
+      'Trois objets grossissent avec ta vitesse de déplacement : le Petit disciple tire plus vite, le Noyau abandonné frappe plus fort et l’Éperon Faraday se recharge en courant. Chaque Patte de chèvre devient un objet de dégâts.',
+      'Three items scale with your movement speed: Little Disciple fires faster, Orphaned Core hits harder and Faraday Spur recharges as you run. Every Goat Hoof becomes a damage item.',
+    ),
+    skills: {
+      label: L('Assemblage', 'Set'),
+      text: L(
+        'Petit disciple ou Noyau abandonné + objets de vitesse ; puis Éperon Faraday et Bouclier de la rose',
+        'Little Disciple or Orphaned Core + speed items; then Faraday Spur and Rose Buckler',
+      ),
+    },
+    items: [
+      { id: 'sprintwisp', core: true, role: L('×1 ou plus · 300 % par feu follet, en sprint', '×1 or more · 300% per wisp, while sprinting') },
+      { id: 'hoof', core: true, role: L('Plusieurs · vitesse, donc dégâts', 'Several · speed, so damage') },
+      { id: 'sprintbonus', core: true, role: L('Plusieurs · +25 % de vitesse en sprint', 'Several · +25% sprint speed') },
+      { id: 'physicsprojectile', role: L('×1 ou plus · 400 %, multiplié par sa vitesse · AC', '×1 or more · 400%, multiplied by its speed · AC') },
+      { id: 'jumpdamagestrike', role: L('×1 · décharge de 400 % au saut, jusqu’à 32 m · AC', '×1 · 400% discharge on jump, up to 32 m · AC') },
+      { id: 'sprintdamage', role: L('Optionnel · crâne à 300 % en sprint · Hallowed Concepts', 'Optional · 300% skull while sprinting · Hallowed Concepts') },
+      { id: 'sprintarmor', role: L('×1 ou plus · +30 d’armure en sprint', '×1 or more · +30 armor while sprinting') },
+      { id: 'attackspeedandmovespeed', role: L('Plusieurs · vitesse et cadence · SotV', 'Several · speed and attack speed · SotV') },
+      { id: 'movespeedonkill', role: L('Optionnel · +125 % de vitesse par élimination · SotV', 'Optional · +125% speed per kill · SotV') },
+    ],
+    synergies: [
+      {
+        items: ['sprintwisp', 'hoof', 'sprintbonus'],
+        text: L(
+          'Le Petit disciple tire toutes les 1,6 s à la vitesse de base, environ toutes les 0,83 s à 14 m/s : doubler ta vitesse double presque sa cadence.',
+          'Little Disciple fires every 1.6 s at base speed, about every 0.83 s at 14 m/s: doubling your speed nearly doubles its fire rate.',
+        ),
+      },
+      {
+        items: ['physicsprojectile', 'hoof', 'attackspeedandmovespeed'],
+        text: L(
+          'Le Noyau hérite de tes objets de vitesse (Patte de chèvre, Boisson énergisante, Moka) et multiplie ses dégâts par sa vitesse. Il ajoute 1 000 % en percutant un gros ennemi.',
+          'The Core inherits your speed items (Goat Hoof, Energy Drink, Mocha) and multiplies its damage by its speed. It adds 1,000% when ramming a heavy enemy.',
+        ),
+      },
+      {
+        items: ['jumpdamagestrike', 'sprintwisp'],
+        text: L(
+          'L’Éperon se charge en bougeant et donne jusqu’à +160 % de vitesse, ce qui accélère aussi le Petit disciple. Sauter le vide : sa charge ne change que le rayon, pas les dégâts.',
+          'The Spur charges as you move and gives up to +160% speed, which also speeds up Little Disciple. Jumping empties it: its charge only changes the radius, not the damage.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Ne t’arrête jamais de sprinter : le Petit disciple et le Casque rituel ne tirent qu’en sprint. Les survivants qui attaquent en sprintant (Chasseuse, POL-Y) en profitent le plus.',
+        'Never stop sprinting: Little Disciple and Ritual Helmet only fire while sprinting. Survivors that attack while sprinting (Huntress, MUL-T) get the most out of it.',
+      ),
+      L(
+        'Build déduit des effets des objets, pas un classique de la communauté : garde une source de dégâts sûre à côté tant que tu ne l’as pas éprouvé.',
+        'A build worked out from item effects, not a community classic: keep a safe damage source alongside until you have tried it.',
+      ),
+      L(
+        'Évite la Spalière de flux rocailleux : elle divise ta vitesse par trois. Les tourelles de l’Ingénieur ne sprintent pas et ne profitent pas du Petit disciple.',
+        'Avoid Stone Flux Pauldron: it cuts your speed to a third. Engineer’s turrets do not sprint and get nothing from Little Disciple.',
+      ),
+    ],
+    sources: [
+      { label: 'Little Disciple', url: wiki('Little_Disciple') },
+      { label: 'Orphaned Core', url: wiki('Orphaned_Core') },
+      { label: 'Faraday Spur', url: wiki('Faraday_Spur') },
+    ],
+  },
+  {
+    slug: 'permanent-gorag-opus',
+    survivor: null,
+    name: L('Frénésie permanente', 'Permanent frenzy'),
+    tagline: L('+100 % de vitesse d’attaque pour toute l’équipe, sans pause.', '+100% attack speed for the whole team, nonstop.'),
+    tag: L('Demande 8 Piles · fort en équipe', 'Needs 8 Fuel Cells · strong in a team'),
+    summary: L(
+      'L’Opus de Gorag donne +100 % de vitesse d’attaque et +50 % de vitesse à tous les alliés pendant 7 s, drones et tourelles compris. Avec le Signe du noyé et 8 Piles, la recharge passe sous ces 7 s : la frénésie ne s’arrête plus.',
+      'Gorag’s Opus gives +100% attack speed and +50% movement speed to all allies for 7 s, drones and turrets included. With Gesture of the Drowned and 8 Fuel Cells the cooldown drops under those 7 s: the frenzy never stops.',
+    ),
+    skills: {
+      label: L('Assemblage', 'Set'),
+      text: L(
+        'Opus de Gorag + Signe du noyé + 8 Piles ; Catalyseur spirituel et Cor de guerre en complément',
+        'Gorag’s Opus + Gesture of the Drowned + 8 Fuel Cells; Soulbound Catalyst and War Horn on top',
+      ),
+    },
+    items: [
+      { id: 'teamwarcry', core: true, role: L('×1 · équipement requis, 7 s de frénésie', '×1 · required equipment, 7 s of frenzy') },
+      { id: 'autocastequipment', core: true, role: L('×1 · automatisation, recharge 45 s → 22,5 s', '×1 · automation, cooldown 45 s → 22.5 s') },
+      { id: 'equipmentmagazine', core: true, role: L('×8 · recharge d’environ 6,1 s : frénésie continue', '×8 · about 6.1 s cooldown: constant frenzy') },
+      { id: 'talisman', role: L('×1 ou plus · −4 s par élimination, moins de Piles', '×1 or more · −4 s per kill, fewer Fuel Cells') },
+      { id: 'energizedonequipmentuse', role: L('×1 · +70 % de vitesse d’attaque en plus, pour toi', '×1 · another +70% attack speed, for you') },
+      { id: 'droneweapons', role: L('Optionnel · des drones qui profitent de la frénésie · SotV', 'Optional · drones that enjoy the frenzy · SotV') },
+      { id: 'roboballbuddy', role: L('Optionnel · 2 sondes accélérées elles aussi', 'Optional · 2 probes, sped up as well') },
+      { id: 'chainlightning', role: L('Optionnel · plus de coups, plus d’effets à l’impact', 'Optional · more hits, more on-hit effects') },
+    ],
+    synergies: [
+      {
+        items: ['teamwarcry', 'autocastequipment', 'equipmentmagazine'],
+        text: L(
+          'Recharge de 45 s : 22,5 s avec le Signe, environ 7,2 s avec 7 Piles, 6,1 s avec 8. Il en faut 8 pour passer sous les 7 s d’effet. Chaque Signe en plus compte comme une Pile.',
+          '45 s cooldown: 22.5 s with Gesture, about 7.2 s with 7 Fuel Cells, 6.1 s with 8. You need 8 to get under the 7 s effect. Each extra Gesture counts as a Fuel Cell.',
+        ),
+      },
+      {
+        items: ['teamwarcry', 'energizedonequipmentuse'],
+        text: L(
+          'Le Cor de guerre dure 8 s par activation : dès que l’Opus part toutes les 8 s ou moins, tu cumules +100 % et +70 % en continu.',
+          'War Horn lasts 8 s per activation: once the Opus fires every 8 s or less, you hold +100% and +70% at all times.',
+        ),
+      },
+      {
+        items: ['teamwarcry', 'droneweapons', 'roboballbuddy'],
+        text: L(
+          'La frénésie touche tous les alliés : chaque drone, sonde ou tourelle tire deux fois plus vite, pas seulement toi.',
+          'The frenzy hits every ally: each drone, probe or turret fires twice as fast, not just you.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Avant les 8 Piles, le build marche déjà par à-coups : 7 s de frénésie à chaque recharge. Le Catalyseur comble l’écart tant que tu tues.',
+        'Before 8 Fuel Cells the build already works in bursts: 7 s of frenzy per cooldown. The Catalyst fills the gap as long as you are killing.',
+      ),
+      L(
+        'Plus il y a d’alliés, plus il vaut : coopération, Ingénieur, Capitaine ou armée de drones. Seul et sans drones, préfère un équipement de dégâts.',
+        'The more allies, the more it is worth: co-op, Engineer, Captain or a drone army. Alone with no drones, prefer a damage equipment.',
+      ),
+      L(
+        'Ne prends pas la Spalière de berserker : son bonus ne s’ajoute pas à celui de l’Opus, le dernier activé remplace l’autre. Évite la Cellule de Lysat, qui corrompt les Piles.',
+        'Skip Berzerker’s Pauldron: its buff does not add to the Opus, the last one activated replaces the other. Avoid Lysate Cell, which corrupts Fuel Cells.',
+      ),
+    ],
+    sources: [
+      { label: 'Gorag’s Opus', url: wiki('Gorag%27s_Opus') },
+      { label: 'War Horn', url: wiki('War_Horn') },
+      { label: 'TheGamer: best equipment for Gesture', url: 'https://www.thegamer.com/risk-rain-2-gesture-drowned-best-equipment-combo/' },
+    ],
+  },
+  {
+    slug: 'egocentrism-stacking',
+    survivor: null,
+    name: L('Égocentrisme', 'Egocentrism'),
+    tagline: L('Laisser un objet manger tous les autres.', 'Let one item eat all the others.'),
+    tag: L('Autonome · lunaire · SotV', 'Hands-free · lunar · SotV'),
+    summary: L(
+      'Toutes les 60 s, l’Égocentrisme transforme un de tes objets en un exemplaire de lui-même. Chaque exemplaire raccourcit le délai entre deux bombes à 360 % : à 20 exemplaires, une bombe toutes les 0,15 s, sans viser ni tirer.',
+      'Every 60 s, Egocentrism turns one of your items into a copy of itself. Each copy shortens the time between 360% bombs: at 20 copies, one bomb every 0.15 s, with no aiming or shooting.',
+    ),
+    skills: {
+      label: L('Assemblage', 'Set'),
+      text: L(
+        'Égocentrisme, le plus tôt possible ; puis de quoi survivre au contact pendant qu’il grossit',
+        'Egocentrism, as early as possible; then enough to survive up close while it grows',
+      ),
+    },
+    items: [
+      { id: 'lunarsun', core: true, role: L('×1 pour démarrer · +1 par minute, tout seul', '×1 to start · +1 a minute, on its own') },
+      { id: 'nearbydamagebonus', role: L('Plusieurs · +20 % à moins de 13 m, où tes bombes frappent', 'Several · +20% within 13 m, where your bombs hit') },
+      { id: 'lunardagger', role: L('×1 · dégâts de base doublés, PV max divisés par 2', '×1 · double base damage, half max health') },
+      { id: 'missile', role: L('Optionnel · les bombes (coefficient 1,0) le déclenchent', 'Optional · bombs (proc 1.0) set it off') },
+      { id: 'chainlightning', role: L('Optionnel · idem, contre les groupes', 'Optional · same, against groups') },
+      { id: 'hoof', role: L('Plusieurs · aller chercher les ennemis', 'Several · get to the enemies') },
+      { id: 'bear', role: L('Plusieurs · tu joues près des ennemis', 'Several · you play close to enemies') },
+    ],
+    synergies: [
+      {
+        items: ['lunarsun'],
+        text: L(
+          'Le délai entre deux bombes vaut 3 s divisé par ton nombre d’exemplaires, et tu en stockes 3, +1 par exemplaire. Les bombes traversent le décor.',
+          'The time between bombs is 3 s divided by your number of copies, and you hold 3, +1 per copy. Bombs go through terrain.',
+        ),
+      },
+      {
+        items: ['lunarsun', 'missile', 'chainlightning'],
+        text: L(
+          'Chaque bombe a un coefficient de 1,0 : elle déclenche tes effets à l’impact comme un tir. Mais ces objets finiront convertis à leur tour.',
+          'Each bomb has a 1.0 proc coefficient: it sets off your on-hit effects like a shot would. But those items will end up converted too.',
+        ),
+      },
+      {
+        items: ['lunarsun', 'nearbydamagebonus'],
+        text: L(
+          'Les bombes tournent autour de toi et frappent à courte portée : le Cristal de concentration s’applique presque toujours.',
+          'Bombs orbit you and hit at short range: Focus Crystal almost always applies.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'L’objet converti est tiré au hasard parmi tes types d’objets, quel que soit le nombre d’exemplaires : un objet unique (un rouge) a autant de chances d’y passer qu’une pile de 10 Seringues.',
+        'The converted item is picked at random among your item types, whatever the stack size: a single item (a red) is as likely to go as a stack of 10 Syringes.',
+      ),
+      L(
+        'Ne le prends donc pas sur un build qui tient à un objet précis (Trèfle, Signe du noyé). Il brille sur les survivants à faible cadence ou quand ton build n’a pas encore pris.',
+        'So do not take it on a build that hangs on one specific item (Clover, Gesture of the Drowned). It shines on slow-firing survivors or when your build has not come together yet.',
+      ),
+      L(
+        'Continue à ramasser tout ce que tu trouves : chaque objet, même inutile, est un futur exemplaire. Les objets sans rareté ne sont pas convertis.',
+        'Keep picking up everything: every item, even a useless one, is a future copy. Items with no rarity are not converted.',
+      ),
+    ],
+    sources: [
+      { label: 'Egocentrism', url: wiki('Egocentrism') },
+      { label: 'GamersDecide: best builds', url: 'https://gamersdecide.com/articles/risk-of-rain-2-best-builds' },
+    ],
+  },
+  {
+    slug: 'transcendence-shield',
+    survivor: null,
+    name: L('Tout en bouclier', 'All shield'),
+    tagline: L('Plus de vie à soigner : un bouclier qui revient seul.', 'No health to heal: a shield that comes back by itself.'),
+    tag: L('Lunaire · Crevettes : SotV', 'Lunar · Shrimp: SotV'),
+    summary: L(
+      'Transcendance change toute ta vie en bouclier (+50 % de PV max) qui se recharge en entier après 7 s sans dégâts. Les Crevettes de plasma tirent tant qu’il te reste du bouclier : ici, c’est jusqu’à ton dernier point de vie.',
+      'Transcendence turns all your health into shield (+50% max health) that fully recharges after 7 s without damage. Plasma Shrimp fires while you have any shield left: here, that means down to your last point of health.',
+    ),
+    skills: {
+      label: L('Assemblage', 'Set'),
+      text: L(
+        'Transcendance + Crevettes de plasma ; puis Générateurs de bouclier, Stabilisateur cinétique et Égide',
+        'Transcendence + Plasma Shrimp; then Shield Generators, Kinetic Dampener and Aegis',
+      ),
+    },
+    items: [
+      { id: 'shieldonly', core: true, role: L('×1 · tout en bouclier, +50 % de PV max', '×1 · all shield, +50% max health') },
+      { id: 'missilevoid', core: true, role: L('×1 ou plus · un missile par impact, sans tirage · SotV', '×1 or more · one missile per hit, no roll · SotV') },
+      { id: 'personalshield', role: L('Plusieurs · +8 % de bouclier par exemplaire', 'Several · +8% shield per copy') },
+      { id: 'shieldbooster', role: L('×1 ou plus · +30 d’armure tant que tu as du bouclier · AC', '×1 or more · +30 armor while you have shield · AC') },
+      { id: 'barrieronoverheal', role: L('×1 · rend tes soins utiles : 50 % en barrière', '×1 · makes healing useful: 50% as barrier') },
+      { id: 'moremissile', role: L('×1 · triple les missiles des Crevettes · SotV', '×1 · triples the Shrimp’s missiles · SotV') },
+      { id: 'bearvoid', role: L('×1 ou plus · un coup bloqué ne coûte pas de bouclier · SotV', '×1 or more · a blocked hit costs no shield · SotV') },
+      { id: 'armorplate', role: L('Plusieurs · petits coups presque annulés', 'Several · small hits nearly cancelled') },
+      { id: 'infusion', role: L('Optionnel · PV max, donc bouclier', 'Optional · max health, so shield') },
+    ],
+    synergies: [
+      {
+        items: ['shieldonly', 'missilevoid'],
+        text: L(
+          'Sans Transcendance, les Crevettes s’arrêtent dès que ton petit bouclier casse. Avec, toute ta barre est du bouclier : les missiles ne s’arrêtent qu’à 1 PV.',
+          'Without Transcendence the Shrimp stop as soon as your small shield breaks. With it your whole bar is shield: missiles only stop at 1 health.',
+        ),
+      },
+      {
+        items: ['shieldonly', 'shieldbooster'],
+        text: L(
+          'Le Stabilisateur donne +30 d’armure tant qu’il reste du bouclier, donc presque tout le temps. Si le bouclier tombe à zéro, il lâche une onde égale à 100 % de ton bouclier max dans 12,5 m.',
+          'The Dampener gives +30 armor while any shield is left, so nearly always. If the shield hits zero, it releases a pulse worth 100% of your max shield within 12.5 m.',
+        ),
+      },
+      {
+        items: ['shieldonly', 'barrieronoverheal'],
+        text: L(
+          'Avec 1 seul PV de vie, tout soin est du soin en trop : l’Égide en change la moitié en barrière. C’est la seule façon de rendre tes soins utiles.',
+          'With only 1 point of health every heal is overhealing: Aegis turns half of it into barrier. It is the only way to make your healing useful.',
+        ),
+      },
+    ],
+    howTo: [
+      L(
+        'Le bouclier ne revient qu’après 7 s sans dégâts, puis se remplit en 2 s : tu joues par allers-retours, pas en échange continu. Les dégâts sur la durée repoussent la recharge.',
+        'Shield only comes back after 7 s without damage, then refills in 2 s: you play in and out, not in a constant trade. Damage over time delays the recharge.',
+      ),
+      L(
+        'Ne prends plus de soins (Faux, Graine, Champignon) sauf si tu as l’Égide. Mets tout en PV max, armure et mobilité pour rompre le combat.',
+        'Stop taking healing (Scythe, Seed, Fungus) unless you have Aegis. Put everything into max health, armor and mobility to break off fights.',
+      ),
+      L(
+        'Les Crevettes corrompent tes Missiles air-sol. Évite le Verre profilé : il réduit aussi ton bouclier.',
+        'Plasma Shrimp corrupts your AtG Missiles. Avoid Shaped Glass: it shrinks your shield too.',
+      ),
+    ],
+    sources: [
+      { label: 'Transcendence', url: wiki('Transcendence') },
+      { label: 'Plasma Shrimp', url: wiki('Plasma_Shrimp') },
+      { label: 'Kinetic Dampener', url: wiki('Kinetic_Dampener') },
+      { label: 'Gameplay.tips: item synergies', url: 'https://gameplay.tips/guides/6116-risk-of-rain-2.html' },
+    ],
+  },
 
   // ------------------------------------------------------------ Commando
   {
