@@ -36,6 +36,8 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'explodeondeath', role: L('×1 ou plus · dégâts de zone', '×1 or more · area damage') },
       { id: 'dagger', role: L('×1 ou plus · amélioration majeure', '×1 or more · major upgrade') },
       { id: 'barrieronkill', role: L('×1 ou plus · protection', '×1 or more · protection') },
+      { id: 'laserturbine', role: L('Optionnel · les impulsions chargent le disque', 'Optional · pulses charge the disc') },
+      { id: 'infusion', role: L('Optionnel · chaque impulsion donne des PV max', 'Optional · every pulse grants max health') },
       { id: 'equipmentmagazine', role: L('Optionnel · recharge plus courte', 'Optional · shorter cooldown') },
       { id: 'strengthenburn', role: L('Optionnel · brûlures de l’Essence ×4 · SotV', 'Optional · Gasoline burns ×4 · SotV') },
     ],
@@ -220,6 +222,7 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'icering', role: L('×1 ou plus · dégâts mono-cible', '×1 or more · single-target damage') },
       { id: 'firering', role: L('×1 ou plus · dégâts de zone', '×1 or more · area damage') },
       { id: 'bearvoid', role: L('Optionnel · bouclier réarmé · SotV', 'Optional · re-armed block · SotV') },
+      { id: 'talisman', role: L('×1 ou plus · −4 s de recharge par élimination', '×1 or more · −4 s cooldown per kill') },
     ],
     synergies: [
       {
@@ -286,6 +289,7 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'syringe', role: L('Plusieurs · selon le personnage', 'Several · depends on the survivor') },
       { id: 'personalshield', role: L('Optionnel · plus de bouclier à perdre', 'Optional · more shield to lose') },
       { id: 'bearvoid', role: L('Optionnel · un coup bloqué ne coûte pas de bouclier', 'Optional · a blocked hit costs no shield') },
+      { id: 'shieldonly', role: L('Optionnel · toute ta vie en bouclier : voir « Tout en bouclier »', 'Optional · all your health as shield: see “All shield”') },
     ],
     synergies: [
       {
@@ -344,6 +348,7 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'autocastequipment', role: L('Optionnel · automatise Le renfort', 'Optional · automates The Back-up') },
       { id: 'equipmentmagazine', role: L('×5 avec 1 Signe · renforts permanents', '×5 with 1 Gesture · permanent back-up') },
       { id: 'hoof', role: L('Mobilité · pour toi', 'Mobility · for you') },
+      { id: 'dronesdropdynamite', role: L('×1 ou plus · chaque allié mécanique lâche de la dynamite · AC', '×1 or more · every mechanical ally drops dynamite · AC') },
     ],
     synergies: [
       {
@@ -536,9 +541,12 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'icering', core: true, role: L('×1 ou plus · 250 % TOTAL, soit 7 500 % par éclair', '×1 or more · 250% TOTAL, so 7,500% per strike') },
       { id: 'firering', core: true, role: L('×1 ou plus · 300 % TOTAL, soit 9 000 % par éclair', '×1 or more · 300% TOTAL, so 9,000% per strike') },
       { id: 'equipmentmagazine', role: L('×3 · un éclair toutes les 6 s environ', '×3 · a strike about every 6 s') },
+      { id: 'talisman', role: L('×1 ou plus · −4 s de recharge par élimination', '×1 or more · −4 s cooldown per kill') },
       { id: 'missile', role: L('×1 ou plus · missile à 9 000 % sur un éclair', '×1 or more · a 9,000% missile off a strike') },
       { id: 'lightningstrikeonhit', role: L('×1 ou plus · foudre à 15 000 % sur un éclair', '×1 or more · 15,000% lightning off a strike') },
       { id: 'clover', role: L('Optionnel · missiles et foudre plus fréquents', 'Optional · missiles and lightning more often') },
+      { id: 'crowbar', role: L('Plusieurs · +75 % sur l’éclair si la cible a plus de 90 % PV', 'Several · +75% on the strike if the target is above 90% health') },
+      { id: 'meteorattackonhighdamage', role: L('Optionnel · 75 % de chance d’un météore à 6 500 % par éclair · SotS', 'Optional · 75% chance of a 6,500% meteor per strike · SotS') },
       { id: 'energizedonequipmentuse', role: L('×2 · +70 % de vitesse d’attaque en continu', '×2 · constant +70% attack speed') },
       { id: 'shockdamageaura', role: L('Optionnel · éclairs toujours critiques sous Énergie · AC', 'Optional · strikes always crit while Energized · AC') },
       { id: 'randomequipmenttrigger', role: L('Optionnel · un autre équipement à chaque éclair · SotV', 'Optional · another equipment on every strike · SotV') },
@@ -554,8 +562,8 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       {
         items: ['lightning', 'autocastequipment', 'equipmentmagazine'],
         text: L(
-          'Signe seul : un éclair toutes les 10 s, exactement la recharge des bracelets, donc chaque éclair les déclenche. Les Piles ajoutent des éclairs entre deux bracelets : avec 3 Piles, environ 6,1 s.',
-          'Gesture alone: a strike every 10 s, exactly the bands’ cooldown, so every strike triggers them. Fuel Cells add strikes in between: with 3, about 6.1 s.',
+          'Signe seul : un éclair toutes les 10 s, exactement la recharge des bracelets, donc chaque éclair les déclenche. Les Piles ajoutent des éclairs entre deux bracelets : avec 3 Piles, environ 6,1 s. Sans cible, les charges s’accumulent puis partent toutes d’affilée.',
+          'Gesture alone: a strike every 10 s, exactly the bands’ cooldown, so every strike triggers them. Fuel Cells add strikes in between: with 3, about 6.1 s. With no target, charges build up and then all fire back to back.',
         ),
       },
       {
@@ -563,6 +571,13 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
         text: L(
           'Leurs dégâts sont TOTAUX : déclenchés par l’éclair, le missile vaut 300 % de 3 000 % et le Perforateur 500 % de 3 000 %. Ils n’ont que 10 % de chance chacun : le Trèfle les fait passer à 19 %.',
           'Their damage is TOTAL: set off by the strike, the missile is worth 300% of 3,000% and the Perforator 500% of 3,000%. Each only has a 10% chance: Clover raises it to 19%.',
+        ),
+      },
+      {
+        items: ['lightning', 'talisman'],
+        text: L(
+          'Chaque élimination retire 4 s (+2 s par exemplaire) à la recharge, et l’éclair tue souvent sa cible : dans une vague, les éclairs s’enchaînent. Contre un boss seul, il n’apporte rien, et les bracelets gardent leurs 10 s.',
+          'Every kill takes 4 s (+2 s per copy) off the cooldown, and the strike often kills its target: in a wave, strikes chain together. Against a lone boss it adds nothing, and the bands keep their 10 s.',
         ),
       },
       {
@@ -621,6 +636,9 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'stickybomb', role: L('Plusieurs · 5 % par exemplaire, 180 % TOTAL', 'Several · 5% per copy, 180% TOTAL') },
       { id: 'syringe', role: L('Plusieurs · plus de coups, plus de chaînes', 'Several · more hits, more chains') },
       { id: 'behemoth', role: L('Optionnel · chaque maillon explose en zone', 'Optional · every link explodes in an area') },
+      { id: 'stunandpierce', role: L('×1 · 15 % à l’impact, coefficient 1,0 · SotS', '×1 · 15% on hit, proc 1.0 · SotS') },
+      { id: 'critglasses', role: L('Plusieurs · le missile critique si le tir a critiqué', 'Several · the missile crits if the shot did') },
+      { id: 'shockdamageaura', role: L('Optionnel · Ukulélé et Perforateur chargé toujours critiques · AC', 'Optional · Ukulele and Charged Perforator always crit · AC') },
     ],
     synergies: [
       {
@@ -693,6 +711,9 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'movespeedonkill', role: L('Optionnel · +125 % de vitesse par élimination · SotV', 'Optional · +125% speed per kill · SotV') },
       { id: 'warcryonmultikill', role: L('Optionnel · +100 % de cadence après 4 éliminations', 'Optional · +100% attack speed after 4 kills') },
       { id: 'bossdamagebonus', role: L('Plusieurs · le build manque de dégâts sur boss', 'Several · the build lacks boss damage') },
+      { id: 'increasedamageonmultikill', role: L('Plusieurs · +3,5 % de dégâts par élimination, jusqu’à 10 fois · SotS', 'Several · +3.5% damage per kill, up to 10 times · SotS') },
+      { id: 'triggerenemydebuffs', role: L('Optionnel · la brûlure passe au voisin à la mort · SotS', 'Optional · burn jumps to a neighbour on death · SotS') },
+      { id: 'blackhole', role: L('Équipement · regroupe les ennemis dans 30 m pendant 10 s', 'Equipment · pulls enemies together within 30 m for 10 s') },
     ],
     synergies: [
       {
@@ -763,6 +784,7 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'fireballsonhit', role: L('×1 · brûlure sur les boss', '×1 · burn on bosses') },
       { id: 'icering', role: L('×1 · ralentissement de 80 %, si tu as un gros coup', '×1 · 80% slow, if you have a big hit') },
       { id: 'triggerenemydebuffs', role: L('Optionnel · propage les altérations à la mort · SotS', 'Optional · spreads debuffs on death · SotS') },
+      { id: 'igniteonkill', role: L('×1 · brûlure sur les voisins à chaque élimination', '×1 · burn on the neighbours on every kill') },
       { id: 'syringe', role: L('Plusieurs · poser les altérations plus vite', 'Several · apply debuffs faster') },
     ],
     synergies: [
@@ -776,8 +798,8 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       {
         items: ['slowonhit', 'icering', 'deathmark'],
         text: L(
-          'Chaque ralentissement est une altération à part : celui de la Chronoboule (60 %) et celui du Bracelet de Runald (80 %) comptent pour deux.',
-          'Each slow is its own debuff: Chronobauble’s (60%) and Runald’s Band’s (80%) count as two.',
+          'Chaque ralentissement est une altération à part : celui de la Chronoboule (60 %) et celui du Bracelet de Runald (80 %) comptent pour deux. La Relique glacée pose le même que Runald : elle n’en ajoute pas un troisième.',
+          'Each slow is its own debuff: Chronobauble’s (60%) and Runald’s Band’s (80%) count as two. Frost Relic applies the same one as Runald’s: it does not add a third.',
         ),
       },
       {
@@ -832,10 +854,12 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'increasehealing', role: L('×1 · soins doublés, donc crânes doublés', '×1 · double healing, so double skulls') },
       { id: 'barrieronoverheal', role: L('×1 · 50 % du soin en trop devient barrière', '×1 · 50% of overhealing becomes barrier') },
       { id: 'equipmentmagazine', role: L('×4 · un fruit toutes les 12 s environ', '×4 · a fruit about every 12 s') },
+      { id: 'talisman', role: L('×1 ou plus · −4 s de recharge par élimination', '×1 or more · −4 s cooldown per kill') },
       { id: 'infusion', role: L('×1 ou plus · PV max, donc crânes plus forts', '×1 or more · max health, so stronger skulls') },
       { id: 'knurl', role: L('Optionnel · PV max et régénération', 'Optional · max health and regen') },
       { id: 'healoncrit', role: L('Optionnel · soins entre deux fruits, si critiques', 'Optional · healing between fruits, with crits') },
       { id: 'seed', role: L('Optionnel · soin à chaque coup', 'Optional · heals on every hit') },
+      { id: 'ghostblades', role: L('×1 · une lame par 10 % de PV soignés, 6 max · Hallowed Concepts', '×1 · one blade per 10% health healed, 6 max · Hallowed Concepts') },
     ],
     synergies: [
       {
@@ -855,8 +879,8 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       {
         items: ['fruit', 'autocastequipment', 'equipmentmagazine'],
         text: L(
-          '1 Signe : un fruit toutes les 22,5 s. Avec 4 Piles, environ 11,7 s.',
-          '1 Gesture: a fruit every 22.5 s. With 4 Fuel Cells, about 11.7 s.',
+          '1 Signe : un fruit toutes les 22,5 s. Avec 4 Piles, environ 11,7 s. Le Catalyseur spirituel retire encore 4 s par élimination.',
+          '1 Gesture: a fruit every 22.5 s. With 4 Fuel Cells, about 11.7 s. Soulbound Catalyst takes off another 4 s per kill.',
         ),
       },
     ],
@@ -870,8 +894,8 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
         'All healing counts, except natural regen: Harvester’s Scythe, Leeching Seed and Monster Tooth fill the gap between fruits.',
       ),
       L(
-        'Évite Transcendance (les soins deviennent presque inutiles) et la Fleur putride, qui étale tes soins dans le temps. Évite aussi la Cellule de Lysat, qui corrompt les Piles.',
-        'Avoid Transcendence (healing becomes nearly useless) and Corpsebloom, which spreads your healing over time. Also avoid Lysate Cell, which corrupts Fuel Cells.',
+        'Évite Transcendance : les soins deviennent presque inutiles. La Fleur putride double tes soins mais les étale (10 % des PV max par seconde au plus) : les crânes sortent un par un au lieu d’une salve. Évite la Cellule de Lysat, qui corrompt les Piles.',
+        'Avoid Transcendence: healing becomes nearly useless. Corpsebloom doubles your healing but spreads it out (10% of max health a second at most): skulls come out one by one instead of in a volley. Avoid Lysate Cell, which corrupts Fuel Cells.',
       ),
     ],
     sources: [
@@ -906,6 +930,7 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'bleedonhitandexplode', role: L('×1 · les ennemis qui saignent explosent', '×1 · bleeding enemies explode') },
       { id: 'deathmark', role: L('Optionnel · le saignement est déjà 1 altération sur 4', 'Optional · bleed is already 1 debuff out of 4') },
       { id: 'nearbydamagebonus', role: L('Optionnel · +20 % à moins de 13 m, saignement compris', 'Optional · +20% within 13 m, bleed included') },
+      { id: 'saw', role: L('Équipement · chaque lame et chaque tic posent du saignement', 'Equipment · every blade and every tick applies bleed') },
     ],
     synergies: [
       {
@@ -978,6 +1003,9 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'sprintarmor', role: L('×1 ou plus · +30 d’armure en sprint', '×1 or more · +30 armor while sprinting') },
       { id: 'attackspeedandmovespeed', role: L('Plusieurs · vitesse et cadence · SotV', 'Several · speed and attack speed · SotV') },
       { id: 'movespeedonkill', role: L('Optionnel · +125 % de vitesse par élimination · SotV', 'Optional · +125% speed per kill · SotV') },
+      { id: 'sprintoutofcombat', role: L('×1 ou plus · +30 % ; les tirs du Petit disciple ne le coupent pas', '×1 or more · +30%; Little Disciple shots do not break it') },
+      { id: 'mushroomvoid', role: L('×1 ou plus · soigne 2 % des PV max par seconde en sprint · SotV', '×1 or more · heals 2% max health a second while sprinting · SotV') },
+      { id: 'speedboostpickup', role: L('Optionnel · jusqu’à +36 % de vitesse avec les orbes · SotS', 'Optional · up to +36% speed from the orbs · SotS') },
     ],
     synergies: [
       {
@@ -990,8 +1018,8 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       {
         items: ['physicsprojectile', 'hoof', 'attackspeedandmovespeed'],
         text: L(
-          'Le Noyau hérite de tes objets de vitesse (Patte de chèvre, Boisson énergisante, Moka) et multiplie ses dégâts par sa vitesse. Il ajoute 1 000 % en percutant un gros ennemi.',
-          'The Core inherits your speed items (Goat Hoof, Energy Drink, Mocha) and multiplies its damage by its speed. It adds 1,000% when ramming a heavy enemy.',
+          'Le Noyau hérite de tes objets de vitesse (Patte de chèvre, Boisson énergisante, Moka, Fouet rouge) et multiplie ses dégâts par sa vitesse. Il hérite aussi du Petit disciple et tire donc les siens. Il ajoute 1 000 % en percutant un gros ennemi.',
+          'The Core inherits your speed items (Goat Hoof, Energy Drink, Mocha, Red Whip) and multiplies its damage by its speed. It also inherits Little Disciple and so fires its own. It adds 1,000% when ramming a heavy enemy.',
         ),
       },
       {
@@ -1048,6 +1076,7 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'droneweapons', role: L('Optionnel · des drones qui profitent de la frénésie · SotV', 'Optional · drones that enjoy the frenzy · SotV') },
       { id: 'roboballbuddy', role: L('Optionnel · 2 sondes accélérées elles aussi', 'Optional · 2 probes, sped up as well') },
       { id: 'chainlightning', role: L('Optionnel · plus de coups, plus d’effets à l’impact', 'Optional · more hits, more on-hit effects') },
+      { id: 'randomequipmenttrigger', role: L('Optionnel · un équipement au hasard à chaque Opus · SotV', 'Optional · a random equipment on every Opus · SotV') },
     ],
     synergies: [
       {
@@ -1187,6 +1216,8 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       { id: 'bearvoid', role: L('×1 ou plus · un coup bloqué ne coûte pas de bouclier · SotV', '×1 or more · a blocked hit costs no shield · SotV') },
       { id: 'armorplate', role: L('Plusieurs · petits coups presque annulés', 'Several · small hits nearly cancelled') },
       { id: 'infusion', role: L('Optionnel · PV max, donc bouclier', 'Optional · max health, so shield') },
+      { id: 'novaonlowhealth', role: L('×1 · explosion de 6 000 % quand le bouclier passe sous 25 %', '×1 · 6,000% blast when shield drops under 25%') },
+      { id: 'phasing', role: L('Optionnel · invisible 5 s sous 25 %, le temps de recharger', 'Optional · invisible for 5 s under 25%, time to recharge') },
     ],
     synergies: [
       {
@@ -1199,8 +1230,8 @@ export const OFFICIAL_BUILDS: OfficialBuild[] = [
       {
         items: ['shieldonly', 'shieldbooster'],
         text: L(
-          'Le Stabilisateur donne +30 d’armure tant qu’il reste du bouclier, donc presque tout le temps. Si le bouclier tombe à zéro, il lâche une onde égale à 100 % de ton bouclier max dans 12,5 m.',
-          'The Dampener gives +30 armor while any shield is left, so nearly always. If the shield hits zero, it releases a pulse worth 100% of your max shield within 12.5 m.',
+          'Le Stabilisateur donne +30 d’armure tant qu’il reste du bouclier : avec Transcendance, c’est en permanence. Son onde de choc, elle, ne partira jamais : elle demande un bouclier à zéro, et ici c’est la mort.',
+          'The Dampener gives +30 armor while any shield is left: with Transcendence, that is permanent. Its pulse, though, will never fire: it needs the shield at zero, and here that means death.',
         ),
       },
       {
