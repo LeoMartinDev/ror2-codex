@@ -24,6 +24,10 @@ bun run deploy     # wrangler deploy (nécessite `bunx wrangler login`)
 - **Par un assistant IA** : il suffit de lui donner l'adresse du site. `/llms.txt` lui explique tout, avec des URL absolues : le format JSON d'un build (objets et survivants nommés en FR ou EN), `/api/items?q=…` pour trouver les objets, et `/api/builds?b=<JSON>` (ou POST) qui valide le build, suggère les noms corrects en cas de faute et renvoie le lien court. Sans API, l'agent peut aussi donner directement le lien lisible `/builds/view?b=<JSON>` : la page affiche le build et les erreurs éventuelles. Le format est défini dans `src/lib/buildInput.ts`.
 - **En local** : `bun run build-link build.json [--open]` fait la même chose depuis un fichier, et `--open` ouvre le résultat (pane navigateur Kero, sinon navigateur par défaut). Le lien vise `http://localhost:3000`, sauf `--base <url>` ou `ROR2_CODEX_URL`.
 
+## Téléporteurs
+
+`/teleporters` liste le téléporteur, le téléporteur primordial et tous les portails (base et DLC) : où chacun mène, ce qu'on y trouve et comment le faire apparaître. Les données sont dans `src/data/portals.ts`, avec les noms officiels du jeu et la page du wiki d'où vient chaque règle. Chaque portail a une ancre (`/teleporters#gold-portal`).
+
 Les portraits des survivants (`public/survivors/`) sont téléchargés par `bun run data`, la liste est dans `src/lib/survivors.ts`.
 
 ## Données

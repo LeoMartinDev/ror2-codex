@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as CatalogRouteImport } from './routes/_catalog'
 import { Route as BuildsRouteRouteImport } from './routes/builds/route'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as TeleportersRouteImport } from './routes/teleporters'
 import { Route as CatalogIndexRouteImport } from './routes/_catalog/index'
 import { Route as ApiBuildsRouteImport } from './routes/api/builds'
 import { Route as ApiItemsRouteImport } from './routes/api/items'
@@ -33,6 +34,11 @@ const BuildsRouteRoute = BuildsRouteRouteImport.update({
 const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
   id: '/llms.txt',
   path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeleportersRoute = TeleportersRouteImport.update({
+  id: '/teleporters',
+  path: '/teleporters',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CatalogIndexRoute = CatalogIndexRouteImport.update({
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/builds': typeof BuildsRouteRouteWithChildren
   '/': typeof CatalogIndexRoute
   '/llms.txt': typeof LlmsDottxtRoute
+  '/teleporters': typeof TeleportersRoute
   '/api/builds': typeof ApiBuildsRoute
   '/api/items': typeof ApiItemsRoute
   '/builds/$slug': typeof BuildsSlugRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/llms.txt': typeof LlmsDottxtRoute
+  '/teleporters': typeof TeleportersRoute
   '/api/builds': typeof ApiBuildsRoute
   '/api/items': typeof ApiItemsRoute
   '/builds/$slug': typeof BuildsSlugRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/builds': typeof BuildsRouteRouteWithChildren
   '/_catalog': typeof CatalogRouteWithChildren
   '/llms.txt': typeof LlmsDottxtRoute
+  '/teleporters': typeof TeleportersRoute
   '/api/builds': typeof ApiBuildsRoute
   '/api/items': typeof ApiItemsRoute
   '/builds/$slug': typeof BuildsSlugRoute
@@ -119,6 +128,7 @@ export interface FileRouteTypes {
     | '/builds'
     | '/'
     | '/llms.txt'
+    | '/teleporters'
     | '/api/builds'
     | '/api/items'
     | '/builds/$slug'
@@ -129,6 +139,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/llms.txt'
+    | '/teleporters'
     | '/api/builds'
     | '/api/items'
     | '/builds/$slug'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/builds'
     | '/_catalog'
     | '/llms.txt'
+    | '/teleporters'
     | '/api/builds'
     | '/api/items'
     | '/builds/$slug'
@@ -156,6 +168,7 @@ export interface RootRouteChildren {
   BuildsRouteRoute: typeof BuildsRouteRouteWithChildren
   CatalogRoute: typeof CatalogRouteWithChildren
   LlmsDottxtRoute: typeof LlmsDottxtRoute
+  TeleportersRoute: typeof TeleportersRoute
   ApiBuildsRoute: typeof ApiBuildsRoute
   ApiItemsRoute: typeof ApiItemsRoute
 }
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/llms.txt'
       fullPath: '/llms.txt'
       preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/teleporters': {
+      id: '/teleporters'
+      path: '/teleporters'
+      fullPath: '/teleporters'
+      preLoaderRoute: typeof TeleportersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_catalog/': {
@@ -277,6 +297,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuildsRouteRoute: BuildsRouteRouteWithChildren,
   CatalogRoute: CatalogRouteWithChildren,
   LlmsDottxtRoute: LlmsDottxtRoute,
+  TeleportersRoute: TeleportersRoute,
   ApiBuildsRoute: ApiBuildsRoute,
   ApiItemsRoute: ApiItemsRoute,
 }

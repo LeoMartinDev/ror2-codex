@@ -22,6 +22,7 @@ export default defineConfig({
         { path: '/builds' },
         { path: '/builds/view' },
         { path: '/builds/edit' },
+        { path: '/teleporters' },
         ...OFFICIAL_BUILDS.map((b) => ({ path: `/builds/${b.slug}` })),
       ],
     }),
